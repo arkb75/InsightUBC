@@ -73,12 +73,8 @@ describe("InsightFacade", function () {
 
 		// 2 [accepted]
 		it("should successfully add a valid dataset", async function () {
-			try {
-				const result = await facade.addDataset("validDataSet", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("validDataSet");
-			} catch (err) {
-				expect.fail("how did it fail bruh");
-			}
+			const result = await facade.addDataset("validDataSet", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("validDataSet");
 		});
 
 		// 3 [accepted]
@@ -113,12 +109,8 @@ describe("InsightFacade", function () {
 
 		// 6 [accepted]
 		it("should reject with same ID", async function () {
-			try {
-				const result = await facade.addDataset("dududu", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("dududu");
-			} catch (err) {
-				expect.fail("dududududu");
-			}
+			const result = await facade.addDataset("dududu", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("dududu");
 
 			// second try ;)
 			try {
@@ -161,20 +153,12 @@ describe("InsightFacade", function () {
 
 		// 10 [accepted]
 		it("accept double add valid", async function () {
-			try {
-				const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("elysia");
-			} catch (err) {
-				expect.fail("eli");
-			}
+			const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("elysia");
 
 			// second try ;)
-			try {
-				const result2 = await facade.addDataset("big", sections2, InsightDatasetKind.Sections);
-				expect(result2).to.be.include("big");
-			} catch (err) {
-				expect.fail("not big");
-			}
+			const result2 = await facade.addDataset("big", sections2, InsightDatasetKind.Sections);
+			expect(result2).to.be.include("big");
 		});
 
 		// 11 [accepted]
@@ -456,8 +440,8 @@ describe("InsightFacade", function () {
 			if (!this.test) {
 				throw new Error(
 					"Invalid call to checkQuery." +
-						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
-						"Do not invoke the function directly."
+					"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+					"Do not invoke the function directly."
 				);
 			}
 			// Destructuring assignment to reduce property accesses
@@ -579,25 +563,17 @@ describe("InsightFacade", function () {
 
 		// 3
 		it("multiple datasets added", async function () {
-			try {
-				const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("elysia");
-			} catch (err) {
-				expect.fail("elii");
-			}
+			const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("elysia");
 
-			try {
-				const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("aponia");
-			} catch (err) {
-				expect.fail("hi3 moment");
-			}
+			const result1 = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+			expect(result1).to.be.include("aponia");
 
-			const result = await facade.listDatasets();
-			expect(result).to.be.an("array").that.has.lengthOf(2);
+			const result2 = await facade.listDatasets();
+			expect(result2).to.be.an("array").that.has.lengthOf(2);
 
-			const dataset: InsightDataset = result[0];
-			const dataset2: InsightDataset = result[1];
+			const dataset: InsightDataset = result2[0];
+			const dataset2: InsightDataset = result2[1];
 
 			expect(dataset.id).to.be.equal("elysia");
 			expect(dataset2.id).to.be.equal("aponia");
@@ -607,30 +583,18 @@ describe("InsightFacade", function () {
 
 		// 4
 		it("add, remove and list", async function () {
-			try {
-				const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("elysia");
-			} catch (err) {
-				expect.fail("elii");
-			}
+			const result1 = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+			expect(result1).to.be.include("elysia");
 
-			try {
-				const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-				expect(result).to.be.include("aponia");
-			} catch (err) {
-				expect.fail("hi3 moment");
-			}
+			const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("aponia");
 
-			try {
-				const endresult = await facade.removeDataset("aponia");
-				expect(endresult).to.be.equal("aponia");
-			} catch (err) {
-				expect.fail("why");
-			}
+			const endresult = await facade.removeDataset("aponia");
+			expect(endresult).to.be.equal("aponia");
 
-			const result = await facade.listDatasets();
-			expect(result).to.be.an("array").that.has.lengthOf(1);
-			expect(result[0].id).to.be.equal("elysia");
+			const result2 = await facade.listDatasets();
+			expect(result2).to.be.an("array").that.has.lengthOf(1);
+			expect(result2[0].id).to.be.equal("elysia");
 		});
 	});
 });
