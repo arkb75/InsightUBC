@@ -1,0 +1,83 @@
+{
+	"title": "IS",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_instructor": "sathaye, adheesh"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_instructor",
+				"sections_id"
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "308"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "369"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "369"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "369"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "369"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "369"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "398"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "398"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "398"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "398"
+		},
+		{
+			"sections_instructor": "sathaye, adheesh",
+			"sections_id": "102"
+		}
+	]
+}

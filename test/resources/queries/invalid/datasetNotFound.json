@@ -1,0 +1,18 @@
+{
+	"title": "datasetNotFound",
+	"input": {
+		"WHERE": {
+			"GT": {
+				"elysias_dept": 97
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"elysias_dept",
+				"elysias_avg"
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

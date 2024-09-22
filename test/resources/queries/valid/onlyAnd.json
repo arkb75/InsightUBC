@@ -1,0 +1,404 @@
+{
+	"title": "onlyAnd",
+	"input": {
+		"WHERE": {
+			"AND": [
+				{
+					"GT": {
+						"sections_avg": 80
+					}
+				},
+				{
+					"IS": {
+						"sections_dept": "busi"
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg"
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.44
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.88
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.88
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.33
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.46
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.09
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.12
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.92
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.75
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.29
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.03
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.49
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.56
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.02
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.79
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.38
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.11
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.24
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.82
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.21
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.49
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.95
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.06
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.92
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.04
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.98
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.68
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.3
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.52
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.52
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.85
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.36
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.09
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.16
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.16
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.8
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.8
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.2
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.8
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.17
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.89
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.12
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.6
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.32
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.22
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.76
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.11
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.13
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.4
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 86.63
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.67
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.07
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.4
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.83
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.33
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.48
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 88.88
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.19
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.19
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 85.08
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.27
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.36
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.86
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.86
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.78
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.65
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.2
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.82
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.97
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.43
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.25
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.09
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.38
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.92
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.92
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.09
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.39
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.02
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.67
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.03
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.2
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.5
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.5
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 85.76
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 83.09
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 82.64
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.56
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.97
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.75
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.33
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.33
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 81.25
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 84.33
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 80.08
+		}
+	]
+}

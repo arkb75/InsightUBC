@@ -1,0 +1,23 @@
+{
+	"title": "just1",
+	"input": {
+		"WHERE": {
+			"EQ": {
+				"sections_avg": 1
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg"
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_dept": "wood",
+			"sections_avg": 1
+		}
+	]
+}
