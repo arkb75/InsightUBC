@@ -438,6 +438,25 @@ describe("InsightFacade", function () {
 			await clearDisk();
 		});
 
+		// test invalid query - not object type
+		it("should reject query that is not an object type", async function () {
+			try {
+				await facade.performQuery("test");
+				expect.fail("Should have rejected.");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+		});
+
+		// test invalid query - blank
+		it("should reject blank query", async function () {
+			try {
+				await facade.performQuery({});
+				expect.fail("Should have rejected.");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+		});
 		// Examples demonstrating how to test performQuery using the JSON Test Queries.
 		// The relative path to the query file must be given in square brackets.
 		it("[invalid/invalid.json] Query missing WHERE", checkQuery);
