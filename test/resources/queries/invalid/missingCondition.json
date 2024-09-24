@@ -1,0 +1,12 @@
+{
+	"title": "missingCondition",
+	"input": {
+		"WHERE": {
+			"GT": {
+				"sections_avg": 90
+			}
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

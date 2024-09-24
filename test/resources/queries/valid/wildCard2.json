@@ -1,0 +1,5970 @@
+{
+	"title": "wildCard2",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_dept": "*ch"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept"
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "arch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "clch"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		},
+		{
+			"sections_dept": "mech"
+		}
+	]
+}

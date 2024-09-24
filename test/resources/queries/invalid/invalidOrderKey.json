@@ -1,0 +1,19 @@
+{
+	"title": "invalidOrderKey",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_dept": "busi"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_id"
+			],
+			"ORDER": "elysiaaaaa"
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
