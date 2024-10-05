@@ -1,4 +1,14 @@
-import { Query, Filter, Options, Comparison, LogicComparison, Negation, EmptyFilter, Order, OrderObject } from "./IQuery";
+import {
+	Query,
+	Filter,
+	Options,
+	Comparison,
+	LogicComparison,
+	Negation,
+	//EmptyFilter, //TODO: add this :(
+	Order,
+	OrderObject,
+} from "./IQuery";
 import { InsightError } from "../IInsightFacade";
 
 export class QueryParser {
