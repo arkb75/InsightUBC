@@ -191,6 +191,7 @@ export default class InsightFacade implements IInsightFacade {
 	public async performQuery(query: unknown): Promise<InsightResult[]> {
 		let parsedQuery: Query;
 		try {
+			// eslint-disable-next-line descriptive/no-unused-vars
 			parsedQuery = QueryParser.parse(query);
 			//console.log(parsedQuery);
 		} catch (error) {
