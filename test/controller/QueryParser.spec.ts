@@ -116,8 +116,15 @@ describe("QueryParser", () => {
 
 	fs.readdirSync(validQueriesDir).forEach((file) => {
 		it(`Should parse valid query from file: ${file}`, () => {
-			const query = fs.readJSONSync(path.join(validQueriesDir, file));
-			expect(() => QueryParser.parse(query)).to.not["throw"]();
+			const queryFileContent = fs.readJSONSync(path.join(validQueriesDir, file));
+			const query = queryFileContent.input;
+			const errorExpected = queryFileContent.errorExpected;
+
+			if (errorExpected) {
+				expect(() => QueryParser.parse(query)).to["throw"](InsightError);
+			} else {
+				expect(() => QueryParser.parse(query)).to.not["throw"]();
+			}
 		});
 	});
 

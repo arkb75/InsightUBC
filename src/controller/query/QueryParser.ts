@@ -17,7 +17,12 @@ export class QueryParser {
 			throw new InsightError("Query must be an object.");
 		}
 
-		const queryObj = query as any;
+		const queryObjOriginal = query as any;
+		const queryObj: any = {};
+
+		for (const key of Object.keys(queryObjOriginal)) {
+			queryObj[key.toUpperCase()] = queryObjOriginal[key];
+		}
 
 		if (!("WHERE" in queryObj) || !("OPTIONS" in queryObj)) {
 			throw new InsightError("Query must contain WHERE and OPTIONS.");
@@ -164,10 +169,13 @@ export class QueryParser {
 			order = this.parseOrder(options.ORDER, columns);
 		}
 
-		return {
+		const resultOptions: Options = {
 			COLUMNS: columns,
-			ORDER: order,
 		};
+		if (order !== undefined) {
+			resultOptions.ORDER = order;
+		}
+		return resultOptions;
 	}
 
 	private static parseOrder(order: any, columns: string[]): Order {
