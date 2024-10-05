@@ -83,7 +83,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_avg"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Query must contain WHERE and OPTIONS.");
+		expect(() => QueryParser.parse(query)).throw(InsightError, "Query must contain WHERE and OPTIONS.");
 	});
 
 	it("Should throw an error for invalid filter", () => {
@@ -95,7 +95,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_avg"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Invalid filter in WHERE clause.");
+		expect(() => QueryParser.parse(query)).to.throw(InsightError, "Invalid filter in WHERE clause.");
 	});
 
 	it("Should throw an error for invalid ORDER key not in COLUMNS", () => {
@@ -106,7 +106,7 @@ describe("QueryParser", () => {
 				ORDER: "courses_dept",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "ORDER key must be in COLUMNS.");
+		expect(() => QueryParser.parse(query)).to.throw(InsightError, "ORDER key must be in COLUMNS.");
 	});
 
 	// Load additional test cases from provided query files
@@ -121,9 +121,9 @@ describe("QueryParser", () => {
 			const errorExpected = queryFileContent.errorExpected;
 
 			if (errorExpected) {
-				expect(() => QueryParser.parse(query)).to["throw"](InsightError);
+				expect(() => QueryParser.parse(query)).to.throw(InsightError);
 			} else {
-				expect(() => QueryParser.parse(query)).to.not["throw"]();
+				expect(() => QueryParser.parse(query)).to.not.throw();
 			}
 		});
 	});
@@ -131,7 +131,7 @@ describe("QueryParser", () => {
 	fs.readdirSync(invalidQueriesDir).forEach((file) => {
 		it(`Should throw error for invalid query from file: ${file}`, () => {
 			const query = fs.readJSONSync(path.join(invalidQueriesDir, file));
-			expect(() => QueryParser.parse(query)).to["throw"](InsightError);
+			expect(() => QueryParser.parse(query)).to.throw(InsightError);
 		});
 	});
 });
