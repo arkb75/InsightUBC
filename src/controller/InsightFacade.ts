@@ -23,6 +23,7 @@ import JSZip from "jszip";
  */
 export default class InsightFacade implements IInsightFacade {
 	public datasetList: InsightDataset[] = [];
+	public data: any = {};
 
 	//private datasets: Map<string, any[]>;
 
@@ -164,10 +165,8 @@ export default class InsightFacade implements IInsightFacade {
 			numRows: sections.length,
 		});
 		// write to disk
-		const data: any = {};
-		data.result = sections;
-		// https://github.com/jprichardson/node-fs-extra/tree/master/docs
-		await fs.outputJSON("data/" + id, JSON.stringify(data));
+		this.data.result = sections;
+		await fs.outputJSON("data/" + id, JSON.stringify(this.data));
 		// return ids of current successfully added datasets
 		return this.datasetList.map((ds) => ds.id);
 	}
@@ -183,9 +182,11 @@ export default class InsightFacade implements IInsightFacade {
 		}
 		// update the list to be filter out any datasets in the list that have the id to remove
 		this.datasetList = this.datasetList.filter((ds) => ds.id !== id);
-		// cache from disk
+		this.data.result.forEach((item: { id: string }) => (item.id === id ? this.data.delete(item) : item));
+		// caching
 		try {
 			await fs.remove("data/" + id);
+			await fs.outputJSON("data/" + id, JSON.stringify(this.data));
 		} catch (err) {
 			throw new InsightError("unable to cache due to error: " + err);
 		}
