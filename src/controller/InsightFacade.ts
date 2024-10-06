@@ -2,16 +2,16 @@ import {
 	IInsightFacade,
 	InsightDataset,
 	InsightDatasetKind,
-	InsightResult,
 	InsightError,
+	InsightResult,
 	NotFoundError,
 	ResultTooLargeError,
 } from "./IInsightFacade";
-import { QueryParser } from "./query/QueryParser";
-import { Query } from "./query/IQuery";
-import { QueryExecutor } from "./query/QueryExecutor";
+import {QueryParser} from "./query/QueryParser";
+import {Query} from "./query/IQuery";
+import {QueryExecutor} from "./query/QueryExecutor";
 
-import { Section } from "./SectionModel";
+import {Section} from "./SectionModel";
 
 import fs from "fs-extra";
 import JSZip from "jszip";
@@ -132,7 +132,7 @@ export default class InsightFacade implements IInsightFacade {
 		// if id has underscore or
 		// is empty after removing whitespaces or
 		// is an existing id string added, throw error for invalid id
-		if (id.includes("_") || id.trim() === "" || !id || this.datasetList.some((item) => item.id === id)) {
+		if (id.includes("_") || id.trim() === "" || !id || this.datasetList.some(ds => ds.id === id)) {
 			throw new InsightError("invalid id!!");
 		}
 		// throw error if the kind is not sections
@@ -166,9 +166,10 @@ export default class InsightFacade implements IInsightFacade {
 		// write to disk
 		const data: any = {};
 		data.result = sections;
+		// https://github.com/jprichardson/node-fs-extra/tree/master/docs
 		await fs.outputJSON("data/" + id, JSON.stringify(data));
 		// return ids of current successfully added datasets
-		return this.datasetList.map((item) => item.id);
+		return this.datasetList.map(ds => ds.id);
 	}
 
 	public async removeDataset(id: string): Promise<string> {
@@ -177,13 +178,17 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("invalid id :(");
 		}
 		// if the id isn't in the list of successfully added ids, throw NotFoundError
-		if (!this.datasetList.some((item) => item.id === id)) {
+		if (!this.datasetList.some(ds => ds.id === id)) {
 			throw new NotFoundError("id not found :(");
 		}
-		// update the list to be filter out any items in the list that have the id to remove
-		this.datasetList = this.datasetList.filter((item) => item.id !== id);
+		// update the list to be filter out any datasets in the list that have the id to remove
+		this.datasetList = this.datasetList.filter(ds => ds.id !== id);
 		// cache from disk
-		await fs.unlink("data/" + id);
+		try {
+			await fs.remove("data/" + id);
+		} catch (err) {
+			throw new InsightError("unable to cache due to error: " + err);
+		}
 		// promise fulfills id of dataset removed
 		return id;
 	}
@@ -201,13 +206,9 @@ export default class InsightFacade implements IInsightFacade {
 			}
 		}
 
-		// TODO: Implement query execution using parsedQuery
-		// For now, throw an error indicating that execution is not yet implemented
-
 		try {
 			const executor = new QueryExecutor(this.datasetList);
-			const result = await executor.execute(parsedQuery);
-			return result;
+			return await executor.execute(parsedQuery);
 		} catch (error) {
 			if (error instanceof ResultTooLargeError) {
 				throw new ResultTooLargeError("L");
@@ -220,8 +221,6 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
-		// TODO: Remove this once you implement the methods!
-		//throw new Error(`InsightFacadeImpl::listDatasets is unimplemented!`);
 		return this.datasetList;
 	}
 }
