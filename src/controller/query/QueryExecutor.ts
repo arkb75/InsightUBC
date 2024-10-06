@@ -1,11 +1,11 @@
-import { Query, Filter, Comparison, LogicComparison, Negation } from "./IQuery"; // removed Option, OrderObject for testing purposes.
-import { InsightResult, InsightError, InsightDataset, ResultTooLargeError } from "../IInsightFacade";
+import { Comparison, Filter, LogicComparison, Negation, Query } from "./IQuery"; // removed Option, OrderObject for testing purposes.
+import { InsightDataset, InsightError, InsightResult, ResultTooLargeError } from "../IInsightFacade";
 
 import fs from "fs-extra";
 
 export class QueryExecutor {
 	private datasets: InsightDataset[];
-	private maxNum: number;
+	private readonly maxNum: number;
 
 	constructor(datasets: InsightDataset[]) {
 		this.datasets = datasets;
@@ -46,9 +46,7 @@ export class QueryExecutor {
 		}
 
 		// apply the OPTIONS clause
-		const result = this.applyOptions(filteredSections, query.OPTIONS);
-
-		return result;
+		return this.applyOptions(filteredSections, query.OPTIONS);
 	}
 
 	private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
@@ -59,9 +57,9 @@ export class QueryExecutor {
 			if (typeof data === "string") {
 				data = JSON.parse(data);
 			}
-			if (!data?.result) {
-				throw new InsightError(`Data for dataset ${datasetId} is missing or corrupted.`);
-			}
+			// if (!data?.result) {
+			// 	throw new InsightError(`Data for dataset ${datasetId} is missing or corrupted.`);
+			// }
 			//console.log(data.result);
 			return data.result;
 		} catch (err) {
@@ -232,7 +230,7 @@ export class QueryExecutor {
 				if (a[orderKey] < b[orderKey]) {
 					return -direction;
 				}
-				return 0; // 0 keep original order for equal values i think??
+				return 0; // 0 keep original order for equal values I think??
 			});
 		}
 
