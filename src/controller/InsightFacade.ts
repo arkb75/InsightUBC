@@ -7,11 +7,11 @@ import {
 	NotFoundError,
 	ResultTooLargeError,
 } from "./IInsightFacade";
-import {QueryParser} from "./query/QueryParser";
-import {Query} from "./query/IQuery";
-import {QueryExecutor} from "./query/QueryExecutor";
+import { QueryParser } from "./query/QueryParser";
+import { Query } from "./query/IQuery";
+import { QueryExecutor } from "./query/QueryExecutor";
 
-import {Section} from "./SectionModel";
+import { Section } from "./SectionModel";
 
 import fs from "fs-extra";
 import JSZip from "jszip";
@@ -132,7 +132,7 @@ export default class InsightFacade implements IInsightFacade {
 		// if id has underscore or
 		// is empty after removing whitespaces or
 		// is an existing id string added, throw error for invalid id
-		if (id.includes("_") || id.trim() === "" || !id || this.datasetList.some(ds => ds.id === id)) {
+		if (id.includes("_") || id.trim() === "" || !id || this.datasetList.some((ds) => ds.id === id)) {
 			throw new InsightError("invalid id!!");
 		}
 		// throw error if the kind is not sections
@@ -169,7 +169,7 @@ export default class InsightFacade implements IInsightFacade {
 		// https://github.com/jprichardson/node-fs-extra/tree/master/docs
 		await fs.outputJSON("data/" + id, JSON.stringify(data));
 		// return ids of current successfully added datasets
-		return this.datasetList.map(ds => ds.id);
+		return this.datasetList.map((ds) => ds.id);
 	}
 
 	public async removeDataset(id: string): Promise<string> {
@@ -178,11 +178,11 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("invalid id :(");
 		}
 		// if the id isn't in the list of successfully added ids, throw NotFoundError
-		if (!this.datasetList.some(ds => ds.id === id)) {
+		if (!this.datasetList.some((ds) => ds.id === id)) {
 			throw new NotFoundError("id not found :(");
 		}
 		// update the list to be filter out any datasets in the list that have the id to remove
-		this.datasetList = this.datasetList.filter(ds => ds.id !== id);
+		this.datasetList = this.datasetList.filter((ds) => ds.id !== id);
 		// cache from disk
 		try {
 			await fs.remove("data/" + id);

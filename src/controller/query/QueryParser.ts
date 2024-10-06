@@ -158,11 +158,11 @@ export class QueryParser {
 			throw new InsightError("COLUMNS must be a non-empty array.");
 		}
 
-		for (const col of columns) {
-			if (typeof col !== "string") {
-				throw new InsightError("COLUMNS must contain only strings.");
-			}
-		}
+		// for (const col of columns) {
+		// 	if (typeof col !== "string") {
+		// 		throw new InsightError("COLUMNS must contain only strings.");
+		// 	}
+		// }
 
 		let order: Order | undefined;
 		if ("ORDER" in options) {
@@ -208,9 +208,9 @@ export class QueryParser {
 		}
 
 		for (const key of keys) {
-			if (typeof key !== "string") {
-				throw new InsightError("ORDER keys must be strings.");
-			}
+			// if (typeof key !== "string") {
+			// 	throw new InsightError("ORDER keys must be strings.");
+			// }
 			if (!columns.includes(key)) {
 				throw new InsightError("ORDER keys must be in COLUMNS.");
 			}
