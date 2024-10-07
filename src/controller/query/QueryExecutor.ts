@@ -49,9 +49,7 @@ export class QueryExecutor {
 		}
 
 		// apply the OPTIONS clause
-		const result = this.applyOptions(filteredSections, query.OPTIONS);
-
-		return result;
+		return this.applyOptions(filteredSections, query.OPTIONS);
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
@@ -241,7 +239,7 @@ export class QueryExecutor {
 				if (a[orderKey] < b[orderKey]) {
 					return -direction;
 				}
-				return 0; // 0 keep original order for equal values i think??
+				return 0; // 0 keep original order for equal values I think??
 			});
 		}
 

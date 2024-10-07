@@ -2,8 +2,8 @@ import {
 	IInsightFacade,
 	InsightDataset,
 	InsightDatasetKind,
-	InsightResult,
 	InsightError,
+	InsightResult,
 	NotFoundError,
 	ResultTooLargeError,
 } from "./IInsightFacade";
