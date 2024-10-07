@@ -1,0 +1,315 @@
+{
+	"title": "orCase5",
+	"input": {
+		"WHERE": {
+			"OR": [
+				{
+					"AND": [
+						{
+							"GT": {
+								"sections_avg": 90
+							}
+						},
+						{
+							"IS": {
+								"sections_dept": "adh*"
+							}
+						}
+					]
+				},
+				{
+					"EQ": {
+						"sections_avg": 99
+					}
+				},
+				{
+					"LT": {
+						"sections_avg": 10
+					}
+				}
+			]
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_dept",
+				"sections_avg",
+				"sections_instructor",
+				"sections_uuid",
+				"sections_title",
+				"sections_id",
+				"sections_pass",
+				"sections_fail",
+				"sections_audit",
+				"sections_year"
+			],
+			"ORDER": "sections_avg"
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{
+			"sections_dept": "lfs",
+			"sections_avg": 0,
+			"sections_instructor": "",
+			"sections_uuid": "56403",
+			"sections_title": "in land food com",
+			"sections_id": "100",
+			"sections_pass": 0,
+			"sections_fail": 1,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "lfs",
+			"sections_avg": 0,
+			"sections_instructor": "",
+			"sections_uuid": "56402",
+			"sections_title": "in land food com",
+			"sections_id": "100",
+			"sections_pass": 0,
+			"sections_fail": 1,
+			"sections_audit": 0,
+			"sections_year": 2009
+		},
+		{
+			"sections_dept": "frst",
+			"sections_avg": 0,
+			"sections_instructor": "",
+			"sections_uuid": "89536",
+			"sections_title": "forest ecology",
+			"sections_id": "202",
+			"sections_pass": 0,
+			"sections_fail": 1,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "wood",
+			"sections_avg": 1,
+			"sections_instructor": "",
+			"sections_uuid": "49835",
+			"sections_title": "prpty,ident&uses",
+			"sections_id": "475",
+			"sections_pass": 0,
+			"sections_fail": 2,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 4,
+			"sections_instructor": "",
+			"sections_uuid": "16428",
+			"sections_title": "found re apprai",
+			"sections_id": "330",
+			"sections_pass": 0,
+			"sections_fail": 1,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "busi",
+			"sections_avg": 4,
+			"sections_instructor": "",
+			"sections_uuid": "16427",
+			"sections_title": "found re apprai",
+			"sections_id": "330",
+			"sections_pass": 0,
+			"sections_fail": 1,
+			"sections_audit": 0,
+			"sections_year": 2016
+		},
+		{
+			"sections_dept": "fopr",
+			"sections_avg": 4.5,
+			"sections_instructor": "bendickson, dennis",
+			"sections_uuid": "84769",
+			"sections_title": "sustnbt&frst ops",
+			"sections_id": "362",
+			"sections_pass": 0,
+			"sections_fail": 4,
+			"sections_audit": 0,
+			"sections_year": 2013
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.02,
+			"sections_instructor": "",
+			"sections_uuid": "19184",
+			"sections_title": "dev wkshp/sem",
+			"sections_id": "329",
+			"sections_pass": 62,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.16,
+			"sections_instructor": "vanwynsberghe, robert",
+			"sections_uuid": "68557",
+			"sections_title": "adul educ",
+			"sections_id": "412",
+			"sections_pass": 31,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2015
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.17,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "75628",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 29,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2011
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.18,
+			"sections_instructor": "falk, clifford",
+			"sections_uuid": "78875",
+			"sections_title": "adul educ",
+			"sections_id": "412",
+			"sections_pass": 11,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2007
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.5,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "79479",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 18,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2012
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.72,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "91932",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 25,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2014
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.82,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "68543",
+			"sections_title": "dev wkshp/sem",
+			"sections_id": "329",
+			"sections_pass": 33,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2015
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 90.85,
+			"sections_instructor": "",
+			"sections_uuid": "46425",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 34,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 91.29,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "19187",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 28,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2016
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 91.33,
+			"sections_instructor": "",
+			"sections_uuid": "85075",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 18,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 1900
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 91.33,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "85074",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 18,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2012
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 91.48,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "46423",
+			"sections_title": "com adult educ",
+			"sections_id": "330",
+			"sections_pass": 23,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2009
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 92.54,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "68540",
+			"sections_title": "dev wkshp/sem",
+			"sections_id": "329",
+			"sections_pass": 26,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2015
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 93.33,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "19182",
+			"sections_title": "dev wkshp/sem",
+			"sections_id": "329",
+			"sections_pass": 33,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2016
+		},
+		{
+			"sections_dept": "adhe",
+			"sections_avg": 96.11,
+			"sections_instructor": "bishundayal, deonarine",
+			"sections_uuid": "68539",
+			"sections_title": "dev wkshp/sem",
+			"sections_id": "329",
+			"sections_pass": 27,
+			"sections_fail": 0,
+			"sections_audit": 0,
+			"sections_year": 2015
+		}
+	]
+}

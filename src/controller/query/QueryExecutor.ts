@@ -39,7 +39,17 @@ export class QueryExecutor {
 
 		// apply the WHERE clause
 		const realData: any[] = dataset[0].data;
+		realData.forEach((item) => {
+			if (typeof item.year === "string") {
+				item.year = Number(item.year);
+			}
+		});
 
+		realData.forEach((item) => {
+			if (typeof item.uuid === "number") {
+				item.uuid = String(item.uuid);
+			}
+		});
 		const filteredSections = this.applyFilter(realData, query.WHERE);
 		//console.log(filteredSections.length);
 
@@ -242,7 +252,6 @@ export class QueryExecutor {
 				return 0; // 0 keep original order for equal values I think??
 			});
 		}
-
 		return results;
 	}
 }
