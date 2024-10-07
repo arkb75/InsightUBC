@@ -81,7 +81,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_avg"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "Query must contain WHERE and OPTIONS.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Query must contain WHERE and OPTIONS.");
 	});
 
 	it("Should throw an error for invalid filter", () => {
@@ -93,7 +93,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_avg"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "Invalid filter in WHERE clause.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Invalid filter in WHERE clause.");
 	});
 
 	it("Should throw an error for invalid ORDER key not in COLUMNS", () => {
@@ -104,7 +104,7 @@ describe("QueryParser", () => {
 				ORDER: "courses_dept",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "ORDER key must be in COLUMNS.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "ORDER key must be in COLUMNS.");
 	});
 
 	it("Should parse valid query from simple.json", () => {
@@ -119,7 +119,7 @@ describe("QueryParser", () => {
 				ORDER: "sections_avg",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should parse valid query with OR", () => {
@@ -132,7 +132,7 @@ describe("QueryParser", () => {
 				ORDER: "courses_dept",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should parse valid query with complex logic", () => {
@@ -153,7 +153,7 @@ describe("QueryParser", () => {
 				},
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should parse valid query with NOT condition", () => {
@@ -168,7 +168,7 @@ describe("QueryParser", () => {
 				ORDER: "courses_avg",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should parse valid query with wildcard IS", () => {
@@ -181,7 +181,7 @@ describe("QueryParser", () => {
 				ORDER: "courses_title",
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should throw error for invalid logic comparator", () => {
@@ -193,7 +193,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_dept"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "AND must be a non-empty array.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "AND must be a non-empty array.");
 	});
 
 	it("Should throw error for invalid IS comparator", () => {
@@ -205,7 +205,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_dept"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "Value of IS must be a string.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Value of IS must be a string.");
 	});
 
 	it("Should throw error for invalid GT comparator", () => {
@@ -217,7 +217,7 @@ describe("QueryParser", () => {
 				COLUMNS: ["courses_dept", "courses_avg"],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "Value of GT must be a number.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "Value of GT must be a number.");
 	});
 
 	it("Should throw error for missing COLUMNS in OPTIONS", () => {
@@ -225,7 +225,7 @@ describe("QueryParser", () => {
 			WHERE: {},
 			OPTIONS: {},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "OPTIONS must contain COLUMNS.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "OPTIONS must contain COLUMNS.");
 	});
 
 	it("Should throw error for empty COLUMNS array", () => {
@@ -235,7 +235,7 @@ describe("QueryParser", () => {
 				COLUMNS: [],
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "COLUMNS must be a non-empty array.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "COLUMNS must be a non-empty array.");
 	});
 
 	it("Should throw error for invalid ORDER type", () => {
@@ -246,7 +246,7 @@ describe("QueryParser", () => {
 				ORDER: 123,
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "ORDER must be a string or an object.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "ORDER must be a string or an object.");
 	});
 
 	it("Should parse valid query with ORDER object", () => {
@@ -260,7 +260,7 @@ describe("QueryParser", () => {
 				},
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.not.throw();
+		expect(() => QueryParser.parse(query)).to.not["throw"]();
 	});
 
 	it("Should throw error for invalid ORDER dir", () => {
@@ -274,7 +274,7 @@ describe("QueryParser", () => {
 				},
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "ORDER dir must be 'UP' or 'DOWN'.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "ORDER dir must be 'UP' or 'DOWN'.");
 	});
 
 	it("Should throw error for ORDER keys not in COLUMNS", () => {
@@ -288,6 +288,6 @@ describe("QueryParser", () => {
 				},
 			},
 		};
-		expect(() => QueryParser.parse(query)).to.throw(InsightError, "ORDER keys must be in COLUMNS.");
+		expect(() => QueryParser.parse(query)).to["throw"](InsightError, "ORDER keys must be in COLUMNS.");
 	});
 });
