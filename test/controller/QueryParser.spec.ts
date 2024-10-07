@@ -17,63 +17,63 @@ describe("QueryParser", () => {
 		});
 	});
 
-// 	it("Should parse a valid query with GT filter", () => {
-// 		const query = {
-// 			WHERE: {
-// 				GT: { courses_avg: 90 },
-// 			},
-// 			OPTIONS: {
-// 				COLUMNS: ["courses_dept", "courses_avg"],
-// 			},
-// 		};
-// 		const result = QueryParser.parse(query);
-// 		expect(result).to.deep.equal({
-// 			WHERE: {
-// 				type: "MCOMPARISON",
-// 				key: "courses_avg",
-// 				operator: "GT",
-// 				value: 90,
-// 			},
-// 			OPTIONS: {
-// 				COLUMNS: ["courses_dept", "courses_avg"],
-// 			},
-// 		});
-// 	});
+	// 	it("Should parse a valid query with GT filter", () => {
+	// 		const query = {
+	// 			WHERE: {
+	// 				GT: { courses_avg: 90 },
+	// 			},
+	// 			OPTIONS: {
+	// 				COLUMNS: ["courses_dept", "courses_avg"],
+	// 			},
+	// 		};
+	// 		const result = QueryParser.parse(query);
+	// 		expect(result).to.deep.equal({
+	// 			WHERE: {
+	// 				type: "MCOMPARISON",
+	// 				key: "courses_avg",
+	// 				operator: "GT",
+	// 				value: 90,
+	// 			},
+	// 			OPTIONS: {
+	// 				COLUMNS: ["courses_dept", "courses_avg"],
+	// 			},
+	// 		});
+	// 	});
 
-// 	it("Should parse a valid query with AND filter", () => {
-// 		const query = {
-// 			WHERE: {
-// 				AND: [{ GT: { courses_avg: 90 } }, { IS: { courses_dept: "cpsc" } }],
-// 			},
-// 			OPTIONS: {
-// 				COLUMNS: ["courses_dept", "courses_avg"],
-// 			},
-// 		};
-// 		const result = QueryParser.parse(query);
-// 		expect(result).to.deep.equal({
-// 			WHERE: {
-// 				type: "LOGIC",
-// 				operator: "AND",
-// 				filters: [
-// 					{
-// 						type: "MCOMPARISON",
-// 						key: "courses_avg",
-// 						operator: "GT",
-// 						value: 90,
-// 					},
-// 					{
-// 						type: "SCOMPARISON",
-// 						key: "courses_dept",
-// 						operator: "IS",
-// 						value: "cpsc",
-// 					},
-// 				],
-// 			},
-// 			OPTIONS: {
-// 				COLUMNS: ["courses_dept", "courses_avg"],
-// 			},
-// 		});
-// 	});
+	// 	it("Should parse a valid query with AND filter", () => {
+	// 		const query = {
+	// 			WHERE: {
+	// 				AND: [{ GT: { courses_avg: 90 } }, { IS: { courses_dept: "cpsc" } }],
+	// 			},
+	// 			OPTIONS: {
+	// 				COLUMNS: ["courses_dept", "courses_avg"],
+	// 			},
+	// 		};
+	// 		const result = QueryParser.parse(query);
+	// 		expect(result).to.deep.equal({
+	// 			WHERE: {
+	// 				type: "LOGIC",
+	// 				operator: "AND",
+	// 				filters: [
+	// 					{
+	// 						type: "MCOMPARISON",
+	// 						key: "courses_avg",
+	// 						operator: "GT",
+	// 						value: 90,
+	// 					},
+	// 					{
+	// 						type: "SCOMPARISON",
+	// 						key: "courses_dept",
+	// 						operator: "IS",
+	// 						value: "cpsc",
+	// 					},
+	// 				],
+	// 			},
+	// 			OPTIONS: {
+	// 				COLUMNS: ["courses_dept", "courses_avg"],
+	// 			},
+	// 		});
+	// 	});
 
 	it("Should throw an error for missing WHERE", () => {
 		const query = {
