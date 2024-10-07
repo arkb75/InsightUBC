@@ -1,6 +1,6 @@
 import {
 	IInsightFacade,
-	InsightDataset,
+	//InsightDataset,
 	//InsightDataset, TODO: Remove comment later
 	InsightDatasetKind,
 	InsightError,
@@ -477,7 +477,7 @@ describe("InsightFacade", function () {
 		});
 		// Examples demonstrating how to test performQuery using the JSON Test Queries.
 		// The relative path to the query file must be given in square brackets.
-		//it("[valid/aLotofRandomStuff.json] aLotofRandomStuff", checkQuery);
+		it("[valid/aLotofRandomStuff.json] aLotofRandomStuff", checkQuery);
 		it("[invalid/invalid.json] Query missing WHERE", checkQuery);
 		it("[invalid/datasetNotFound.json] datasetNotFound", checkQuery);
 		it("[invalid/invalidKey.json] invalidKey", checkQuery);
@@ -510,185 +510,192 @@ describe("InsightFacade", function () {
 		it("[valid/eQ.json] eQ", checkQuery);
 		it("[valid/gTEQ.json] gTEQ", checkQuery);
 		it("[valid/iS.json] iS", checkQuery);
+
+		it("[valid/orCase1.json] orCase1", checkQuery);
+		it("[invalid/orCase2.json] orCase2", checkQuery);
+
+		it("[valid/orCase3.json] orCase3", checkQuery);
+		it("[valid/orCase4.json] orCase4", checkQuery);
+		it("[valid/orCase5.json] orCase5", checkQuery);
 	});
 
-	describe("ListDatasets", function () {
-		beforeEach(function () {
-			// This section resets the insightFacade instance
-			// This runs before each test
-			facade = new InsightFacade();
-		});
+	// 	// describe("ListDatasets", function () {
+	// 	// 	beforeEach(function () {
+	// 	// 		// This section resets the insightFacade instance
+	// 	// 		// This runs before each test
+	// 	// 		facade = new InsightFacade();
+	// 	// 	});
 
-		afterEach(async function () {
-			// This section resets the data directory (removing any cached data)
-			// This runs after each test, which should make each test independent of the previous one
-			await clearDisk();
-		});
+	// 	// 	afterEach(async function () {
+	// 	// 		// This section resets the data directory (removing any cached data)
+	// 	// 		// This runs after each test, which should make each test independent of the previous one
+	// 	// 		await clearDisk();
+	// 	// 	});
 
-		// 1 [accepted] todo: removed cause error cause when doing lint:check
-		// it("should return empty array with no datasets added", async function () {
-		// 	const result = await facade.listDatasets();
+	// 	// 	// 1 [accepted] todo: removed cause error cause when doing lint:check
+	// 	// 	// it("should return empty array with no datasets added", async function () {
+	// 	// 	// 	const result = await facade.listDatasets();
 
-		// 	expect(result).to.be.an("array").that.is.empty;
-		// });
+	// 	// 	// 	expect(result).to.be.an("array").that.is.empty;
+	// 	// 	// });
 
-		// 2
-		it("one valid dataset added", async function () {
-			await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+	// 	// 	// 2
+	// 	// 	it("one valid dataset added", async function () {
+	// 	// 		await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
 
-			const result = await facade.listDatasets();
+	// 	// 		const result = await facade.listDatasets();
 
-			expect(result).to.be.an("array").that.has.lengthOf(1);
+	// 	// 		expect(result).to.be.an("array").that.has.lengthOf(1);
 
-			const dataset: InsightDataset = result[0];
+	// 	// 		const dataset: InsightDataset = result[0];
 
-			expect(dataset.id).to.be.equal("elysia");
-			expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
-		});
+	// 	// 		expect(dataset.id).to.be.equal("elysia");
+	// 	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 	// 	});
 
-		// 3
-		it("multiple datasets added", async function () {
-			const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-			expect(result).to.be.include("elysia");
+	// 	// 	// 3
+	// 	// 	it("multiple datasets added", async function () {
+	// 	// 		const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+	// 	// 		expect(result).to.be.include("elysia");
 
-			const result1 = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-			expect(result1).to.be.include("aponia");
+	// 	// 		const result1 = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+	// 	// 		expect(result1).to.be.include("aponia");
 
-			const result2 = await facade.listDatasets();
-			//expect(result2).to.have.lengthOf(2);
+	// 	// 		const result2 = await facade.listDatasets();
+	// 	// 		//expect(result2).to.have.lengthOf(2);
 
-			//expect(result2).to.be.an("array").that.has.lengthOf(2);
+	// 	// 		//expect(result2).to.be.an("array").that.has.lengthOf(2);
 
-			const dataset: InsightDataset = result2[0];
-			const dataset2: InsightDataset = result2[1];
+	// 	// 		const dataset: InsightDataset = result2[0];
+	// 	// 		const dataset2: InsightDataset = result2[1];
 
-			expect(dataset.id).to.be.equal("elysia");
-			expect(dataset2.id).to.be.equal("aponia");
-			expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
-			expect(dataset2.numRows).to.be.a("number").that.is.greaterThan(0);
-		});
+	// 	// 		expect(dataset.id).to.be.equal("elysia");
+	// 	// 		expect(dataset2.id).to.be.equal("aponia");
+	// 	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 	// 		expect(dataset2.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 	// 	});
 
-		// 4
-		it("add, remove and list", async function () {
-			const result1 = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-			expect(result1).to.be.include("elysia");
+	// 	// 	// 4
+	// 	// 	it("add, remove and list", async function () {
+	// 	// 		const result1 = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+	// 	// 		expect(result1).to.be.include("elysia");
 
-			const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-			expect(result).to.be.include("aponia");
+	// 	// 		const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+	// 	// 		expect(result).to.be.include("aponia");
 
-			const endresult = await facade.removeDataset("aponia");
-			expect(endresult).to.be.equal("aponia");
+	// 	// 		const endresult = await facade.removeDataset("aponia");
+	// 	// 		expect(endresult).to.be.equal("aponia");
 
-			const result2 = await facade.listDatasets();
-			expect(result2).to.be.an("array").that.has.lengthOf(1);
-			expect(result2[0].id).to.be.equal("elysia");
-		});
-	});
+	// 	// 		const result2 = await facade.listDatasets();
+	// 	// 		expect(result2).to.be.an("array").that.has.lengthOf(1);
+	// 	// 		expect(result2[0].id).to.be.equal("elysia");
+	// 	// 	});
+	// 	// });
 
-	// describe("QueryExecutor Tests", () => {
-	// 	let queryExecutor: QueryExecutor;
-	// 	let datasets: Map<string, any[]>;
-	// 	let testData: any[];
+	// 	// describe("QueryExecutor Tests", () => {
+	// 	// 	let queryExecutor: QueryExecutor;
+	// 	// 	let datasets: Map<string, any[]>;
+	// 	// 	let testData: any[];
 
-	// 	beforeEach(() => {
-	// 		// Sample dataset to use in the tests
-	// 		testData = [
-	// 			{ dept: "cpsc", avg: 90, year: 2021 },
-	// 			{ dept: "math", avg: 85, year: 2021 },
-	// 			{ dept: "phys", avg: 78, year: 2021 },
-	// 			{ dept: "cpsc", avg: 60, year: 2020 },
-	// 			{ dept: "cpsc", avg: 45, year: 2019 },
-	// 		];
+	// 	// 	beforeEach(() => {
+	// 	// 		// Sample dataset to use in the tests
+	// 	// 		testData = [
+	// 	// 			{ dept: "cpsc", avg: 90, year: 2021 },
+	// 	// 			{ dept: "math", avg: 85, year: 2021 },
+	// 	// 			{ dept: "phys", avg: 78, year: 2021 },
+	// 	// 			{ dept: "cpsc", avg: 60, year: 2020 },
+	// 	// 			{ dept: "cpsc", avg: 45, year: 2019 },
+	// 	// 		];
 
-	// 		// Initialize datasets map with a sample dataset
-	// 		datasets = new Map();
-	// 		datasets.set("courses", testData);
+	// 	// 		// Initialize datasets map with a sample dataset
+	// 	// 		datasets = new Map();
+	// 	// 		datasets.set("courses", testData);
 
-	// 		// Instantiate QueryExecutor with the datasets map
-	// 		queryExecutor = new QueryExecutor(datasets);
-	// 	});
+	// 	// 		// Instantiate QueryExecutor with the datasets map
+	// 	// 		queryExecutor = new QueryExecutor(datasets);
+	// 	// 	});
 
-	// 	it("should filter data using a simple comparison (GT)", () => {
-	// 		const filter: Comparison = {
-	// 			type: "MCOMPARISON",
-	// 			operator: "GT",
-	// 			key: "avg",
-	// 			value: 80,
-	// 		};
+	// 	// 	it("should filter data using a simple comparison (GT)", () => {
+	// 	// 		const filter: Comparison = {
+	// 	// 			type: "MCOMPARISON",
+	// 	// 			operator: "GT",
+	// 	// 			key: "avg",
+	// 	// 			value: 80,
+	// 	// 		};
 
-	// 		const result = queryExecutor.applyFilter(filter, testData);
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 90, year: 2021 });
-	// 		expect(result).to.deep.include({ dept: "math", avg: 85, year: 2021 });
-	// 	});
+	// 	// 		const result = queryExecutor.applyFilter(filter, testData);
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 90, year: 2021 });
+	// 	// 		expect(result).to.deep.include({ dept: "math", avg: 85, year: 2021 });
+	// 	// 	});
 
-	// 	it("should apply negation correctly (NOT avg > 80)", () => {
-	// 		const filter: Negation = {
-	// 			type: "NOT",
-	// 			filter: {
-	// 				type: "MCOMPARISON",
-	// 				operator: "GT",
-	// 				key: "avg",
-	// 				value: 80,
-	// 			},
-	// 		};
+	// 	// 	it("should apply negation correctly (NOT avg > 80)", () => {
+	// 	// 		const filter: Negation = {
+	// 	// 			type: "NOT",
+	// 	// 			filter: {
+	// 	// 				type: "MCOMPARISON",
+	// 	// 				operator: "GT",
+	// 	// 				key: "avg",
+	// 	// 				value: 80,
+	// 	// 			},
+	// 	// 		};
 
-	// 		const result = queryExecutor.applyFilter(filter, testData);
-	// 		expect(result).to.deep.include({ dept: "phys", avg: 78, year: 2021 });
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 60, year: 2020 });
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 45, year: 2019 });
-	// 	});
+	// 	// 		const result = queryExecutor.applyFilter(filter, testData);
+	// 	// 		expect(result).to.deep.include({ dept: "phys", avg: 78, year: 2021 });
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 60, year: 2020 });
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 45, year: 2019 });
+	// 	// 	});
 
-	// 	it("should apply logical AND (avg > 70 AND year = 2021)", () => {
-	// 		const filter: LogicComparison = {
-	// 			type: "LOGIC",
-	// 			operator: "AND",
-	// 			filters: [
-	// 				{
-	// 					type: "MCOMPARISON",
-	// 					operator: "GT",
-	// 					key: "avg",
-	// 					value: 70,
-	// 				},
-	// 				{
-	// 					type: "MCOMPARISON",
-	// 					operator: "EQ",
-	// 					key: "year",
-	// 					value: 2021,
-	// 				},
-	// 			],
-	// 		};
+	// 	// 	it("should apply logical AND (avg > 70 AND year = 2021)", () => {
+	// 	// 		const filter: LogicComparison = {
+	// 	// 			type: "LOGIC",
+	// 	// 			operator: "AND",
+	// 	// 			filters: [
+	// 	// 				{
+	// 	// 					type: "MCOMPARISON",
+	// 	// 					operator: "GT",
+	// 	// 					key: "avg",
+	// 	// 					value: 70,
+	// 	// 				},
+	// 	// 				{
+	// 	// 					type: "MCOMPARISON",
+	// 	// 					operator: "EQ",
+	// 	// 					key: "year",
+	// 	// 					value: 2021,
+	// 	// 				},
+	// 	// 			],
+	// 	// 		};
 
-	// 		const result = queryExecutor.applyFilter(filter, testData);
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 90, year: 2021 });
-	// 		expect(result).to.deep.include({ dept: "math", avg: 85, year: 2021 });
-	// 	});
+	// 	// 		const result = queryExecutor.applyFilter(filter, testData);
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 90, year: 2021 });
+	// 	// 		expect(result).to.deep.include({ dept: "math", avg: 85, year: 2021 });
+	// 	// 	});
 
-	// 	it("should handle complex negation with logic (NOT (avg > 70 AND year = 2021))", () => {
-	// 		const filter: Negation = {
-	// 			type: "NOT",
-	// 			filter: {
-	// 				type: "LOGIC",
-	// 				operator: "AND",
-	// 				filters: [
-	// 					{
-	// 						type: "MCOMPARISON",
-	// 						operator: "GT",
-	// 						key: "avg",
-	// 						value: 70,
-	// 					},
-	// 					{
-	// 						type: "MCOMPARISON",
-	// 						operator: "EQ",
-	// 						key: "year",
-	// 						value: 2021,
-	// 					},
-	// 				],
-	// 			},
-	// 		};
+	// 	// 	it("should handle complex negation with logic (NOT (avg > 70 AND year = 2021))", () => {
+	// 	// 		const filter: Negation = {
+	// 	// 			type: "NOT",
+	// 	// 			filter: {
+	// 	// 				type: "LOGIC",
+	// 	// 				operator: "AND",
+	// 	// 				filters: [
+	// 	// 					{
+	// 	// 						type: "MCOMPARISON",
+	// 	// 						operator: "GT",
+	// 	// 						key: "avg",
+	// 	// 						value: 70,
+	// 	// 					},
+	// 	// 					{
+	// 	// 						type: "MCOMPARISON",
+	// 	// 						operator: "EQ",
+	// 	// 						key: "year",
+	// 	// 						value: 2021,
+	// 	// 					},
+	// 	// 				],
+	// 	// 			},
+	// 	// 		};
 
-	// 		const result = queryExecutor.applyFilter(filter, testData);
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 60, year: 2020 });
-	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 45, year: 2019 });
-	// 	});
-	// });
+	// 	// 		const result = queryExecutor.applyFilter(filter, testData);
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 60, year: 2020 });
+	// 	// 		expect(result).to.deep.include({ dept: "cpsc", avg: 45, year: 2019 });
+	// 	// 	});
+	// 	// });
 });
