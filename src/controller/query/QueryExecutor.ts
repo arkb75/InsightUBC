@@ -1,13 +1,13 @@
-import { Comparison, Filter, LogicComparison, Negation, Query } from "./IQuery"; // removed Option, OrderObject for testing purposes.
-import { InsightDataset, InsightError, InsightResult, ResultTooLargeError } from "../IInsightFacade";
+import { Query, Filter, Comparison, LogicComparison, Negation } from "./IQuery"; // removed Option, OrderObject for testing purposes.
+import { InsightResult, InsightError, ResultTooLargeError } from "../IInsightFacade"; // Removed InsightDataset
 
-import fs from "fs-extra";
+//import fs from "fs-extra";
 
 export class QueryExecutor {
-	private datasets: InsightDataset[];
-	private readonly maxNum: number;
+	private datasets: any[];
+	private maxNum: number;
 
-	constructor(datasets: InsightDataset[]) {
+	constructor(datasets: any[]) {
 		this.datasets = datasets;
 		this.maxNum = 5000;
 	}
@@ -29,15 +29,18 @@ export class QueryExecutor {
 		}
 
 		// perform the query
-		return this.evaluateQuery(dataset, query);
+		return this.evaluateQuery(this.datasets, query);
 	}
 
-	private async evaluateQuery(dataset: InsightDataset, query: Query): Promise<InsightResult[]> {
+	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
 		// retrieve the sections for the dataset from disk
-		const sections = await this.getSectionDataForDataset(dataset.id);
+		//const sections = await this.getSectionDataForDataset(dataset.id);
+		//console.log(sections);
 
 		// apply the WHERE clause
-		const filteredSections = this.applyFilter(sections, query.WHERE);
+		const realData: any[] = dataset[0].data;
+
+		const filteredSections = this.applyFilter(realData, query.WHERE);
 		//console.log(filteredSections.length);
 
 		// console.log("Filtered Sections:", filteredSections);
@@ -49,23 +52,23 @@ export class QueryExecutor {
 		return this.applyOptions(filteredSections, query.OPTIONS);
 	}
 
-	private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
-		try {
-			// read the JSON file from the data folder
-			let data = await fs.readJSON(`data/${datasetId}`);
-			// parse it
-			if (typeof data === "string") {
-				data = JSON.parse(data);
-			}
-			// if (!data?.result) {
-			// 	throw new InsightError(`Data for dataset ${datasetId} is missing or corrupted.`);
-			// }
-			//console.log(data.result);
-			return data.result;
-		} catch (err) {
-			throw new InsightError(`Failed to read dataset from disk: ${err}`);
-		}
-	}
+	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
+	// 	try {
+	// 		// read the JSON file from the data folder
+	// 		let data = await fs.readJSON(`data/data.JSON`);
+	// 		// parse it
+	// 		if (typeof data === "string") {
+	// 			data = JSON.parse(data);
+	// 		}
+	// 		if (!data?.result) {
+	// 			throw new InsightError(`Data for dataset ${datasetId} is missing or corrupted.`);
+	// 		}
+	// 		//console.log(data.result);
+	// 		return data.result;
+	// 	} catch (err) {
+	// 		throw new InsightError(`Failed to read dataset from disk: ${err}`);
+	// 	}
+	// }
 
 	private extractDatasetIds(query: Query): Set<string> {
 		const datasetIds = new Set<string>();
@@ -124,7 +127,10 @@ export class QueryExecutor {
 
 	private evaluateComparison(comparison: Comparison, item: any): boolean {
 		const mappedKey = this.mapKey(comparison.key);
+		//console.log(item);
 		const itemValue = item[mappedKey];
+		//console.log(itemValue)
+
 		const comparisonValue = comparison.value;
 		//console.log(comparison.operator);
 		if (itemValue === undefined) {
@@ -164,6 +170,9 @@ export class QueryExecutor {
 		};
 
 		// return the mapped key or the core key if not found in the mapping
+		//console.log(keyMapping[coreKey]);
+		//console.log("Mapping key:", coreKey, "to", keyMapping[coreKey] || coreKey);
+
 		return keyMapping[coreKey] || coreKey;
 	}
 

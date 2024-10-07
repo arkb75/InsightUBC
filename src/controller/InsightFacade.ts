@@ -22,15 +22,6 @@ import JSZip from "jszip";
  *
  */
 export default class InsightFacade implements IInsightFacade {
-	public datasetList: InsightDataset[] = [];
-	public data: any = {};
-
-	//private datasets: Map<string, any[]>;
-
-	constructor() {
-		//this.datasets = new Map<string, any[]>();
-	}
-
 	// create list of courses from reading the file content
 	public async readData(content: string): Promise<Promise<string>[]> {
 		// https://stuk.github.io/jszip/documentation/api_jszip/load_async.html
@@ -66,6 +57,7 @@ export default class InsightFacade implements IInsightFacade {
 	// create sections based on section data model from the file data
 	public async createSections(courses: string[]): Promise<Section[]> {
 		const sections: Section[] = [];
+
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
 		// go through each course in the courses list
 		for (const course of courses) {
@@ -129,17 +121,30 @@ export default class InsightFacade implements IInsightFacade {
 		);
 	}
 
-	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+	public checkArg(id: string, kind: InsightDatasetKind, datasets: any[]): Boolean {
 		// if id has underscore or
 		// is empty after removing whitespaces or
 		// is an existing id string added, throw error for invalid id
-		if (id.includes("_") || id.trim() === "" || !id || this.datasetList.some((ds) => ds.id === id)) {
+		if (id.includes("_") || id.trim() === "" || !id || datasets.some((ds: any) => ds.id === id)) {
 			throw new InsightError("invalid id!!");
 		}
 		// throw error if the kind is not sections
 		if (kind !== InsightDatasetKind.Sections) {
 			throw new InsightError("invalid kind: not sections");
 		}
+		return true;
+	}
+
+	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
+		// datasets added -- get data in disk if there are any
+		let datasets: any[] = [];
+		try {
+			datasets = await fs.readJSON("data/data.JSON");
+		} catch {
+			/* empty */
+		}
+		// throw errors for id and kind arguments if any
+		this.checkArg(id, kind, datasets);
 		// read data and get courses (files)
 		let courses: Promise<string>[] = [];
 		try {
@@ -159,34 +164,40 @@ export default class InsightFacade implements IInsightFacade {
 			throw new InsightError("invalid course: doesn't contain one or more valid sections");
 		}
 		// add to datasetList
-		this.datasetList.push({
+		datasets.push({
 			id: id,
 			kind: kind,
 			numRows: sections.length,
+			data: sections,
 		});
 		// write to disk
-		this.data.result = sections;
-		await fs.outputJSON("data/" + id, JSON.stringify(this.data));
+		await fs.outputJSON("data/data.JSON", datasets);
 		// return ids of current successfully added datasets
-		return this.datasetList.map((ds) => ds.id);
+		return datasets.map((ds: any) => ds.id);
 	}
 
 	public async removeDataset(id: string): Promise<string> {
+		// datasets added -- get data in disk if there are any
+		let datasets: any[] = [];
+		try {
+			datasets = await fs.readJSON("data/data.JSON");
+		} catch {
+			/* empty */
+		}
 		// if id has underscore or is empty after removing whitespaces, throw error for invalid id
 		if (id.includes("_") || id.trim() === "" || !id) {
 			throw new InsightError("invalid id :(");
 		}
 		// if the id isn't in the list of successfully added ids, throw NotFoundError
-		if (!this.datasetList.some((ds) => ds.id === id)) {
+		if (!datasets.some((ds: any) => ds.id === id)) {
 			throw new NotFoundError("id not found :(");
 		}
 		// update the list to be filter out any datasets in the list that have the id to remove
-		this.datasetList = this.datasetList.filter((ds) => ds.id !== id);
-		this.data.result.forEach((item: { id: string }) => (item.id === id ? this.data.delete(item) : item));
+		datasets = datasets.filter((ds: any) => ds.id !== id);
 		// caching
 		try {
-			await fs.remove("data/" + id);
-			await fs.outputJSON("data/" + id, JSON.stringify(this.data));
+			// update with updated datasets with removed dataset
+			await fs.outputJSON("data/data.JSON", datasets);
 		} catch (err) {
 			throw new InsightError("unable to cache due to error: " + err);
 		}
@@ -206,9 +217,16 @@ export default class InsightFacade implements IInsightFacade {
 				throw new InsightError("An unexpected error occurred during query parsing.");
 			}
 		}
-
+		// datasets added -- get data in disk if there are any
+		let datasets: any[] = [];
 		try {
-			const executor = new QueryExecutor(this.datasetList);
+			datasets = await fs.readJSON("data/data.JSON");
+			//console.log(datasets);
+		} catch {
+			/* empty */
+		}
+		try {
+			const executor = new QueryExecutor(datasets);
 			return await executor.execute(parsedQuery);
 		} catch (error) {
 			if (error instanceof ResultTooLargeError) {
@@ -217,11 +235,21 @@ export default class InsightFacade implements IInsightFacade {
 				throw new InsightError(`Failed to execute query: ${error}`);
 			}
 		}
-
-		// throw new Error(`InsightFacade::performQuery execution not implemented.`);
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
-		return this.datasetList;
+		// datasets added -- get data in disk if there are any
+		let datasets: any[] = [];
+		try {
+			datasets = await fs.readJSON("data/data.JSON");
+		} catch {
+			/* empty */
+		}
+		// only return id, kind and numRows of the added datasets
+		return datasets.map((ds: any) => ({
+			id: ds.id,
+			kind: ds.kind,
+			numRows: ds.numRows,
+		}));
 	}
 }

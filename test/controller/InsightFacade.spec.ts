@@ -380,6 +380,15 @@ describe("InsightFacade", function () {
 				expect(err).to.be.instanceOf(NotFoundError);
 			}
 		});
+
+		it("one concurrent active InsightFacade", async function () {
+			const result = await facade.addDataset("lll", sections2, InsightDatasetKind.Sections);
+			expect(result).to.be.include("lll");
+			const newInstance = new InsightFacade();
+			// this should still work, and work the same as facade.removeDataset("lll")
+			const endResult = await newInstance.removeDataset("lll");
+			expect(endResult).to.be.equal("lll");
+		});
 	});
 
 	describe("PerformQuery", function () {
