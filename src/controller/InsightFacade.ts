@@ -47,6 +47,7 @@ export default class InsightFacade implements IInsightFacade {
 		if (coursesFolder === null) {
 			throw new InsightError("null courses folder");
 		} else {
+			// https://stuk.github.io/jszip/documentation/api_jszip/for_each.html
 			coursesFolder.forEach(function (relativePath: string) {
 				const file = zip.file("courses/" + relativePath);
 				if (file === null) {
