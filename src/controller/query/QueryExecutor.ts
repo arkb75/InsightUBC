@@ -33,10 +33,6 @@ export class QueryExecutor {
 	}
 
 	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
-		// retrieve the sections for the dataset from disk
-		//const sections = await this.getSectionDataForDataset(dataset.id);
-		//console.log(sections);
-
 		// apply the WHERE clause
 		const realData: any[] = dataset[0].data;
 		realData.forEach((item) => {
@@ -44,22 +40,18 @@ export class QueryExecutor {
 				item.year = Number(item.year);
 			}
 		});
-
 		realData.forEach((item) => {
 			if (typeof item.uuid === "number") {
 				item.uuid = String(item.uuid);
 			}
 		});
 		const filteredSections = this.applyFilter(realData, query.WHERE);
-		//console.log(filteredSections.length);
 
-		// console.log("Filtered Sections:", filteredSections);
 		if (filteredSections.length > this.maxNum) {
 			throw new ResultTooLargeError("Query results exceed 5000 entries.");
 		}
 
 		// apply the OPTIONS clause
-		// return this.applyOptions(filteredSections, query.OPTIONS);
 		const filteredKeys = this.applyOptions(filteredSections, query.OPTIONS);
 
 		// apply the TRANSFORMATION clause if there is one
@@ -259,21 +251,26 @@ export class QueryExecutor {
 
 		// apply ORDER clause if it exists
 		if (options.ORDER) {
-			// const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
-			const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
+			results = this.applyOrder(results, options);
+		}
+		return results;
+	}
 
-			if (typeof options.ORDER === "string") {
-				results = this.applySort(results, options.ORDER, direction);
-			} else {
-				for (const key of options.ORDER.keys) {
-					results = this.applySort(results, key, direction);
-				}
+	private applyOrder(filteredSections: InsightResult[], options: any): InsightResult[] {
+		// const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
+		const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
+		let results = filteredSections;
+		if (typeof options.ORDER === "string") {
+			results = this.applySorting(filteredSections, options.ORDER, direction);
+		} else {
+			for (const key of options.ORDER.keys) {
+				results = this.applySorting(filteredSections, key, direction);
 			}
 		}
 		return results;
 	}
 
-	private applySort(results: InsightResult[], orderKey: any, direction: any): InsightResult[] {
+	private applySorting(results: InsightResult[], orderKey: any, direction: any): InsightResult[] {
 		return results.sort((a, b) => {
 			if (a[orderKey] > b[orderKey]) {
 				return direction;
