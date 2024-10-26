@@ -1,6 +1,7 @@
 export interface Query {
 	WHERE: Filter;
 	OPTIONS: Options;
+	TRANSFORMATIONS?: Transformations;
 }
 
 export type Filter = Comparison | LogicComparison | Negation | EmptyFilter;
@@ -37,4 +38,13 @@ export type Order = string | OrderObject;
 export interface OrderObject {
 	dir: "UP" | "DOWN";
 	keys: string[];
+}
+
+export interface Transformations {
+	type: "TRANSFORMATIONS";
+	GROUP: string[];
+	APPLY: string[];
+	applyKey: string;
+	token: "MAX" | "MIN" | "AVG" | "COUNT" | "SUM";
+	key: string;
 }

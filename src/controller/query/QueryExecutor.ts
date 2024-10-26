@@ -59,7 +59,16 @@ export class QueryExecutor {
 		}
 
 		// apply the OPTIONS clause
-		return this.applyOptions(filteredSections, query.OPTIONS);
+		// return this.applyOptions(filteredSections, query.OPTIONS);
+		const filteredKeys = this.applyOptions(filteredSections, query.OPTIONS);
+
+		// apply the TRANSFORMATION clause if there is one
+		if (!query.TRANSFORMATIONS) {
+			return filteredKeys;
+		}
+
+		// return this.applyTransformations(filteredKeys, query.TRANSFORMATIONS);
+		return filteredKeys; // TODO: remove after fulfilling applyTransformations
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
@@ -177,6 +186,17 @@ export class QueryExecutor {
 			pass: "pass",
 			fail: "fail",
 			audit: "audit",
+			fullname: "fullname",
+			shortname: "shortname",
+			number: "number",
+			name: "name",
+			address: "address",
+			lat: "lat",
+			lon: "lon",
+			seats: "seats",
+			type: "type",
+			furniture: "furniture",
+			href: "href",
 		};
 
 		// return the mapped key or the core key if not found in the mapping
@@ -239,19 +259,33 @@ export class QueryExecutor {
 
 		// apply ORDER clause if it exists
 		if (options.ORDER) {
-			const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
+			// const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
 			const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
 
-			results = results.sort((a, b) => {
-				if (a[orderKey] > b[orderKey]) {
-					return direction;
+			if (typeof options.ORDER === "string") {
+				results = this.applySort(results, options.ORDER, direction);
+			} else {
+				for (const key of options.ORDER.keys) {
+					results = this.applySort(results, key, direction);
 				}
-				if (a[orderKey] < b[orderKey]) {
-					return -direction;
-				}
-				return 0; // 0 keep original order for equal values I think??
-			});
+			}
 		}
 		return results;
 	}
+
+	private applySort(results: InsightResult[], orderKey: any, direction: any): InsightResult[] {
+		return results.sort((a, b) => {
+			if (a[orderKey] > b[orderKey]) {
+				return direction;
+			}
+			if (a[orderKey] < b[orderKey]) {
+				return -direction;
+			}
+			return 0; // 0 keep original order for equal values I think??
+		});
+	}
+
+	// private applyTransformations(filteredKeys: any[], transformations: any) {
+	//
+	// }
 }
