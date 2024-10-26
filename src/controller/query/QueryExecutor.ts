@@ -33,10 +33,6 @@ export class QueryExecutor {
 	}
 
 	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
-		// retrieve the sections for the dataset from disk
-		//const sections = await this.getSectionDataForDataset(dataset.id);
-		//console.log(sections);
-
 		// apply the WHERE clause
 		const realData: any[] = dataset[0].data;
 		realData.forEach((item) => {
@@ -44,22 +40,27 @@ export class QueryExecutor {
 				item.year = Number(item.year);
 			}
 		});
-
 		realData.forEach((item) => {
 			if (typeof item.uuid === "number") {
 				item.uuid = String(item.uuid);
 			}
 		});
 		const filteredSections = this.applyFilter(realData, query.WHERE);
-		//console.log(filteredSections.length);
 
-		// console.log("Filtered Sections:", filteredSections);
 		if (filteredSections.length > this.maxNum) {
 			throw new ResultTooLargeError("Query results exceed 5000 entries.");
 		}
 
 		// apply the OPTIONS clause
-		return this.applyOptions(filteredSections, query.OPTIONS);
+		const filteredKeys = this.applyOptions(filteredSections, query.OPTIONS);
+
+		// apply the TRANSFORMATION clause if there is one
+		if (!query.TRANSFORMATIONS) {
+			return filteredKeys;
+		}
+
+		// return this.applyTransformations(filteredKeys, query.TRANSFORMATIONS);
+		return filteredKeys; // TODO: remove after fulfilling applyTransformations
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
@@ -177,6 +178,17 @@ export class QueryExecutor {
 			pass: "pass",
 			fail: "fail",
 			audit: "audit",
+			fullname: "fullname",
+			shortname: "shortname",
+			number: "number",
+			name: "name",
+			address: "address",
+			lat: "lat",
+			lon: "lon",
+			seats: "seats",
+			type: "type",
+			furniture: "furniture",
+			href: "href",
 		};
 
 		// return the mapped key or the core key if not found in the mapping
@@ -239,19 +251,38 @@ export class QueryExecutor {
 
 		// apply ORDER clause if it exists
 		if (options.ORDER) {
-			const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
-			const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
-
-			results = results.sort((a, b) => {
-				if (a[orderKey] > b[orderKey]) {
-					return direction;
-				}
-				if (a[orderKey] < b[orderKey]) {
-					return -direction;
-				}
-				return 0; // 0 keep original order for equal values I think??
-			});
+			results = this.applyOrder(results, options);
 		}
 		return results;
 	}
+
+	private applyOrder(filteredSections: InsightResult[], options: any): InsightResult[] {
+		// const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
+		const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
+		let results = filteredSections;
+		if (typeof options.ORDER === "string") {
+			results = this.applySorting(filteredSections, options.ORDER, direction);
+		} else {
+			for (const key of options.ORDER.keys) {
+				results = this.applySorting(filteredSections, key, direction);
+			}
+		}
+		return results;
+	}
+
+	private applySorting(results: InsightResult[], orderKey: any, direction: any): InsightResult[] {
+		return results.sort((a, b) => {
+			if (a[orderKey] > b[orderKey]) {
+				return direction;
+			}
+			if (a[orderKey] < b[orderKey]) {
+				return -direction;
+			}
+			return 0; // 0 keep original order for equal values I think??
+		});
+	}
+
+	// private applyTransformations(filteredKeys: any[], transformations: any) {
+	//
+	// }
 }
