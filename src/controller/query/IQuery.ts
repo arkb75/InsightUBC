@@ -41,10 +41,12 @@ export interface OrderObject {
 }
 
 export interface Transformations {
-	type: "TRANSFORMATIONS";
 	GROUP: string[];
-	APPLY: string[];
-	applyKey: string;
+	APPLY: ApplyRule[];
+}
+
+export interface ApplyRule {
+	applykey: string;
 	token: "MAX" | "MIN" | "AVG" | "COUNT" | "SUM";
 	key: string;
 }
