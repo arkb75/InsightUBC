@@ -169,7 +169,7 @@ export class QueryParser {
 			const groups: string[] = transformations.GROUP;
 			const applykeys = this.getApplyKeys(transformations);
 			for (const column of columns) {
-				if(!groups.indexOf(column) && !applykeys.indexOf(column)) {
+				if (!groups.indexOf(column) && !applykeys.indexOf(column)) {
 					throw new InsightError("COLUMNS must be in GROUP/APPLY when TRANSFORMATIONS is present");
 				}
 			}
@@ -293,7 +293,7 @@ export class QueryParser {
 		const key = applyObj.key;
 
 		if (applykey.length !== 1) {
-			throw new InsightError("APPLYRULE must have only 1 key.")
+			throw new InsightError("APPLYRULE must have only 1 key.");
 		}
 
 		if (token !== "MAX" && token !== "MIN" && token !== "SUM" && token !== "COUNT" && token !== "AVG") {
