@@ -10,9 +10,8 @@ import {
 import { QueryParser } from "./query/QueryParser";
 import { Query } from "./query/IQuery";
 import { QueryExecutor } from "./query/QueryExecutor";
-
+import { RoomsProcessor } from "./RoomsProcessor";
 import { Section } from "./SectionModel";
-
 import fs from "fs-extra";
 import JSZip from "jszip";
 
@@ -128,32 +127,59 @@ export default class InsightFacade implements IInsightFacade {
 		return sections;
 	}
 
-	public checkArg(id: string, kind: InsightDatasetKind, datasets: any[]): Boolean {
-		if (id.includes("_") || id.trim() === "" || !id || datasets.some((ds: any) => ds.id === id)) {
-			throw new InsightError("invalid id!!");
+	public checkArg(id: string, kind: InsightDatasetKind, datasets: any[]): boolean {
+		// Validate 'id'
+		if (typeof id !== "string" || id.trim() === "" || id.includes("_")) {
+			throw new InsightError("Invalid id: id must be a non-empty string without underscores");
 		}
-		if (kind !== InsightDatasetKind.Sections) {
-			throw new InsightError("invalid kind: not sections");
+
+		// Check if 'id' already exists
+		if (datasets.some((ds: any) => ds.id === id)) {
+			throw new InsightError(`Dataset with id '${id}' already exists`);
 		}
+
+		// Validate 'kind'
+		if (kind !== InsightDatasetKind.Sections && kind !== InsightDatasetKind.Rooms) {
+			throw new InsightError("Invalid kind: must be either 'sections' or 'rooms'");
+		}
+
 		return true;
 	}
 
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
 		const datasets = await this.updateDatasets();
 		this.checkArg(id, kind, datasets);
-		let courses: Promise<string>[] = [];
-		try {
-			courses = await this.processCourses(content);
-		} catch (err) {
-			throw new InsightError("unable to read data successfully. error: " + err);
+
+		if (kind === InsightDatasetKind.Sections) {
+			// Existing logic for processing sections dataset
+			let courses: Promise<string>[] = [];
+			try {
+				courses = await this.processCourses(content);
+			} catch (err) {
+				throw new InsightError("unable to read data successfully. error: " + err);
+			}
+			const sections = await this.getSections(courses);
+			datasets.push({
+				id: id,
+				kind: kind,
+				numRows: sections.length,
+				data: sections,
+			});
+		} else if (kind === InsightDatasetKind.Rooms) {
+			// Process rooms dataset using RoomsProcessor
+			const roomsProcessor = new RoomsProcessor();
+			const rooms = await roomsProcessor.processRooms(content);
+			if (rooms.length === 0) {
+				throw new InsightError("No valid rooms found in dataset");
+			}
+			datasets.push({
+				id: id,
+				kind: kind,
+				numRows: rooms.length,
+				data: rooms,
+			});
 		}
-		const sections = await this.getSections(courses);
-		datasets.push({
-			id: id,
-			kind: kind,
-			numRows: sections.length,
-			data: sections,
-		});
+
 		await fs.outputJSON("data/data.JSON", datasets);
 		return datasets.map((ds: any) => ds.id);
 	}

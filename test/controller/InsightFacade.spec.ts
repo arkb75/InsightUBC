@@ -35,6 +35,7 @@ describe("InsightFacade", function () {
 	let sections2: string;
 	let invalidsection: string;
 	let nothingsection: string;
+	let rooms: string;
 
 	before(async function () {
 		// This block runs once and loads the datasets.
@@ -42,6 +43,7 @@ describe("InsightFacade", function () {
 		sections2 = await getContentFromArchives("elysia.zip");
 		invalidsection = await getContentFromArchives("invalidsection.zip");
 		nothingsection = await getContentFromArchives("nothing.zip");
+		rooms = await getContentFromArchives("campus.zip");
 
 		// Just in case there is anything hanging around from a previous run of the test suite
 		await clearDisk();
@@ -287,6 +289,33 @@ describe("InsightFacade", function () {
 				expect(err).to.be.instanceOf(InsightError);
 			}
 		});
+
+		// 22
+		it("should successfully add a valid rooms dataset", async function () {
+			const result = await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+			expect(result).to.include("rooms");
+		});
+
+		// 23
+		it("should reject adding a rooms dataset with an existing id", async function () {
+			await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+			try {
+				await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+				expect.fail("Should have thrown an InsightError due to duplicate id");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+		});
+
+		// 24
+		it("should reject adding a rooms dataset with an invalid id", async function () {
+			try {
+				await facade.addDataset("_rooms", rooms, InsightDatasetKind.Rooms);
+				expect.fail("Should have thrown an InsightError due to invalid id");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+		});
 	});
 
 	describe("RemoveDataset", function () {
@@ -381,6 +410,33 @@ describe("InsightFacade", function () {
 			}
 		});
 
+		// 7
+		it("should successfully remove a rooms dataset", async function () {
+			await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+			const result = await facade.removeDataset("rooms");
+			expect(result).to.equal("rooms");
+		});
+
+		// 8
+		it("should reject removing a non-existent rooms dataset", async function () {
+			try {
+				await facade.removeDataset("nonExistentRooms");
+				expect.fail("Should have thrown a NotFoundError");
+			} catch (err) {
+				expect(err).to.be.instanceOf(NotFoundError);
+			}
+		});
+
+		// 9
+		it("should reject removing a rooms dataset with an invalid id", async function () {
+			try {
+				await facade.removeDataset("_rooms");
+				expect.fail("Should have thrown an InsightError due to invalid id");
+			} catch (err) {
+				expect(err).to.be.instanceOf(InsightError);
+			}
+		});
+
 		it("one concurrent active InsightFacade", async function () {
 			const result = await facade.addDataset("lll", sections2, InsightDatasetKind.Sections);
 			expect(result).to.be.include("lll");
@@ -397,6 +453,22 @@ describe("InsightFacade", function () {
 		 *
 		 * Note: the 'this' parameter is automatically set by Mocha and contains information about the test.
 		 */
+
+		before(async function () {
+			facade = new InsightFacade();
+
+			// Add only the sections dataset
+			try {
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+			} catch (err) {
+				throw new Error(`In PerformQuery Before hook, dataset failed to be added.\n${err}`);
+			}
+		});
+
+		after(async function () {
+			await clearDisk();
+		});
+
 		async function checkQuery(this: Mocha.Context): Promise<void> {
 			//changed never to void
 			if (!this.test) {
@@ -435,27 +507,6 @@ describe("InsightFacade", function () {
 			}
 		}
 
-		before(async function () {
-			facade = new InsightFacade();
-
-			// Add the datasets to InsightFacade once.
-			// Will *fail* if there is a problem reading ANY dataset.
-			const loadDatasetPromises: Promise<string[]>[] = [
-				facade.addDataset("sections", sections, InsightDatasetKind.Sections),
-			];
-
-			try {
-				await Promise.all(loadDatasetPromises);
-				//console.log(facade.listDatasets);
-			} catch (err) {
-				throw new Error(`In PerformQuery Before hook, dataset(s) failed to be added. \n${err}`);
-			}
-		});
-
-		after(async function () {
-			await clearDisk();
-		});
-
 		// test invalid query - not object type
 		it("should reject query that is not an object type", async function () {
 			try {
@@ -488,7 +539,7 @@ describe("InsightFacade", function () {
 		it("[invalid/invalidWhereField.json] invalidWhereField", checkQuery);
 		it("[invalid/noMiddleWildcard.json] noMiddleWild*card", checkQuery);
 		it("[invalid/slightlyAbove5000.json] slightlyAbove5000", checkQuery);
-
+		it("[invalid/datasetNotFound.json] Query referencing a non-existent dataset", checkQuery);
 		it("[valid/simple.json] SELECT dept, avg WHERE avg > 97", checkQuery);
 		it("[valid/complex.json] complex query", checkQuery);
 		it("[valid/complex2.json] complex2 query", checkQuery);
