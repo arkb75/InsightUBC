@@ -274,7 +274,7 @@ export class QueryParser {
 		}
 
 		if (!Array.isArray(apply) || apply.length === 0) {
-			throw new InsightError("APPLY must be a non-empty array.");
+			throw new InsightError("invalid APPLY: APPLY must be a non-empty array.");
 		}
 
 		return {
