@@ -30,11 +30,13 @@ export class QueryParser {
 		}
 
 		const where = this.parseFilter(queryObj.WHERE);
-		const options = this.parseOptions(queryObj.OPTIONS);
 
 		if (!("TRANSFORMATIONS" in queryObj)) {
+			const options = this.parseOptions(queryObj.OPTIONS, null);
 			return { WHERE: where, OPTIONS: options };
 		}
+
+		const options = this.parseOptions(queryObj.OPTIONS, queryObj.TRANSFORMATIONS);
 		const transformations = this.parseTransformations(queryObj.TRANSFORMATIONS);
 		return { WHERE: where, OPTIONS: options, TRANSFORMATIONS: transformations };
 	}
@@ -148,7 +150,7 @@ export class QueryParser {
 		};
 	}
 
-	private static parseOptions(options: any): Options {
+	private static parseOptions(options: any, transformations: any): Options {
 		if (typeof options !== "object" || options === null) {
 			throw new InsightError("OPTIONS must be an object.");
 		}
@@ -161,6 +163,16 @@ export class QueryParser {
 
 		if (!Array.isArray(columns) || columns.length === 0) {
 			throw new InsightError("COLUMNS must be a non-empty array.");
+		}
+
+		if (transformations !== null) {
+			const groups: string[] = transformations.GROUP;
+			const applykeys = this.getApplyKeys(transformations);
+			for (const column of columns) {
+				if(!groups.indexOf(column) && !applykeys.indexOf(column)) {
+					throw new InsightError("COLUMNS must be in GROUP/APPLY when TRANSFORMATIONS is present");
+				}
+			}
 		}
 
 		// for (const col of columns) {
@@ -181,6 +193,14 @@ export class QueryParser {
 			resultOptions.ORDER = order;
 		}
 		return resultOptions;
+	}
+
+	private static getApplyKeys(transformation: any): string[] {
+		const result: string[] = [];
+		for (const applykey of transformation.APPLY) {
+			result.push(applykey.applykey);
+		}
+		return result;
 	}
 
 	private static parseOrder(order: any, columns: string[]): Order {
@@ -246,12 +266,12 @@ export class QueryParser {
 			throw new InsightError("invalid APPLY: OPTIONS must contain APPLY.");
 		}
 
+		const appKey = transformations[transformations.key];
+		const apply: ApplyRule[] = appKey.map((subApplyRule: any) => this.parseApply(subApplyRule));
+
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
 		}
-
-		const appKey = transformations[transformations.key];
-		const apply: ApplyRule[] = appKey.map((subApplyRule: any) => this.parseApply(subApplyRule));
 
 		if (!Array.isArray(apply) || apply.length === 0) {
 			throw new InsightError("APPLY must be a non-empty array.");
@@ -263,7 +283,7 @@ export class QueryParser {
 		};
 	}
 
-	private static parseApply(applyObj: any): ApplyRule {
+	private static parseApply(applyObj: ApplyRule): ApplyRule {
 		if (!("applykey" in applyObj) || !("token" in applyObj) || !("key" in applyObj)) {
 			throw new InsightError("APPLY object must contain applykey, token and key.");
 		}
@@ -271,6 +291,10 @@ export class QueryParser {
 		const applykey = applyObj.applykey;
 		const token = applyObj.token;
 		const key = applyObj.key;
+
+		if (applykey.length !== 1) {
+			throw new InsightError("APPLYRULE must have only 1 key.")
+		}
 
 		if (token !== "MAX" && token !== "MIN" && token !== "SUM" && token !== "COUNT" && token !== "AVG") {
 			throw new InsightError("APPLY token must be 'MAX', 'MIN', 'SUM', 'COUNT' or 'AVG'.");
