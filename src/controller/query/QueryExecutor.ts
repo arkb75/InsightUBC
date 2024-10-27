@@ -1,4 +1,4 @@
-import { Query, Filter, Comparison, LogicComparison, Negation } from "./IQuery"; // removed Option, OrderObject for testing purposes.
+import { Query, Filter, Comparison, LogicComparison, Negation, ApplyRule } from "./IQuery"; // removed Option, OrderObject for testing purposes.
 import { InsightResult, InsightError, ResultTooLargeError } from "../IInsightFacade";
 import Decimal from "decimal.js";
 // Removed InsightDataset
@@ -243,7 +243,7 @@ export class QueryExecutor {
 			const result: InsightResult = {};
 			for (const column of columns) {
 				const mappedColumn = this.mapKey(column);
-				result[column] = section[mappedColumn];
+				result[column] = section[mappedColumn]; // TODO: change to work for rooms
 			}
 			return result;
 		});
@@ -281,8 +281,16 @@ export class QueryExecutor {
 		});
 	}
 
-	private applyTransformations(filteredQuery: any[], transformations: any): InsightResult[] {
+	private applyTransformations(filteredQuery: InsightResult[], transformations: any): InsightResult[] {
+		if (!transformations?.GROUP) {
+			throw new InsightError("TRANSFORMATIONS must contain GROUP.");
+		}
+		if (!transformations?.APPLY) {
+			throw new InsightError("TRANSFORMATIONS must contain APPLY.");
+		}
+
 		const groups = this.groupBy(filteredQuery, transformations);
+
 		return this.evaluateApply(Object.values(groups), transformations);
 	}
 
@@ -308,49 +316,67 @@ export class QueryExecutor {
 	// }
 
 	// https://keestalkstech.com/2021/10/having-fun-grouping-arrays-into-maps-with-typescript/
-	private groupBy(data: any[], transformations: any): Record<string, InsightResult[]> {
+	private groupBy(data: InsightResult[], transformations: any): Record<string, InsightResult[]> {
 		// https://www.wisdomgeek.com/development/web-development/javascript/how-to-groupby-using-reduce-in-javascript/
 		const groups = transformations.GROUP;
 		return data.reduce((results, item) => {
 			// https://gist.github.com/mikaello/06a76bca33e5d79cdd80c162d7774e9c
-			const key = groups.map((group: any) => item[group.split("_")[1]].join("-"));
+			const key = groups.map((group: any) => item[group.split("_")[1]]).join("-");
 			if (!results[key]) {
 				results[key] = [];
 			}
 			results[key].push(item);
 			return results;
-		}, {});
+		}, {} as Record<string, InsightResult[]>);
 	}
 
-	private evaluateApply(groupedData: any, transformations: any): InsightResult[] {
-		const groups = transformations.GROUP;
-		const apply = transformations.APPLY;
+	private evaluateApply(groupedData: InsightResult[][], transformations: any): InsightResult[] {
+		const groups: string[] = transformations.GROUP;
+		const apply: ApplyRule[] = transformations.APPLY;
 		const results: InsightResult[] = [];
-		const item: Record<string, string | number> = {};
+		const itemValue: InsightResult = {};
 
 		for (const data of groupedData) {
 			for (const applyRule of apply) {
-				item[applyRule.applykey] = this.calculate(data[applyRule.key], applyRule.token);
+				const mappedKey = this.mapKey(applyRule.key);
+				const keyToApply = data.map((item) => item[mappedKey]);
+				itemValue[mappedKey] = this.calculate(keyToApply, applyRule.token);
 			}
 
 			for (const group of groups) {
-				item[group.split("_")[1]] = data[0][group.split("_")[1]];
+				itemValue[group.split("_")[1]] = data[0][group.split("_")[1]];
 			}
-			results.push(item);
+			results.push(itemValue);
 		}
 		return results;
 	}
 
-	private calculate(data: any, token: any): number {
+	private calculate(data: any, token: string): number {
 		switch (token) {
 			case "MAX":
-				return Math.max(data);
+				if (typeof data[0] !== "number") {
+					throw new InsightError("invalid field type: cannot use MAX token on a sfield");
+				} else {
+					return Math.max(data);
+				}
 			case "MIN":
-				return Math.min(data);
+				if (typeof data[0] !== "number") {
+					throw new InsightError("invalid field type: cannot use MIN token on a sfield");
+				} else {
+					return Math.min(data);
+				}
 			case "AVG":
-				return this.calculateAvg(data);
+				if (typeof data[0] !== "number") {
+					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
+				} else {
+					return this.calculateAvg(data);
+				}
 			case "SUM":
-				return this.calculateSum(data);
+				if (typeof data[0] !== "number") {
+					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
+				} else {
+					return this.calculateSum(data);
+				}
 			case "COUNT":
 				return this.calculateCount(data);
 			default:
@@ -358,7 +384,7 @@ export class QueryExecutor {
 		}
 	}
 
-	private calculateAvg(values: any): number {
+	private calculateAvg(values: number[]): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -369,7 +395,7 @@ export class QueryExecutor {
 		return Number(avg.toFixed(rounding));
 	}
 
-	private calculateSum(values: any): number {
+	private calculateSum(values: number[]): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -379,7 +405,7 @@ export class QueryExecutor {
 		return Number(total.toFixed(rounding));
 	}
 
-	private calculateCount(data: any): number {
+	private calculateCount(data: (string | number)[]): number {
 		// https://stackoverflow.com/questions/5667888/counting-the-occurrences-frequency-of-array-elements
 		const counts: any = {};
 		for (const item of data) {
