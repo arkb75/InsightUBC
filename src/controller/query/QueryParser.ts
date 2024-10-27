@@ -233,17 +233,17 @@ export class QueryParser {
 		}
 
 		if (!("GROUP" in transformations)) {
-			throw new InsightError("OPTIONS must contain GROUP.");
+			throw new InsightError("invalid GROUP: OPTIONS must contain GROUP.");
 		}
 
 		const group = transformations.GROUP;
 
 		if (!Array.isArray(group) || group.length === 0) {
-			throw new InsightError("GROUP must be a non-empty array.");
+			throw new InsightError("invalid GROUP: GROUP must be a non-empty array.");
 		}
 
 		if (!("APPLY" in transformations)) {
-			throw new InsightError("OPTIONS must contain APPLY.");
+			throw new InsightError("invalid APPLY: OPTIONS must contain APPLY.");
 		}
 
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
