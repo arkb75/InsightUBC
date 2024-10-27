@@ -1,5 +1,7 @@
 import { Query, Filter, Comparison, LogicComparison, Negation } from "./IQuery"; // removed Option, OrderObject for testing purposes.
-import { InsightResult, InsightError, ResultTooLargeError } from "../IInsightFacade"; // Removed InsightDataset
+import { InsightResult, InsightError, ResultTooLargeError } from "../IInsightFacade";
+import Decimal from "decimal.js";
+// Removed InsightDataset
 
 //import fs from "fs-extra";
 
@@ -45,22 +47,19 @@ export class QueryExecutor {
 				item.uuid = String(item.uuid);
 			}
 		});
-		const filteredSections = this.applyFilter(realData, query.WHERE);
+		let filteredQuery = this.applyFilter(realData, query.WHERE);
 
-		if (filteredSections.length > this.maxNum) {
+		if (filteredQuery.length > this.maxNum) {
 			throw new ResultTooLargeError("Query results exceed 5000 entries.");
 		}
 
-		// apply the OPTIONS clause
-		const filteredKeys = this.applyOptions(filteredSections, query.OPTIONS);
-
 		// apply the TRANSFORMATION clause if there is one
-		if (!query.TRANSFORMATIONS) {
-			return filteredKeys;
+		if (query.TRANSFORMATIONS) {
+			filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
 		}
 
-		// return this.applyTransformations(filteredKeys, query.TRANSFORMATIONS);
-		return filteredKeys; // TODO: remove after fulfilling applyTransformations
+		// apply the OPTIONS clause
+		return this.applyOptions(filteredQuery, query.OPTIONS);
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
@@ -234,13 +233,13 @@ export class QueryExecutor {
 		}
 	}
 
-	private applyOptions(filteredSections: any[], options: any): InsightResult[] {
+	private applyOptions(filteredQuery: any[], options: any): InsightResult[] {
 		if (!options?.COLUMNS) {
 			throw new InsightError("OPTIONS must contain COLUMNS.");
 		}
 
 		const columns = options.COLUMNS; // list of columns to include in the result
-		let results = filteredSections.map((section) => {
+		let results = filteredQuery.map((section) => {
 			const result: InsightResult = {};
 			for (const column of columns) {
 				const mappedColumn = this.mapKey(column);
@@ -256,15 +255,15 @@ export class QueryExecutor {
 		return results;
 	}
 
-	private applyOrder(filteredSections: InsightResult[], options: any): InsightResult[] {
+	private applyOrder(filteredQuery: InsightResult[], options: any): InsightResult[] {
 		// const orderKey = typeof options.ORDER === "string" ? options.ORDER : options.ORDER.keys[0];
 		const direction = typeof options.ORDER === "object" && options.ORDER.dir === "DOWN" ? -1 : 1;
-		let results = filteredSections;
+		let results = filteredQuery;
 		if (typeof options.ORDER === "string") {
-			results = this.applySorting(filteredSections, options.ORDER, direction);
+			results = this.applySorting(filteredQuery, options.ORDER, direction);
 		} else {
 			for (const key of options.ORDER.keys) {
-				results = this.applySorting(filteredSections, key, direction);
+				results = this.applySorting(filteredQuery, key, direction);
 			}
 		}
 		return results;
@@ -282,7 +281,110 @@ export class QueryExecutor {
 		});
 	}
 
-	// private applyTransformations(filteredKeys: any[], transformations: any) {
-	//
+	private applyTransformations(filteredQuery: any[], transformations: any): InsightResult[] {
+		const groups = this.groupBy(filteredQuery, transformations);
+		return this.evaluateApply(Object.values(groups), transformations);
+	}
+
+	// private getGroup(list: any[], ...keys: string[]): InsightResult[] {
+	// 	// https://gist.github.com/JamieMason/0566f8412af9fe6a1d470aa1e089a752
+	// 	return list.reduce((results, item) => {
+	// 		const value = keys.map((key) => item[key]).join('-');
+	// 		results[value] = (results[value] || []).concat(item);
+	// 		return results;
+	// 	}, []);
 	// }
+	//
+	// private groupBy(data: any[], keys: string[]) {
+	// 	// https://stackoverflow.com/questions/35506433/grouping-by-multiple-fields-per-object
+	// 	const results: any[] = [];
+	// 	data.forEach(function(a) {
+	// 		keys.reduce(function(o,g,i) {
+	// 			o[a[g]] = o[a[g]] || (i+1 === keys.length ? [] : []);
+	// 			return o[a[g]];
+	// 		}, results).push(a);
+	// 	});
+	// 	return results;
+	// }
+
+	// https://keestalkstech.com/2021/10/having-fun-grouping-arrays-into-maps-with-typescript/
+	private groupBy(data: any[], transformations: any): Record<string, InsightResult[]> {
+		// https://www.wisdomgeek.com/development/web-development/javascript/how-to-groupby-using-reduce-in-javascript/
+		const groups = transformations.GROUP;
+		return data.reduce((results, item) => {
+			// https://gist.github.com/mikaello/06a76bca33e5d79cdd80c162d7774e9c
+			const key = groups.map((group: any) => item[group.split("_")[1]].join("-"));
+			if (!results[key]) {
+				results[key] = [];
+			}
+			results[key].push(item);
+			return results;
+		}, {});
+	}
+
+	private evaluateApply(groupedData: any, transformations: any): InsightResult[] {
+		const groups = transformations.GROUP;
+		const apply = transformations.APPLY;
+		const results: InsightResult[] = [];
+		const item: Record<string, string | number> = {};
+
+		for (const data of groupedData) {
+			for (const applyRule of apply) {
+				item[applyRule.applykey] = this.calculate(data[applyRule.key], applyRule.token);
+			}
+
+			for (const group of groups) {
+				item[group.split("_")[1]] = data[0][group.split("_")[1]];
+			}
+			results.push(item);
+		}
+		return results;
+	}
+
+	private calculate(data: any, token: any): number {
+		switch (token) {
+			case "MAX":
+				return Math.max(data);
+			case "MIN":
+				return Math.min(data);
+			case "AVG":
+				return this.calculateAvg(data);
+			case "SUM":
+				return this.calculateSum(data);
+			case "COUNT":
+				return this.calculateCount(data);
+			default:
+				throw new InsightError(`Unsupported apply token: ${token}`);
+		}
+	}
+
+	private calculateAvg(values: any): number {
+		let total = new Decimal(0);
+		for (const num of values) {
+			const decimalVal = new Decimal(num);
+			total = Decimal.add(decimalVal, total);
+		}
+		const avg = total.toNumber() / values.length;
+		const rounding = 2;
+		return Number(avg.toFixed(rounding));
+	}
+
+	private calculateSum(values: any): number {
+		let total = new Decimal(0);
+		for (const num of values) {
+			const decimalVal = new Decimal(num);
+			total = Decimal.add(decimalVal, total);
+		}
+		const rounding = 2;
+		return Number(total.toFixed(rounding));
+	}
+
+	private calculateCount(data: any): number {
+		// https://stackoverflow.com/questions/5667888/counting-the-occurrences-frequency-of-array-elements
+		const counts: any = {};
+		for (const item of data) {
+			counts[item] = counts[item] ? counts[item] + 1 : 1;
+		}
+		return counts.size;
+	}
 }

@@ -1,13 +1,14 @@
 import {
-	Query,
-	Filter,
-	Options,
+	ApplyRule,
 	Comparison,
+	Filter,
 	LogicComparison,
 	Negation,
-	//EmptyFilter, //TODO: add this :(
+	Options,
 	Order,
 	OrderObject,
+	Query,
+	Transformations,
 } from "./IQuery";
 import { InsightError } from "../IInsightFacade";
 
@@ -31,7 +32,11 @@ export class QueryParser {
 		const where = this.parseFilter(queryObj.WHERE);
 		const options = this.parseOptions(queryObj.OPTIONS);
 
-		return { WHERE: where, OPTIONS: options };
+		if (!("TRANSFORMATIONS" in queryObj)) {
+			return { WHERE: where, OPTIONS: options };
+		}
+		const transformations = this.parseTransformations(queryObj.TRANSFORMATIONS);
+		return { WHERE: where, OPTIONS: options, TRANSFORMATIONS: transformations };
 	}
 
 	private static parseFilter(filter: any): Filter {
@@ -220,5 +225,70 @@ export class QueryParser {
 			dir: dir,
 			keys: keys,
 		};
+	}
+
+	private static parseTransformations(transformations: any): Transformations {
+		if (typeof transformations !== "object" || transformations === null) {
+			throw new InsightError("TRANSFORMATIONS must be an object.");
+		}
+
+		if (!("GROUP" in transformations)) {
+			throw new InsightError("OPTIONS must contain GROUP.");
+		}
+
+		const group = transformations.GROUP;
+
+		if (!Array.isArray(group) || group.length === 0) {
+			throw new InsightError("GROUP must be a non-empty array.");
+		}
+
+		if (!("APPLY" in transformations)) {
+			throw new InsightError("OPTIONS must contain APPLY.");
+		}
+
+		if (!this.uniqueApplyKeys(transformations.APPLY)) {
+			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
+		}
+
+		const appKey = transformations[transformations.key];
+		const apply: ApplyRule[] = appKey.map((subApplyRule: any) => this.parseApply(subApplyRule));
+
+		if (!Array.isArray(apply) || apply.length === 0) {
+			throw new InsightError("APPLY must be a non-empty array.");
+		}
+
+		return {
+			GROUP: group,
+			APPLY: apply,
+		};
+	}
+
+	private static parseApply(applyObj: any): ApplyRule {
+		if (!("applykey" in applyObj) || !("token" in applyObj) || !("key" in applyObj)) {
+			throw new InsightError("APPLY object must contain applykey, token and key.");
+		}
+
+		const applykey = applyObj.applykey;
+		const token = applyObj.token;
+		const key = applyObj.key;
+
+		if (token !== "MAX" && token !== "MIN" && token !== "SUM" && token !== "COUNT" && token !== "AVG") {
+			throw new InsightError("APPLY token must be 'MAX', 'MIN', 'SUM', 'COUNT' or 'AVG'.");
+		}
+
+		return {
+			applykey: applykey,
+			token: token,
+			key: key,
+		};
+	}
+
+	private static uniqueApplyKeys(applyRules: ApplyRule[]): boolean {
+		const applyKeys: string[] = [];
+		for (const ar of applyRules) {
+			applyKeys.push(ar.key);
+		}
+		// https://www.geeksforgeeks.org/how-to-create-a-typescript-function-to-check-for-duplicates-in-an-array/
+		return !applyKeys.every((item, index) => applyKeys.indexOf(item) === index);
 	}
 }
