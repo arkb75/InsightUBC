@@ -304,7 +304,7 @@ describe("QueryParser", () => {
 			},
 			TRANSFORMATIONS: {
 				GROUP: ["courses_avg"],
-				APPLY: [{ "overallAvg": {"AVG": "courses_avg" }}],
+				APPLY: [{ overallAvg: { AVG: "courses_avg" } }],
 			},
 		};
 		// console.log(QueryParser.parse(query));
@@ -323,7 +323,7 @@ describe("QueryParser", () => {
 			},
 			TRANSFORMATIONS: {
 				GROUP: ["courses_avg"],
-				APPLY: [{ "overallAvg": {"AVG": "courses_avg" }}, { "max": {"MAX": "courses_avg" }}],
+				APPLY: [{ overallAvg: { AVG: "courses_avg" } }, { max: { MAX: "courses_avg" } }],
 			},
 		};
 		expect(() => QueryParser.parse(query)).to.not.throw();

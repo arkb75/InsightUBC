@@ -268,15 +268,15 @@ export class QueryParser {
 		// const appKey = transformations[transformations.key];
 		const applyResult: ApplyRule[] = [];
 		transformations.APPLY.map((applyRule: ApplyRule) => {
-				const applykey: string = Object.keys(applyRule)[0].toString();
-				const ruleValues: Record<any, any> = Object.values(applyRule)[0];
-				const token: string = Object.keys(ruleValues)[0].toString();
-				const key: string = Object.values(ruleValues)[0].toString();
-				// const applykey: string = applyRule.applykey;
-				// const token = applyRule.token;
-				// const key = applyRule.key;
-				applyResult.push(this.parseApply(applykey, token, key));
-			});
+			const applykey: string = Object.keys(applyRule)[0].toString();
+			const ruleValues: Record<any, any> = Object.values(applyRule)[0];
+			const token: string = Object.keys(ruleValues)[0].toString();
+			const key: string = Object.values(ruleValues)[0].toString();
+			// const applykey: string = applyRule.applykey;
+			// const token = applyRule.token;
+			// const key = applyRule.key;
+			applyResult.push(this.parseApply(applykey, token, key));
+		});
 
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");

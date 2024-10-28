@@ -334,9 +334,9 @@ export class QueryExecutor {
 		const groups: string[] = transformations.GROUP;
 		const apply: ApplyRule[] = transformations.APPLY;
 		const results: InsightResult[] = [];
-		const itemValue: InsightResult = {};
 
 		for (const data of groupedData) {
+			const itemValue: InsightResult = {};
 			for (const applyRule of apply) {
 				const mappedKey = this.mapKey(applyRule.key);
 				const keyToApply = data.map((item) => item[mappedKey]);
@@ -347,6 +347,7 @@ export class QueryExecutor {
 				itemValue[group.split("_")[1]] = data[0][group.split("_")[1]];
 			}
 			results.push(itemValue);
+			console.log(results);
 		}
 		return results;
 	}
