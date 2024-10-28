@@ -18,7 +18,7 @@ export class QueryExecutor {
 		// find dataset id from query
 		const datasetIds = this.extractDatasetIds(query);
 
-		if (datasetIds.size !== 1) {
+		if (datasetIds.size !== 1 && !query.TRANSFORMATIONS) {
 			throw new InsightError("Query must reference exactly one dataset.");
 		}
 
@@ -282,10 +282,10 @@ export class QueryExecutor {
 	}
 
 	private applyTransformations(filteredQuery: InsightResult[], transformations: any): InsightResult[] {
-		if (!transformations?.GROUP) {
+		if (!transformations.GROUP) {
 			throw new InsightError("TRANSFORMATIONS must contain GROUP.");
 		}
-		if (!transformations?.APPLY) {
+		if (!transformations.APPLY) {
 			throw new InsightError("TRANSFORMATIONS must contain APPLY.");
 		}
 
@@ -340,7 +340,7 @@ export class QueryExecutor {
 			for (const applyRule of apply) {
 				const mappedKey = this.mapKey(applyRule.key);
 				const keyToApply = data.map((item) => item[mappedKey]);
-				itemValue[mappedKey] = this.calculate(keyToApply, applyRule.token);
+				itemValue[applyRule.applykey] = this.calculate(keyToApply, applyRule.token);
 			}
 
 			for (const group of groups) {
@@ -357,13 +357,13 @@ export class QueryExecutor {
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use MAX token on a sfield");
 				} else {
-					return Math.max(data);
+					return this.calculateMax(data);
 				}
 			case "MIN":
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use MIN token on a sfield");
 				} else {
-					return Math.min(data);
+					return this.calculateMin(data);
 				}
 			case "AVG":
 				if (typeof data[0] !== "number") {
@@ -384,7 +384,25 @@ export class QueryExecutor {
 		}
 	}
 
-	private calculateAvg(values: number[]): number {
+	private calculateMax(values: any): number {
+		let maximum = values[0];
+
+		for (const item in values) {
+			maximum = maximum < values[item] ? values[item] : maximum;
+		}
+		return maximum;
+	}
+
+	private calculateMin(values: any): number {
+		let minimum = values[0];
+
+		for (const item in values) {
+			minimum = minimum > values[item] ? values[item] : minimum;
+		}
+		return minimum;
+	}
+
+	private calculateAvg(values: any): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -395,7 +413,7 @@ export class QueryExecutor {
 		return Number(avg.toFixed(rounding));
 	}
 
-	private calculateSum(values: number[]): number {
+	private calculateSum(values: any): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -405,7 +423,7 @@ export class QueryExecutor {
 		return Number(total.toFixed(rounding));
 	}
 
-	private calculateCount(data: (string | number)[]): number {
+	private calculateCount(data: any): number {
 		// https://stackoverflow.com/questions/5667888/counting-the-occurrences-frequency-of-array-elements
 		const counts: any = {};
 		for (const item of data) {

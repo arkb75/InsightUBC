@@ -304,7 +304,26 @@ describe("QueryParser", () => {
 			},
 			TRANSFORMATIONS: {
 				GROUP: ["courses_avg"],
-				APPLY: [{ applykey: "overallAvg", token: "AVG", key: "courses_avg" }],
+				APPLY: [{ "overallAvg": {"AVG": "courses_avg" }}],
+			},
+		};
+		// console.log(QueryParser.parse(query));
+		expect(() => QueryParser.parse(query)).to.not.throw();
+	});
+
+	it("Should parse a valid query with 2 transformations and return sorted applykey", () => {
+		const query = {
+			WHERE: {},
+			OPTIONS: {
+				COLUMNS: ["courses_avg", "overallAvg"],
+				ORDER: {
+					dir: "UP",
+					keys: ["overallAvg"],
+				},
+			},
+			TRANSFORMATIONS: {
+				GROUP: ["courses_avg"],
+				APPLY: [{ "overallAvg": {"AVG": "courses_avg" }}, { "max": {"MAX": "courses_avg" }}],
 			},
 		};
 		expect(() => QueryParser.parse(query)).to.not.throw();
