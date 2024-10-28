@@ -578,13 +578,13 @@ describe("InsightFacade", function () {
 		it("[invalidC2/invalidArray.json] Invalid APPLY: is not a list", checkQuery);
 		it(
 			"[invalidC2/invalidColumnMix.json] " +
-			"Invalid COLUMN key - has one in & not in GROUP or APPLY when TRANSFORMATIONS exists",
+				"Invalid COLUMN key - has one in & not in GROUP or APPLY when TRANSFORMATIONS exists",
 			checkQuery
 		);
 		it("[invalidC2/invalidColumnOrder.json] Invalid ORDER key - not in COLUMNS", checkQuery);
 		it(
 			"[invalidC2/invalidColumnsTransformations.json] " +
-			"Invalid COLUMN key - not in GROUP or APPLY when TRANSFORMATIONS exists",
+				"Invalid COLUMN key - not in GROUP or APPLY when TRANSFORMATIONS exists",
 			checkQuery
 		);
 		it("[invalidC2/invalidDirection.json] Invalid ORDER: not valid direction", checkQuery);
@@ -594,7 +594,7 @@ describe("InsightFacade", function () {
 		it("[invalidC2/missingGroup.json] Missing GROUP in TRANSFORMATIONS", checkQuery);
 		it("[invalidC2/missingGroupApply.json] Missing GROUP and APPLY in TRANSFORMATIONS", checkQuery);
 		it("[invalidC2/invalidKeyType.json] invalid key type for token in APPLY", checkQuery);
-		it("[invalidC2/invalidApplyObj.json] ApplyRule missing key", checkQuery);
+		it("[invalidC2/invalidApplyObj.json] ApplyRule missing token and key", checkQuery);
 		it("[invalidC2/invalidToken.json] invalid token", checkQuery);
 		it("[invalidC2/duplicateApplykey.json] duplicateApplykey", checkQuery);
 		it("[invalidC2/sortListNoDirection.json] Invalid ORDER: has no direction when there is list of keys", checkQuery);
