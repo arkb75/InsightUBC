@@ -265,35 +265,36 @@ export class QueryParser {
 		if (!("APPLY" in transformations)) {
 			throw new InsightError("invalid APPLY: OPTIONS must contain APPLY.");
 		}
-
-		const appKey = transformations[transformations.key];
-		const apply: ApplyRule[] = appKey.map((applyRule: any) => this.parseApply(applyRule));
+		// const appKey = transformations[transformations.key];
+		const applyResult: ApplyRule[] = [];
+		transformations.APPLY.map((applyRule: ApplyRule) => {
+			const applykey: string = Object.keys(applyRule)[0].toString();
+			const ruleValues: Record<any, any> = Object.values(applyRule)[0];
+			const token: string = Object.keys(ruleValues)[0].toString();
+			const key: string = Object.values(ruleValues)[0].toString();
+			// const applykey: string = applyRule.applykey;
+			// const token = applyRule.token;
+			// const key = applyRule.key;
+			applyResult.push(this.parseApply(applykey, token, key));
+		});
 
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
 		}
 
-		if (!Array.isArray(apply) || apply.length === 0) {
+		if (!Array.isArray(applyResult) || applyResult.length === 0) {
 			throw new InsightError("invalid APPLY: APPLY must be a non-empty array.");
 		}
 
 		return {
 			GROUP: group,
-			APPLY: apply,
+			APPLY: applyResult,
 		};
 	}
-	// TODO: fix this?
-	private static parseApply(applyObj: ApplyRule): ApplyRule {
-		if (!("applykey" in applyObj) || !("token" in applyObj) || !("key" in applyObj)) {
+
+	private static parseApply(applykey: string, token: string, key: string): ApplyRule {
+		if (!applykey || !token || !key) {
 			throw new InsightError("APPLY object must contain applykey, token and key.");
-		}
-
-		const applykey = applyObj.applykey;
-		const token = applyObj.token;
-		const key = applyObj.key;
-
-		if (applykey.length !== 1) {
-			throw new InsightError("APPLYRULE must have only 1 key.");
 		}
 
 		if (token !== "MAX" && token !== "MIN" && token !== "SUM" && token !== "COUNT" && token !== "AVG") {
@@ -308,11 +309,11 @@ export class QueryParser {
 	}
 
 	private static uniqueApplyKeys(applyRules: ApplyRule[]): boolean {
-		const applyKeys: string[] = [];
-		for (const ar of applyRules) {
-			applyKeys.push(ar.key);
-		}
+		const keys: string[] = [];
+		applyRules.map((applyRule: ApplyRule) => {
+			keys.push(Object.keys(applyRule)[0].toString());
+		});
 		// https://www.geeksforgeeks.org/how-to-create-a-typescript-function-to-check-for-duplicates-in-an-array/
-		return !applyKeys.every((item, index) => applyKeys.indexOf(item) === index);
+		return new Set(keys).size === keys.length;
 	}
 }
