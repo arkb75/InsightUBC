@@ -1,0 +1,33 @@
+{
+	"title": "Invalid APPLY: ApplyRule has more than 1 key",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"max"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title", "sections_avg"
+			],
+			"APPLY": [
+				{
+					"max": {
+						"MAX": "sections_avg"
+					},
+					"min": {
+						"MIN": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

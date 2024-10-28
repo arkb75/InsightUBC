@@ -1,0 +1,36 @@
+{
+	"title": "columns from GROUP and not APPLY",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title",
+				"sections_avg"
+			],
+			"APPLY": [
+				{
+					"overallavg": {
+						"AVG": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{"sections_title":"work & learning"},{"sections_title":"work & learning"},
+		{"sections_title":"work & learning"},{"sections_title":"work & learning"},
+		{"sections_title":"work & learning"},{"sections_title":"work & learning"},
+		{"sections_title":"work & learning"},{"sections_title":"work & learning"},
+		{"sections_title":"work int health"}
+	]
+}

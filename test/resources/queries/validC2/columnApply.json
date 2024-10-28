@@ -1,0 +1,33 @@
+{
+	"title": "columns from APPLY and not GROUP",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"overallavg"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title",
+				"sections_avg"
+			],
+			"APPLY": [
+				{
+					"overallavg": {
+						"AVG": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{"overallavg":84.92},{"overallavg":87.82},{"overallavg":83.58},{"overallavg":87.53},{"overallavg":87.54},
+		{"overallavg":90.11},{"overallavg":85.88},{"overallavg":87.4},{"overallavg":98.98}
+	]
+}

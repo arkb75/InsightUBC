@@ -239,11 +239,11 @@ export class QueryExecutor {
 		}
 
 		const columns = options.COLUMNS; // list of columns to include in the result
-		let results = filteredQuery.map((section) => {
+		let results = filteredQuery.map((item) => {
 			const result: InsightResult = {};
 			for (const column of columns) {
 				const mappedColumn = this.mapKey(column);
-				result[column] = section[mappedColumn]; // TODO: change to work for rooms
+				result[column] = item[mappedColumn];
 			}
 			return result;
 		});

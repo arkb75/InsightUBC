@@ -1,0 +1,39 @@
+{
+	"title": "single group and multiple apply",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"max",
+				"min"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"max": {
+						"MAX": "sections_avg"
+					}
+				},
+				{
+					"min": {
+						"MIN": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{"sections_title":"work & learning","max":90.11,"min":83.58},
+		{"sections_title":"work int health","max":98.98,"min":98.98}
+	]
+}

@@ -1,0 +1,40 @@
+{
+	"title": "order with given direction on an applykey",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "wor*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"overallAvg"
+			],
+			"ORDER": {
+				"dir": "DOWN",
+				"keys": [
+					"overallAvg"
+				]
+			}
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"overallAvg": {
+						"AVG": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{"sections_title":"work int health","overallAvg":98.98},{"sections_title":"work & learning","overallAvg":86.63},
+		{"sections_title":"wor prob in nut","overallAvg":77.89},{"sections_title":"world lit engl","overallAvg":76.44},
+		{"sections_title":"world lit in eng","overallAvg":74.7},{"sections_title":"world englishes","overallAvg":74.62}
+	]
+}
