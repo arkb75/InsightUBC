@@ -1,0 +1,28 @@
+{
+	"title": "ApplyRule missing token and key",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title","count"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"count": {
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

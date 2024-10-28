@@ -1,0 +1,29 @@
+{
+	"title": "count with mfield",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"count"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"count": {
+						"COUNT": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [{"count":8},{"count":1}]
+}

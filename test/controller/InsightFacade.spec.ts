@@ -568,6 +568,50 @@ describe("InsightFacade", function () {
 		it("[valid/orCase3.json] orCase3", checkQuery);
 		it("[valid/orCase4.json] orCase4", checkQuery);
 		it("[valid/orCase5.json] orCase5", checkQuery);
+
+		// c2 query engine focused (transformations and sort)
+		it("[invalidC2/applyKeyWhere.json] Invalid key in WHERE: applyKey", checkQuery);
+		it("[invalidC2/emptyArray.json] Invalid APPLY: list is empty", checkQuery);
+		it("[invalidC2/emptyGroup.json] Invalid GROUP in TRANSFORMATIONS: empty list", checkQuery);
+		it("[invalidC2/invalidApplykey.json] Invalid applykey in APPLY ApplyRule: applykey has underscore", checkQuery);
+		it("[invalidC2/invalidApplyRule.json] Invalid APPLY: ApplyRule has more than 1 key", checkQuery);
+		it("[invalidC2/invalidArray.json] Invalid APPLY: is not a list", checkQuery);
+		it(
+			"[invalidC2/invalidColumnMix.json] " +
+				"Invalid COLUMN key - has one in & not in GROUP or APPLY when TRANSFORMATIONS exists",
+			checkQuery
+		);
+		it("[invalidC2/invalidColumnOrder.json] Invalid ORDER key - not in COLUMNS", checkQuery);
+		it(
+			"[invalidC2/invalidColumnsTransformations.json] " +
+				"Invalid COLUMN key - not in GROUP or APPLY when TRANSFORMATIONS exists",
+			checkQuery
+		);
+		it("[invalidC2/invalidDirection.json] Invalid ORDER: not valid direction", checkQuery);
+		it("[invalidC2/invalidGroupArray.json] Invalid GROUP in TRANSFORMATIONS: not an array", checkQuery);
+		it("[invalidC2/invalidOrderList.json] Invalid ORDER key - not a list", checkQuery);
+		it("[invalidC2/missingApply.json] Missing APPLY in TRANSFORMATIONS", checkQuery);
+		it("[invalidC2/missingGroup.json] Missing GROUP in TRANSFORMATIONS", checkQuery);
+		it("[invalidC2/missingGroupApply.json] Missing GROUP and APPLY in TRANSFORMATIONS", checkQuery);
+		it("[invalidC2/invalidKeyType.json] invalid key type for token in APPLY", checkQuery);
+		it("[invalidC2/invalidApplyObj.json] ApplyRule missing token and key", checkQuery);
+		it("[invalidC2/invalidToken.json] invalid token", checkQuery);
+		it("[invalidC2/duplicateApplykey.json] duplicateApplykey", checkQuery);
+		it("[invalidC2/sortListNoDirection.json] Invalid ORDER: has no direction when there is list of keys", checkQuery);
+		it("[validC2/simple.json] valid transformation apply and group", checkQuery);
+		it("[validC2/simpleSum.json] sum and single group", checkQuery);
+		it("[validC2/sortMix.json] order on an applykey and a key", checkQuery);
+		it("[validC2/columnApply.json] columns from APPLY and not GROUP", checkQuery);
+		it("[validC2/columnGroup.json] columns from GROUP and not APPLY", checkQuery);
+		it("[validC2/countM.json] count with mfield", checkQuery);
+		it("[validC2/countS.json] count with sfield", checkQuery);
+		it("[validC2/isolatedApply.json] APPLY that is unused", checkQuery);
+		it("[validC2/multiple.json] multiple group and multiple apply", checkQuery);
+		it("[validC2/multipleApply.json] single group and multiple apply", checkQuery);
+		it("[validC2/multipleApply2.json] single group and multiple apply with different keys", checkQuery);
+		it("[validC2/multipleGroup.json] multiple group and single apply", checkQuery);
+		it("[validC2/orderApplykey.json] order on an applykey", checkQuery);
+		it("[validC2/orderApplykeyDirection.json] order with given direction on an applykey", checkQuery);
 	});
 
 	// 	// describe("ListDatasets", function () {

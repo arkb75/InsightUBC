@@ -267,7 +267,7 @@ export class QueryParser {
 		}
 
 		const appKey = transformations[transformations.key];
-		const apply: ApplyRule[] = appKey.map((subApplyRule: any) => this.parseApply(subApplyRule));
+		const apply: ApplyRule[] = appKey.map((applyRule: any) => this.parseApply(applyRule));
 
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
@@ -282,7 +282,7 @@ export class QueryParser {
 			APPLY: apply,
 		};
 	}
-
+	// TODO: fix this?
 	private static parseApply(applyObj: ApplyRule): ApplyRule {
 		if (!("applykey" in applyObj) || !("token" in applyObj) || !("key" in applyObj)) {
 			throw new InsightError("APPLY object must contain applykey, token and key.");

@@ -1,0 +1,36 @@
+{
+	"title": "valid transformation apply and group",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title",
+				"max"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"APPLY": [
+				{
+					"max": {
+						"MAX": "sections_avg"
+					}
+				}
+			],
+			"GROUP": [
+				"sections_title",
+				"sections_avg"
+			]
+		}
+	},
+	"errorExpected": false,
+	"expected": [
+		{"sections_title":"work & learning","max":84.92},{"sections_title":"work & learning","max":87.82},
+		{"sections_title":"work & learning","max":83.58},{"sections_title":"work & learning","max":87.53},
+		{"sections_title":"work & learning","max":87.54},{"sections_title":"work & learning","max":90.11},
+		{"sections_title":"work & learning","max":85.88},{"sections_title":"work & learning","max":87.4},
+		{"sections_title":"work int health","max":98.98}]
+}

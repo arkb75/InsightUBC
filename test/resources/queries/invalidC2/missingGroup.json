@@ -1,0 +1,26 @@
+{
+	"title": "Missing GROUP in TRANSFORMATIONS",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"max"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"APPLY": [
+				{
+					"max": {
+						"MAX": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}

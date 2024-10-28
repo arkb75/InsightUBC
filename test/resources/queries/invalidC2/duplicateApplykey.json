@@ -1,0 +1,34 @@
+{
+	"title": "duplicateApplykey",
+	"input": {
+		"WHERE": {
+			"IS": {
+				"sections_title": "work*"
+			}
+		},
+		"OPTIONS": {
+			"COLUMNS": [
+				"sections_title"
+			]
+		},
+		"TRANSFORMATIONS": {
+			"GROUP": [
+				"sections_title"
+			],
+			"APPLY": [
+				{
+					"count": {
+						"COUNT": "sections_title"
+					}
+				},
+				{
+					"count": {
+						"COUNT": "sections_avg"
+					}
+				}
+			]
+		}
+	},
+	"errorExpected": true,
+	"expected": "InsightError"
+}
