@@ -3,6 +3,7 @@ import * as parse5 from "parse5";
 import JSZip from "jszip";
 import { findNodeWithAttribute, getTextFromNode, findNode, findTableWithTdClass } from "./HtmlUtils";
 import { InsightError } from "./IInsightFacade";
+import http from "http";
 
 export class RoomsProcessor {
 	public async processRooms(content: string): Promise<Room[]> {
@@ -21,6 +22,15 @@ export class RoomsProcessor {
 		const roomPromises: Promise<Room[]>[] = [];
 
 		for (const building of buildings) {
+			try {
+                const { lat, lon } = await this.getGeolocation(building.address);
+                building.lat = lat;
+                building.lon = lon;
+            } catch (error) {
+                console.warn(`Could not fetch geolocation for ${building.shortname}: ${error}`);
+                continue;
+            }
+
 			const buildingFile = unzipped.file(building.filepath);
 			if (!buildingFile) {
 				// The building file might not exist; skip this building
@@ -187,5 +197,39 @@ export class RoomsProcessor {
 
 	private extractRoomType(td: any, room: Partial<Room>): void {
 		room.type = getTextFromNode(td).trim();
+	}
+
+    private async getGeolocation(address: string): Promise<{ lat: number, lon: number }> {
+		const teamNumber = "165";
+		const encodedAddress = encodeURIComponent(address);
+		const url = `http://cs310.students.cs.ubc.ca:11316/api/v1/project_team${teamNumber}/${encodedAddress}`;
+
+        return new Promise((resolve, reject) => {
+
+            http.get(url, (res) => {
+                let data = "";
+
+                res.on("data", (chunk) => {
+                    data += chunk;
+                });
+
+				res.on("end", () => {
+					try {
+						const response: { lat?: number; lon?: number; error?: string } = JSON.parse(data);
+						if (response.error) {
+							reject(new Error(`Geolocation error: ${response.error}`));
+						} else if (response.lat !== undefined && response.lon !== undefined) {
+							resolve({ lat: response.lat, lon: response.lon });
+						} else {
+							reject(new Error("Invalid geolocation response format"));
+						}
+					} catch (error) {
+						reject(new Error("Failed to parse geolocation response"));
+					}
+				});
+			}).on("error", (err) => {
+				reject(new Error("HTTP request error: " + err.message));
+			});
+		});
 	}
 }
