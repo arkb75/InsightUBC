@@ -1,6 +1,6 @@
 import { Query, Filter, Comparison, LogicComparison, Negation, ApplyRule } from "./IQuery"; // removed Option, OrderObject for testing purposes.
 import { InsightResult, InsightError, ResultTooLargeError } from "../IInsightFacade";
-import Decimal from "decimal.js";
+import { Calculations } from "./Calculations";
 // Removed InsightDataset
 
 //import fs from "fs-extra";
@@ -294,27 +294,6 @@ export class QueryExecutor {
 		return this.evaluateApply(Object.values(groups), transformations);
 	}
 
-	// private getGroup(list: any[], ...keys: string[]): InsightResult[] {
-	// 	// https://gist.github.com/JamieMason/0566f8412af9fe6a1d470aa1e089a752
-	// 	return list.reduce((results, item) => {
-	// 		const value = keys.map((key) => item[key]).join('-');
-	// 		results[value] = (results[value] || []).concat(item);
-	// 		return results;
-	// 	}, []);
-	// }
-	//
-	// private groupBy(data: any[], keys: string[]) {
-	// 	// https://stackoverflow.com/questions/35506433/grouping-by-multiple-fields-per-object
-	// 	const results: any[] = [];
-	// 	data.forEach(function(a) {
-	// 		keys.reduce(function(o,g,i) {
-	// 			o[a[g]] = o[a[g]] || (i+1 === keys.length ? [] : []);
-	// 			return o[a[g]];
-	// 		}, results).push(a);
-	// 	});
-	// 	return results;
-	// }
-
 	// https://keestalkstech.com/2021/10/having-fun-grouping-arrays-into-maps-with-typescript/
 	private groupBy(data: InsightResult[], transformations: any): Record<string, InsightResult[]> {
 		// https://www.wisdomgeek.com/development/web-development/javascript/how-to-groupby-using-reduce-in-javascript/
@@ -347,7 +326,6 @@ export class QueryExecutor {
 				itemValue[group.split("_")[1]] = data[0][group.split("_")[1]];
 			}
 			results.push(itemValue);
-			console.log(results);
 		}
 		return results;
 	}
@@ -358,78 +336,30 @@ export class QueryExecutor {
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use MAX token on a sfield");
 				} else {
-					return this.calculateMax(data);
+					return Calculations.calculateMax(data);
 				}
 			case "MIN":
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use MIN token on a sfield");
 				} else {
-					return this.calculateMin(data);
+					return Calculations.calculateMin(data);
 				}
 			case "AVG":
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
 				} else {
-					return this.calculateAvg(data);
+					return Calculations.calculateAvg(data);
 				}
 			case "SUM":
 				if (typeof data[0] !== "number") {
 					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
 				} else {
-					return this.calculateSum(data);
+					return Calculations.calculateSum(data);
 				}
 			case "COUNT":
-				return this.calculateCount(data);
+				return Calculations.calculateCount(data);
 			default:
 				throw new InsightError(`Unsupported apply token: ${token}`);
 		}
-	}
-
-	private calculateMax(values: any): number {
-		let maximum = values[0];
-
-		for (const item in values) {
-			maximum = maximum < values[item] ? values[item] : maximum;
-		}
-		return maximum;
-	}
-
-	private calculateMin(values: any): number {
-		let minimum = values[0];
-
-		for (const item in values) {
-			minimum = minimum > values[item] ? values[item] : minimum;
-		}
-		return minimum;
-	}
-
-	private calculateAvg(values: any): number {
-		let total = new Decimal(0);
-		for (const num of values) {
-			const decimalVal = new Decimal(num);
-			total = Decimal.add(decimalVal, total);
-		}
-		const avg = total.toNumber() / values.length;
-		const rounding = 2;
-		return Number(avg.toFixed(rounding));
-	}
-
-	private calculateSum(values: any): number {
-		let total = new Decimal(0);
-		for (const num of values) {
-			const decimalVal = new Decimal(num);
-			total = Decimal.add(decimalVal, total);
-		}
-		const rounding = 2;
-		return Number(total.toFixed(rounding));
-	}
-
-	private calculateCount(data: any): number {
-		// https://stackoverflow.com/questions/5667888/counting-the-occurrences-frequency-of-array-elements
-		const counts: any = {};
-		for (const item of data) {
-			counts[item] = counts[item] ? counts[item] + 1 : 1;
-		}
-		return counts.size;
 	}
 }
