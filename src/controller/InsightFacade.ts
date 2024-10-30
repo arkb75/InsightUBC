@@ -129,7 +129,7 @@ export default class InsightFacade implements IInsightFacade {
 
 	public checkArg(id: string, kind: InsightDatasetKind, datasets: any[]): boolean {
 		// Validate 'id'
-		if (typeof id !== "string" || id.trim() === "" || id.includes("_")) {
+		if (id.trim() === "" || id.includes("_")) {
 			throw new InsightError("Invalid id: id must be a non-empty string without underscores");
 		}
 

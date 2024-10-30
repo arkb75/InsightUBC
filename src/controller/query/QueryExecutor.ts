@@ -26,7 +26,7 @@ export class QueryExecutor {
 		const dataset = this.datasets.find((ds) => ds.id === datasetId);
 		//console.log(dataset);
 
-		if (!dataset) {
+		if (!dataset && !query.TRANSFORMATIONS) {
 			throw new InsightError(`Dataset ${datasetId} not found in the executor.`);
 		}
 

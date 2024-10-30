@@ -169,7 +169,7 @@ export class QueryParser {
 			const groups: string[] = transformations.GROUP;
 			const applykeys = this.getApplyKeys(transformations);
 			for (const column of columns) {
-				if (!groups.indexOf(column) && !applykeys.indexOf(column)) {
+				if (groups.indexOf(column) === -1 && applykeys.indexOf(column) === -1) {
 					throw new InsightError("COLUMNS must be in GROUP/APPLY when TRANSFORMATIONS is present");
 				}
 			}
@@ -197,8 +197,8 @@ export class QueryParser {
 
 	private static getApplyKeys(transformation: any): string[] {
 		const result: string[] = [];
-		for (const applykey of transformation.APPLY) {
-			result.push(applykey.applykey);
+		for (const applyRule of transformation.APPLY) {
+			result.push(Object.keys(applyRule)[0].toString());
 		}
 		return result;
 	}
@@ -266,17 +266,12 @@ export class QueryParser {
 			throw new InsightError("invalid APPLY: OPTIONS must contain APPLY.");
 		}
 		// const appKey = transformations[transformations.key];
-		const applyResult: ApplyRule[] = [];
-		transformations.APPLY.map((applyRule: ApplyRule) => {
-			const applykey: string = Object.keys(applyRule)[0].toString();
-			const ruleValues: Record<any, any> = Object.values(applyRule)[0];
-			const token: string = Object.keys(ruleValues)[0].toString();
-			const key: string = Object.values(ruleValues)[0].toString();
-			// const applykey: string = applyRule.applykey;
-			// const token = applyRule.token;
-			// const key = applyRule.key;
-			applyResult.push(this.parseApply(applykey, token, key));
-		});
+		let applyResult: ApplyRule[] = [];
+		try {
+			applyResult = this.applyResult(transformations);
+		} catch (err) {
+			throw new InsightError(`Unable to parse APPLY due to error: ${err}`);
+		}
 
 		if (!this.uniqueApplyKeys(transformations.APPLY)) {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
@@ -290,6 +285,28 @@ export class QueryParser {
 			GROUP: group,
 			APPLY: applyResult,
 		};
+	}
+
+	private static applyResult(transformations: Transformations): ApplyRule[] {
+		const applyResult: ApplyRule[] = [];
+		transformations.APPLY.map((applyRule: ApplyRule) => {
+			if (Object.keys(applyRule).length !== 1) {
+				throw new InsightError("ApplyRule in APPLY must have only 1 applykey.");
+			}
+			const applykey: string = Object.keys(applyRule)[0].toString();
+			const ruleValues: Record<any, any> = Object.values(applyRule)[0];
+			const token: string = Object.keys(ruleValues)[0].toString();
+			const key: string = Object.values(ruleValues)[0].toString();
+			if (applykey.trim() === "" || applykey.includes("_")) {
+				throw new InsightError("Invalid applykey: applykey must be a non-empty string without underscores");
+			}
+			try {
+				applyResult.push(this.parseApply(applykey, token, key));
+			} catch (err) {
+				throw new InsightError(`failed to parse APPLY due to error: ${err}`);
+			}
+		});
+		return applyResult;
 	}
 
 	private static parseApply(applykey: string, token: string, key: string): ApplyRule {
