@@ -297,6 +297,9 @@ export class QueryParser {
 			const ruleValues: Record<any, any> = Object.values(applyRule)[0];
 			const token: string = Object.keys(ruleValues)[0].toString();
 			const key: string = Object.values(ruleValues)[0].toString();
+			if (Object.keys(ruleValues).length !== 1) {
+				throw new InsightError("ApplyRule in APPLY must have only 1 token and key to an applykey.");
+			}
 			if (applykey.trim() === "" || applykey.includes("_")) {
 				throw new InsightError("Invalid applykey: applykey must be a non-empty string without underscores");
 			}
