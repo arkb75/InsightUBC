@@ -46,6 +46,6 @@ export class Calculations {
 		for (const item of data) {
 			counts[item] = counts[item] ? counts[item] + 1 : 1;
 		}
-		return counts.size;
+		return Object.keys(counts).length;
 	}
 }

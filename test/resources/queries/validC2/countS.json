@@ -27,7 +27,7 @@
 	},
 	"errorExpected": false,
 	"expected": [
-		{"sections_title":"work & learning","overallAvg":1},
-		{"sections_title":"work int health","overallAvg":1}
+		{"sections_title":"work & learning","count":1},
+		{"sections_title":"work int health","count":1}
 	]
 }

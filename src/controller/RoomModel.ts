@@ -3,6 +3,8 @@ export interface Building {
 	shortname: string;
 	address: string;
 	filepath: string;
+	lat?: number;
+	lon?: number;
 }
 
 export interface Room {
