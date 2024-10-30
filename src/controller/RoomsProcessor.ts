@@ -153,9 +153,9 @@ export class RoomsProcessor {
 						if (hrefAttr) {
 							building.filepath = hrefAttr.value.replace(/^\./, "").replace(/^\//, "");
 							// Extract shortname from filepath
-							const filename = building.filepath!.split('/').pop();
+							const filename = building.filepath!.split("/").pop();
 							if (filename) {
-								const shortname = filename.split('.')[0]; // e.g., "chem"
+								const shortname = filename.split(".")[0]; // e.g., "chem"
 								building.shortname = shortname.toUpperCase(); // e.g., "CHEM"
 							}
 						}
