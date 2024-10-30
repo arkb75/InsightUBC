@@ -50,6 +50,8 @@ export class RoomsProcessor {
 		const roomsArrays = await Promise.all(roomPromises);
 		const rooms: Room[] = roomsArrays.flat();
 
+		console.log("Parsed Rooms:", rooms);
+
 		return rooms;
 	}
 
@@ -87,6 +89,51 @@ export class RoomsProcessor {
 		}
 		return buildings;
 	}
+	private extractBuildingAddress(td: any, building: Partial<Building>): void {
+		building.address = getTextFromNode(td).trim();
+	}
+
+	private extractBuildingShortname(linkNode: any, building: Partial<Building>): void {
+		// Attempt to find <abbr> tag
+		const abbrNode = findNode(linkNode, "abbr");
+		if (abbrNode) {
+			building.shortname = getTextFromNode(abbrNode).trim();
+		} else {
+			// Use regex to extract from fullname
+			const text = getTextFromNode(linkNode).trim();
+			const match = text.match(/\(([^)]+)\)$/);
+			if (match?.[1]) {
+				building.shortname = match[1];
+			} else {
+				// Extract from href
+				const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
+				if (hrefAttr) {
+					const hrefValue = hrefAttr.value;
+					const codeMatch = hrefValue.match(/\/([^/]+)-\d+/);
+					if (codeMatch?.[1]) {
+						building.shortname = codeMatch[1];
+					}
+				}
+			}
+		}
+	}
+
+	private extractBuildingInfo(td: any, building: Partial<Building>): void {
+		const linkNode = findNode(td, "a");
+		if (linkNode) {
+			// Extract the building's full name
+			building.fullname = getTextFromNode(linkNode).trim();
+
+			// Extract the building's shortname
+			this.extractBuildingShortname(linkNode, building);
+
+			// Extract filepath
+			const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
+			if (hrefAttr) {
+				building.filepath = hrefAttr.value.replace(/^\./, "").replace(/^\//, "");
+			}
+		}
+	}
 
 	private parseBuilding(tr: any): Building | null {
 		const building: Partial<Building> = {};
@@ -96,20 +143,13 @@ export class RoomsProcessor {
 			if (classAttr) {
 				const classValue = classAttr.value;
 				if (classValue.includes("views-field-title")) {
-					const linkNode = findNode(td, "a");
-					if (linkNode?.attrs) {
-						const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
-						if (hrefAttr) {
-							building.filepath = hrefAttr.value.replace(/^\./, "").replace(/^\//, "");
-						}
-						building.shortname = getTextFromNode(linkNode).trim();
-					}
+					this.extractBuildingInfo(td, building);
 				} else if (classValue.includes("views-field-field-building-address")) {
-					building.address = getTextFromNode(td).trim();
+					this.extractBuildingAddress(td, building);
 				}
 			}
 		}
-		if (building.shortname && building.address && building.filepath) {
+		if (building.shortname && building.address && building.filepath && building.fullname) {
 			return building as Building;
 		}
 		return null;
