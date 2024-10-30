@@ -224,7 +224,7 @@ export class RoomsProcessor {
 								reject(new Error("Invalid geolocation response format"));
 							}
 						} catch (error) {
-							reject(new Error("Failed to parse geolocation response"));
+							reject(new Error(`Failed to parse geolocation response due to error: ${error}`));
 						}
 					});
 				})
