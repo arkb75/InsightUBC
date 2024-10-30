@@ -7,11 +7,13 @@ import http from "http";
 
 export class RoomsProcessor {
 	public async processRooms(content: string): Promise<Room[]> {
-		const zip = new JSZip();
-		const unzipped = await zip.loadAsync(content, { base64: true });
-		if (!unzipped) {
-			throw new InsightError("Unable to read content");
-		}
+		// const zip = new JSZip();
+		// const unzipped = await zip.loadAsync(content, { base64: true });
+		// if (!unzipped) {
+		// 	throw new InsightError("Unable to read content");
+		// }
+		const unzipped = await this.loadZipContent(content);
+
 		const indexFile = unzipped.file("index.htm");
 		if (!indexFile) {
 			throw new InsightError("index.htm file missing in rooms dataset");
@@ -19,18 +21,21 @@ export class RoomsProcessor {
 		const indexContent = await indexFile.async("text");
 		const buildings = await this.parseIndexFile(indexContent);
 
+		await Promise.all(
+			buildings.map(async (building) => {
+				try {
+					const { lat, lon } = await this.getGeolocation(building.address);
+					building.lat = lat;
+					building.lon = lon;
+				} catch (error) {
+					console.warn(`Could not fetch geolocation for ${building.shortname}: ${error}`);
+				}
+			})
+		);
+
 		const roomPromises: Promise<Room[]>[] = [];
 
 		for (const building of buildings) {
-			try {
-				const { lat, lon } = await this.getGeolocation(building.address);
-				building.lat = lat;
-				building.lon = lon;
-			} catch (error) {
-				console.warn(`Could not fetch geolocation for ${building.shortname}: ${error}`);
-				continue;
-			}
-
 			const buildingFile = unzipped.file(building.filepath);
 			if (!buildingFile) {
 				// The building file might not exist; skip this building
@@ -46,6 +51,15 @@ export class RoomsProcessor {
 		const rooms: Room[] = roomsArrays.flat();
 
 		return rooms;
+	}
+
+	private async loadZipContent(content: string): Promise<JSZip> {
+		const zip = new JSZip();
+		const unzipped = await zip.loadAsync(content, { base64: true });
+		if (!unzipped) {
+			throw new InsightError("Unable to read content");
+		}
+		return unzipped;
 	}
 
 	private async parseIndexFile(content: string): Promise<Building[]> {
