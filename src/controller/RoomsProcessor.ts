@@ -143,9 +143,25 @@ export class RoomsProcessor {
 			if (classAttr) {
 				const classValue = classAttr.value;
 				if (classValue.includes("views-field-title")) {
-					this.extractBuildingInfo(td, building);
+					const linkNode = findNode(td, "a");
+					if (linkNode) {
+						// Extract the building's full name
+						building.fullname = getTextFromNode(linkNode).trim();
+
+						// Extract filepath
+						const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
+						if (hrefAttr) {
+							building.filepath = hrefAttr.value.replace(/^\./, "").replace(/^\//, "");
+							// Extract shortname from filepath
+							const filename = building.filepath!.split('/').pop();
+							if (filename) {
+								const shortname = filename.split('.')[0]; // e.g., "chem"
+								building.shortname = shortname.toUpperCase(); // e.g., "CHEM"
+							}
+						}
+					}
 				} else if (classValue.includes("views-field-field-building-address")) {
-					this.extractBuildingAddress(td, building);
+					building.address = getTextFromNode(td).trim();
 				}
 			}
 		}
