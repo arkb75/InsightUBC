@@ -1,7 +1,7 @@
-import { Room, Building } from "./RoomModel";
+import { Building, Room } from "./RoomModel";
 import * as parse5 from "parse5";
 import JSZip from "jszip";
-import { findNodeWithAttribute, getTextFromNode, findNode, findTableWithTdClass } from "./HtmlUtils";
+import { findNode, findNodeWithAttribute, findTableWithTdClass, getTextFromNode } from "./HtmlUtils";
 import { InsightError } from "./IInsightFacade";
 import http from "http";
 
@@ -48,11 +48,7 @@ export class RoomsProcessor {
 		}
 
 		const roomsArrays = await Promise.all(roomPromises);
-		const rooms: Room[] = roomsArrays.flat();
-
-		console.log("Parsed Rooms:", rooms);
-
-		return rooms;
+		return roomsArrays.flat();
 	}
 
 	private async loadZipContent(content: string): Promise<JSZip> {
