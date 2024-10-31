@@ -193,6 +193,8 @@ export class RoomsProcessor {
 			}
 			const room = this.parseRoom(tr, building);
 			if (room) {
+				room.lat = building.lat;
+				room.lon = building.lon;
 				rooms.push(room);
 			}
 		}
