@@ -265,6 +265,11 @@ export class QueryParser {
 		if (!("APPLY" in transformations)) {
 			throw new InsightError("invalid APPLY: OPTIONS must contain APPLY.");
 		}
+
+		if (!this.uniqueApplyKeys(transformations.APPLY)) {
+			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
+		}
+
 		// const appKey = transformations[transformations.key];
 		let applyResult: ApplyRule[] = [];
 		try {
@@ -273,11 +278,7 @@ export class QueryParser {
 			throw new InsightError(`Unable to parse APPLY due to error: ${err}`);
 		}
 
-		if (!this.uniqueApplyKeys(transformations.APPLY)) {
-			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
-		}
-
-		if (!Array.isArray(applyResult)) {
+		if (applyResult.length < 1) {
 			throw new InsightError("invalid APPLY: APPLY must be a non-empty array.");
 		}
 
