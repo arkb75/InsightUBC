@@ -278,10 +278,6 @@ export class QueryParser {
 			throw new InsightError(`Unable to parse APPLY due to error: ${err}`);
 		}
 
-		if (applyResult.length < 1) {
-			throw new InsightError("invalid APPLY: APPLY must be a non-empty array.");
-		}
-
 		return {
 			GROUP: group,
 			APPLY: applyResult,
