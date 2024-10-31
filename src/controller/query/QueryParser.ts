@@ -277,7 +277,7 @@ export class QueryParser {
 			throw new InsightError("invalid APPLY: some APPLYRULEs share an applykey with the same name.");
 		}
 
-		if (!Array.isArray(applyResult) || applyResult.length === 0) {
+		if (!Array.isArray(applyResult)) {
 			throw new InsightError("invalid APPLY: APPLY must be a non-empty array.");
 		}
 

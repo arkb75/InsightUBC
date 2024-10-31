@@ -212,7 +212,9 @@ export default class InsightFacade implements IInsightFacade {
 				throw new InsightError("An unexpected error occurred during query parsing.");
 			}
 		}
+
 		const datasets = await this.updateDatasets();
+
 		try {
 			const executor = new QueryExecutor(datasets);
 			return await executor.execute(parsedQuery);

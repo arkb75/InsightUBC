@@ -49,13 +49,13 @@ export class QueryExecutor {
 		});
 		let filteredQuery = this.applyFilter(realData, query.WHERE);
 
-		if (filteredQuery.length > this.maxNum) {
-			throw new ResultTooLargeError("Query results exceed 5000 entries.");
-		}
-
 		// apply the TRANSFORMATION clause if there is one
 		if (query.TRANSFORMATIONS) {
 			filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
+		}
+
+		if (filteredQuery.length > this.maxNum) {
+			throw new ResultTooLargeError("Query results exceed 5000 entries.");
 		}
 
 		// apply the OPTIONS clause

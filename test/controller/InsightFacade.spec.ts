@@ -571,7 +571,6 @@ describe("InsightFacade", function () {
 
 		// c2 query engine focused (transformations and sort)
 		it("[invalidC2/applyKeyWhere.json] Invalid key in WHERE: applyKey", checkQuery);
-		it("[invalidC2/emptyArray.json] Invalid APPLY: list is empty", checkQuery);
 		it("[invalidC2/emptyGroup.json] Invalid GROUP in TRANSFORMATIONS: empty list", checkQuery);
 		it("[invalidC2/invalidApplykey.json] Invalid applykey in APPLY ApplyRule: applykey has underscore", checkQuery);
 		it("[invalidC2/invalidApplyRule.json] Invalid APPLY: ApplyRule has more than 1 key", checkQuery);
@@ -612,6 +611,64 @@ describe("InsightFacade", function () {
 		it("[validC2/multipleGroup.json] multiple group and single apply", checkQuery);
 		it("[validC2/orderApplykey.json] order on an applykey", checkQuery);
 		it("[validC2/orderApplykeyDirection.json] order with given direction on an applykey", checkQuery);
+	});
+
+	describe("PerformQueryRooms", function () {
+		before(async function () {
+			facade = new InsightFacade();
+
+			// Add only the sections dataset
+			try {
+				await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+			} catch (err) {
+				throw new Error(`In PerformQuery Before hook, dataset failed to be added.\n${err}`);
+			}
+		});
+
+		after(async function () {
+			await clearDisk();
+		});
+
+		async function checkQuery(this: Mocha.Context): Promise<void> {
+			//changed never to void
+			if (!this.test) {
+				throw new Error(
+					"Invalid call to checkQuery." +
+						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+						"Do not invoke the function directly."
+				);
+			}
+			// Destructuring assignment to reduce property accesses
+			const { input, expected, errorExpected } = await loadTestQuery(this.test.title);
+			let result: InsightResult[];
+			try {
+				result = await facade.performQuery(input);
+				//console.log(result);
+				//expect(result).to.be.deep.equal(expected);
+				expect(result).to.have.deep.members(expected);
+				//expect(result).to.have.ordered.members(expected);
+			} catch (err) {
+				if (!errorExpected) {
+					expect.fail(`performQuery threw unexpected error: ${err}`);
+				}
+
+				if (err instanceof ResultTooLargeError) {
+					expect(expected).to.be.equal("ResultTooLargeError");
+				} else if (err instanceof InsightError) {
+					expect(expected).to.be.equal("InsightError");
+				} else {
+					expect.fail("bruh how did this even happen :sob:" + err);
+				}
+				return;
+			}
+
+			if (errorExpected) {
+				expect.fail(`performQuery resolved when it should have rejected with ${expected}`);
+			}
+		}
+
+		it("[validC2/rooms.json] simple rooms query", checkQuery);
+		it("[validC2/emptyApply.json] empty APPLY", checkQuery);
 	});
 
 	// 	// describe("ListDatasets", function () {
