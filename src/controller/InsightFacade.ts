@@ -146,18 +146,25 @@ export default class InsightFacade implements IInsightFacade {
 		return true;
 	}
 
+	public async processSecRoom(content: string, course: boolean, roomsProcessor: any): Promise<any[]> {
+		try {
+			if (course) {
+				return await this.processCourses(content);
+			} else {
+				return await roomsProcessor.processRooms(content);
+			}
+		} catch (err) {
+			throw new InsightError("unable to read data successfully. error: " + err);
+		}
+	}
+
 	public async addDataset(id: string, content: string, kind: InsightDatasetKind): Promise<string[]> {
 		const datasets = await this.updateDatasets();
 		this.checkArg(id, kind, datasets);
 
 		if (kind === InsightDatasetKind.Sections) {
 			// Existing logic for processing sections dataset
-			let courses: Promise<string>[] = [];
-			try {
-				courses = await this.processCourses(content);
-			} catch (err) {
-				throw new InsightError("unable to read data successfully. error: " + err);
-			}
+			const courses: Promise<string>[] = await this.processSecRoom(content, true, null);
 			const sections = await this.getSections(courses);
 			datasets.push({
 				id: id,
@@ -168,14 +175,14 @@ export default class InsightFacade implements IInsightFacade {
 		} else if (kind === InsightDatasetKind.Rooms) {
 			// Process rooms dataset using RoomsProcessor
 			const roomsProcessor = new RoomsProcessor();
-			const rooms = await roomsProcessor.processRooms(content);
-			if (rooms.length === 0) {
+			const rooms = this.processSecRoom(content, false, roomsProcessor);
+			if ((await rooms).length === 0) {
 				throw new InsightError("No valid rooms found in dataset");
 			}
 			datasets.push({
 				id: id,
 				kind: kind,
-				numRows: rooms.length,
+				numRows: (await rooms).length,
 				data: rooms,
 			});
 		}
