@@ -16,7 +16,12 @@ export class QueryExecutor {
 
 	public async execute(query: Query): Promise<InsightResult[]> {
 		// find dataset id from query
-		const datasetIds = this.extractDatasetIds(query);
+		let datasetIds: any = {};
+		try {
+			datasetIds = this.extractDatasetIds(query);
+		} catch {
+			throw new InsightError("unable to extract dataset ids");
+		}
 
 		if (datasetIds.size !== 1 && !query.TRANSFORMATIONS) {
 			throw new InsightError("Query must reference exactly one dataset.");
@@ -31,16 +36,20 @@ export class QueryExecutor {
 		}
 
 		// perform the query
-		return this.evaluateQuery(this.datasets, query);
+		try {
+			return this.evaluateQuery(this.datasets, query);
+		} catch {
+			throw new InsightError("unable to evaluate the query");
+		}
 	}
 
 	private normalizeData(data: any[]): void {
 		data.forEach((item) => {
-			if (typeof item.year === "string" && item.year !== null) {
+			if (typeof item.year === "string") {
 				item.year = Number(item.year);
 			}
 
-			if (typeof item.uuid === "number" && item.uuid !== null) {
+			if (typeof item.uuid === "number") {
 				item.uuid = String(item.uuid);
 			}
 		});
@@ -342,7 +351,7 @@ export class QueryExecutor {
 			for (const applyRule of apply) {
 				const mappedKey = this.mapKey(applyRule.key);
 				const keyToApply = data.map((item) => item[mappedKey]);
-				itemValue[applyRule.applykey] = this.calculate(keyToApply, applyRule.token);
+				itemValue[applyRule.applykey] = Calculations.calculate(keyToApply, applyRule.token);
 			}
 
 			for (const group of groups) {
@@ -351,38 +360,5 @@ export class QueryExecutor {
 			results.push(itemValue);
 		}
 		return results;
-	}
-
-	private calculate(data: any, token: string): number {
-		switch (token) {
-			case "MAX":
-				if (typeof data[0] !== "number") {
-					throw new InsightError("invalid field type: cannot use MAX token on a sfield");
-				} else {
-					return Calculations.calculateMax(data);
-				}
-			case "MIN":
-				if (typeof data[0] !== "number") {
-					throw new InsightError("invalid field type: cannot use MIN token on a sfield");
-				} else {
-					return Calculations.calculateMin(data);
-				}
-			case "AVG":
-				if (typeof data[0] !== "number") {
-					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
-				} else {
-					return Calculations.calculateAvg(data);
-				}
-			case "SUM":
-				if (typeof data[0] !== "number") {
-					throw new InsightError("invalid field type: cannot use AVG token on a sfield");
-				} else {
-					return Calculations.calculateSum(data);
-				}
-			case "COUNT":
-				return Calculations.calculateCount(data);
-			default:
-				throw new InsightError(`Unsupported apply token: ${token}`);
-		}
 	}
 }

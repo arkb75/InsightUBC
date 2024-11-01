@@ -34,8 +34,7 @@ export default class InsightFacade implements IInsightFacade {
 
 	private async loadDatasetsFromDisk(): Promise<void> {
 		try {
-			const datasets = await fs.readJSON("data/data.JSON");
-			this.datasets = datasets;
+			this.datasets = await fs.readJSON("data/data.JSON");
 		} catch (_err) {
 			// If the file doesn't exist, initialize datasets as an empty array
 			this.datasets = [];
