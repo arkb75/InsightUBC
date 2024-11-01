@@ -6,6 +6,20 @@ import { InsightError } from "./IInsightFacade";
 import http from "http";
 
 export class RoomsProcessor {
+	private async geolocationBuilding(buildings: any): Promise<void> {
+		await Promise.all(
+			buildings.map(async (building: { address: string; lat: number; lon: number; shortname: any; }) => {
+				try {
+					const { lat, lon } = await this.getGeolocation(building.address);
+					building.lat = lat;
+					building.lon = lon;
+				} catch (error) {
+					console.warn(`Could not fetch geolocation for ${building.shortname}: ${error}`);
+				}
+			})
+		);
+	}
+
 	public async processRooms(content: string): Promise<Room[]> {
 		// const zip = new JSZip();
 		// const unzipped = await zip.loadAsync(content, { base64: true });
@@ -26,17 +40,11 @@ export class RoomsProcessor {
 			throw new InsightError("unable to parse buildings");
 		}
 
-		await Promise.all(
-			buildings.map(async (building) => {
-				try {
-					const { lat, lon } = await this.getGeolocation(building.address);
-					building.lat = lat;
-					building.lon = lon;
-				} catch (error) {
-					console.warn(`Could not fetch geolocation for ${building.shortname}: ${error}`);
-				}
-			})
-		);
+		try {
+			await this.geolocationBuilding(buildings);
+		} catch {
+			throw new InsightError('Not geolocation-ing');
+		}
 
 		let roomPromises: Promise<Room[]>[] = [];
 		try {
@@ -57,7 +65,12 @@ export class RoomsProcessor {
 		// 	roomPromises.push(buildingPromise);
 		// }
 
-		const roomsArrays = await Promise.all(roomPromises);
+		let roomsArrays: Room[][] = [];
+		try {
+			roomsArrays = await Promise.all(roomPromises);
+		} catch {
+			throw new InsightError("unable to fulfill roomPromises")
+		}
 		return roomsArrays.flat();
 	}
 
