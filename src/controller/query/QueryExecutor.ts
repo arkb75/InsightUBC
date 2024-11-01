@@ -36,30 +36,50 @@ export class QueryExecutor {
 
 	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
 		// apply the WHERE clause
-		const realData: any[] = dataset[0].data;
-		realData.forEach((item) => {
-			if (typeof item.year === "string") {
-				item.year = Number(item.year);
-			}
-		});
-		realData.forEach((item) => {
-			if (typeof item.uuid === "number") {
-				item.uuid = String(item.uuid);
-			}
-		});
-		let filteredQuery = this.applyFilter(realData, query.WHERE);
+		let foundValidDataset = false;
 
-		// apply the TRANSFORMATION clause if there is one
-		if (query.TRANSFORMATIONS) {
-			filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
+		for (let i = 0; i < dataset.length; i++) {
+			try {
+				const realData: any[] = dataset[i].data;
+				realData.forEach((item) => {
+					if (typeof item.year === "string" && item.year !== null) {
+						item.year = Number(item.year);
+					}
+				});
+				realData.forEach((item) => {
+					if (typeof item.uuid === "number" && item.year !== null) {
+						item.uuid = String(item.uuid);
+					}
+				});
+
+				let filteredQuery = this.applyFilter(realData, query.WHERE);
+
+				if (query.TRANSFORMATIONS) {
+					filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
+				}
+
+				if (filteredQuery.length > this.maxNum) {
+					throw new ResultTooLargeError("Query results exceed 5000 entries.");
+				}
+
+				return this.applyOptions(filteredQuery, query.OPTIONS);
+
+			} catch (err) {
+				if (err instanceof InsightError && err.message.includes("does not exist in the dataset")) {
+					continue;
+				}
+
+				if (err instanceof ResultTooLargeError) {
+					throw new ResultTooLargeError("Query results exceed 5000 entries.");
+				}
+			}
 		}
 
-		if (filteredQuery.length > this.maxNum) {
-			throw new ResultTooLargeError("Query results exceed 5000 entries.");
+		if (!foundValidDataset) {
+			throw new InsightError("Required key(s) do not exist in any provided dataset.");
 		}
 
-		// apply the OPTIONS clause
-		return this.applyOptions(filteredQuery, query.OPTIONS);
+		return await [];
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {
