@@ -35,7 +35,7 @@ export class Calculations {
 		}
 	}
 
-	private calculateMax(values: any): number {
+	private static calculateMax(values: any): number {
 		let maximum = values[0];
 
 		for (const item in values) {
@@ -44,7 +44,7 @@ export class Calculations {
 		return maximum;
 	}
 
-	private calculateMin(values: any): number {
+	private static calculateMin(values: any): number {
 		let minimum = values[0];
 
 		for (const item in values) {
@@ -53,7 +53,7 @@ export class Calculations {
 		return minimum;
 	}
 
-	private calculateAvg(values: any): number {
+	private static calculateAvg(values: any): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -64,7 +64,7 @@ export class Calculations {
 		return Number(avg.toFixed(rounding));
 	}
 
-	private calculateSum(values: any): number {
+	private static calculateSum(values: any): number {
 		let total = new Decimal(0);
 		for (const num of values) {
 			const decimalVal = new Decimal(num);
@@ -74,7 +74,7 @@ export class Calculations {
 		return Number(total.toFixed(rounding));
 	}
 
-	private calculateCount(data: any): number {
+	private static calculateCount(data: any): number {
 		// https://stackoverflow.com/questions/5667888/counting-the-occurrences-frequency-of-array-elements
 		const counts: any = {};
 		for (const item of data) {
