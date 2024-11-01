@@ -19,7 +19,12 @@ export class RoomsProcessor {
 			throw new InsightError("index.htm file missing in rooms dataset");
 		}
 		const indexContent = await indexFile.async("text");
-		const buildings = await this.parseIndexFile(indexContent);
+		let buildings = [];
+		try {
+			buildings = await this.parseIndexFile(indexContent);
+		} catch {
+			throw new InsightError("unable to parse buildings");
+		}
 
 		await Promise.all(
 			buildings.map(async (building) => {
@@ -33,6 +38,30 @@ export class RoomsProcessor {
 			})
 		);
 
+		let roomPromises: Promise<Room[]>[] = [];
+		try {
+			roomPromises = await this.processBuildings(unzipped, buildings);
+		} catch {
+			throw new InsightError("unable to process buildings.");
+		}
+
+		// for (const building of buildings) {
+		// 	const buildingFile = unzipped.file(building.filepath);
+		// 	if (!buildingFile) {
+		// 		// The building file might not exist; skip this building
+		// 		continue;
+		// 	}
+		// 	const buildingPromise = buildingFile.async("text").then(async (buildingContent) => {
+		// 		return this.parseBuildingFile(buildingContent, building);
+		// 	});
+		// 	roomPromises.push(buildingPromise);
+		// }
+
+		const roomsArrays = await Promise.all(roomPromises);
+		return roomsArrays.flat();
+	}
+
+	private async processBuildings(unzipped: JSZip, buildings: any[]): Promise<Promise<Room[]>[]> {
 		const roomPromises: Promise<Room[]>[] = [];
 
 		for (const building of buildings) {
@@ -41,14 +70,13 @@ export class RoomsProcessor {
 				// The building file might not exist; skip this building
 				continue;
 			}
-			const buildingPromise = buildingFile.async("text").then(async (buildingContent) => {
+			const buildingPromise = buildingFile.async("text").then(async (buildingContent: string) => {
 				return this.parseBuildingFile(buildingContent, building);
 			});
 			roomPromises.push(buildingPromise);
 		}
 
-		const roomsArrays = await Promise.all(roomPromises);
-		return roomsArrays.flat();
+		return roomPromises;
 	}
 
 	private async loadZipContent(content: string): Promise<JSZip> {
@@ -84,51 +112,6 @@ export class RoomsProcessor {
 			}
 		}
 		return buildings;
-	}
-	private extractBuildingAddress(td: any, building: Partial<Building>): void {
-		building.address = getTextFromNode(td).trim();
-	}
-
-	private extractBuildingShortname(linkNode: any, building: Partial<Building>): void {
-		// Attempt to find <abbr> tag
-		const abbrNode = findNode(linkNode, "abbr");
-		if (abbrNode) {
-			building.shortname = getTextFromNode(abbrNode).trim();
-		} else {
-			// Use regex to extract from fullname
-			const text = getTextFromNode(linkNode).trim();
-			const match = text.match(/\(([^)]+)\)$/);
-			if (match?.[1]) {
-				building.shortname = match[1];
-			} else {
-				// Extract from href
-				const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
-				if (hrefAttr) {
-					const hrefValue = hrefAttr.value;
-					const codeMatch = hrefValue.match(/\/([^/]+)-\d+/);
-					if (codeMatch?.[1]) {
-						building.shortname = codeMatch[1];
-					}
-				}
-			}
-		}
-	}
-
-	private extractBuildingInfo(td: any, building: Partial<Building>): void {
-		const linkNode = findNode(td, "a");
-		if (linkNode) {
-			// Extract the building's full name
-			building.fullname = getTextFromNode(linkNode).trim();
-
-			// Extract the building's shortname
-			this.extractBuildingShortname(linkNode, building);
-
-			// Extract filepath
-			const hrefAttr = linkNode.attrs.find((attr: any) => attr.name === "href");
-			if (hrefAttr) {
-				building.filepath = hrefAttr.value.replace(/^\./, "").replace(/^\//, "");
-			}
-		}
 	}
 
 	private parseBuilding(tr: any): Building | null {
