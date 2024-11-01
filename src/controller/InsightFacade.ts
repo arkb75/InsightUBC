@@ -21,6 +21,27 @@ import JSZip from "jszip";
  *
  */
 export default class InsightFacade implements IInsightFacade {
+	private datasets: any[];
+
+	constructor() {
+		this.datasets = [];
+		// Do not call async functions here
+	}
+
+	public async init(): Promise<void> {
+		await this.loadDatasetsFromDisk();
+	}
+
+	private async loadDatasetsFromDisk(): Promise<void> {
+		try {
+			const datasets = await fs.readJSON("data/data.JSON");
+			this.datasets = datasets;
+		} catch (_err) {
+			// If the file doesn't exist, initialize datasets as an empty array
+			this.datasets = [];
+		}
+	}
+
 	public async updateDatasets(): Promise<any[]> {
 		let datasets: any[];
 		try {
@@ -235,8 +256,7 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
-		const datasets = await this.updateDatasets();
-		return datasets.map((ds: any) => ({
+		return this.datasets.map((ds: any) => ({
 			id: ds.id,
 			kind: ds.kind,
 			numRows: ds.numRows,
