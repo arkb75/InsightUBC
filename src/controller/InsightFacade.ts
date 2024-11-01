@@ -175,14 +175,14 @@ export default class InsightFacade implements IInsightFacade {
 		} else if (kind === InsightDatasetKind.Rooms) {
 			// Process rooms dataset using RoomsProcessor
 			const roomsProcessor = new RoomsProcessor();
-			const rooms = this.processSecRoom(content, false, roomsProcessor);
-			if ((await rooms).length === 0) {
+			const rooms = await this.processSecRoom(content, false, roomsProcessor);
+			if (rooms.length === 0) {
 				throw new InsightError("No valid rooms found in dataset");
 			}
 			datasets.push({
 				id: id,
 				kind: kind,
-				numRows: (await rooms).length,
+				numRows: rooms.length,
 				data: rooms,
 			});
 		}
