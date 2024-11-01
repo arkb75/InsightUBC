@@ -34,32 +34,55 @@ export class QueryExecutor {
 		return this.evaluateQuery(this.datasets, query);
 	}
 
-	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
-		// apply the WHERE clause
-		const realData: any[] = dataset[0].data;
-		realData.forEach((item) => {
-			if (typeof item.year === "string") {
+	private normalizeData(data: any[]): void {
+		data.forEach((item) => {
+			if (typeof item.year === "string" && item.year !== null) {
 				item.year = Number(item.year);
 			}
-		});
-		realData.forEach((item) => {
-			if (typeof item.uuid === "number") {
+
+			if (typeof item.uuid === "number" && item.uuid !== null) {
 				item.uuid = String(item.uuid);
 			}
 		});
-		let filteredQuery = this.applyFilter(realData, query.WHERE);
+	}
 
-		// apply the TRANSFORMATION clause if there is one
+	private processDataset(data: any[], query: Query): InsightResult[] {
+		let filteredQuery = this.applyFilter(data, query.WHERE);
 		if (query.TRANSFORMATIONS) {
 			filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
 		}
-
 		if (filteredQuery.length > this.maxNum) {
 			throw new ResultTooLargeError("Query results exceed 5000 entries.");
 		}
-
-		// apply the OPTIONS clause
 		return this.applyOptions(filteredQuery, query.OPTIONS);
+	}
+
+	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
+		// apply the WHERE clause
+		let foundValidDataset = false;
+
+		for (const data of dataset) {
+			try {
+				this.normalizeData(data.data);
+				const results = this.processDataset(data.data, query);
+				foundValidDataset = true;
+				return results;
+			} catch (err) {
+				if (err instanceof InsightError && err.message.includes("does not exist in the dataset")) {
+					continue;
+				}
+
+				if (err instanceof ResultTooLargeError) {
+					throw new ResultTooLargeError("Query results exceed 5000 entries.");
+				}
+			}
+		}
+
+		if (!foundValidDataset) {
+			throw new InsightError("Required key(s) do not exist in any provided dataset.");
+		}
+
+		return [];
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {

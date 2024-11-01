@@ -71,7 +71,7 @@ describe("InsightFacade", function () {
 		// 	expect.fail("Should have thrown above.");
 		// });
 
-		// 1 [accepted]
+		//1[accepted]
 		it("should reject with  an empty dataset id", function () {
 			const result = facade.addDataset("", sections, InsightDatasetKind.Sections);
 
@@ -619,6 +619,7 @@ describe("InsightFacade", function () {
 
 			// Add only the sections dataset
 			try {
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
 				await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
 			} catch (err) {
 				throw new Error(`In PerformQuery Before hook, dataset failed to be added.\n${err}`);
@@ -669,80 +670,145 @@ describe("InsightFacade", function () {
 
 		it("[validC2/rooms.json] simple rooms query", checkQuery);
 		it("[validC2/emptyApply.json] empty APPLY", checkQuery);
+		it("[validC2/countM.json] empty APPLY", checkQuery);
+		it("[validC2/isolatedApply.json] empty APPLY", checkQuery);
+		it("[validC2/columnApply.json] empty APPLY", checkQuery);
 	});
 
-	// 	// describe("ListDatasets", function () {
-	// 	// 	beforeEach(function () {
-	// 	// 		// This section resets the insightFacade instance
-	// 	// 		// This runs before each test
-	// 	// 		facade = new InsightFacade();
-	// 	// 	});
+	describe("PerformQuerySections", function () {
+		before(async function () {
+			facade = new InsightFacade();
 
-	// 	// 	afterEach(async function () {
-	// 	// 		// This section resets the data directory (removing any cached data)
-	// 	// 		// This runs after each test, which should make each test independent of the previous one
-	// 	// 		await clearDisk();
-	// 	// 	});
+			// Add only the sections dataset
+			try {
+				await facade.addDataset("sections", sections, InsightDatasetKind.Sections);
+				await facade.addDataset("rooms", rooms, InsightDatasetKind.Rooms);
+			} catch (err) {
+				throw new Error(`In PerformQuery Before hook, dataset failed to be added.\n${err}`);
+			}
+		});
 
-	// 	// 	// 1 [accepted] todo: removed cause error cause when doing lint:check
-	// 	// 	// it("should return empty array with no datasets added", async function () {
-	// 	// 	// 	const result = await facade.listDatasets();
+		after(async function () {
+			await clearDisk();
+		});
 
-	// 	// 	// 	expect(result).to.be.an("array").that.is.empty;
-	// 	// 	// });
+		async function checkQuery(this: Mocha.Context): Promise<void> {
+			//changed never to void
+			if (!this.test) {
+				throw new Error(
+					"Invalid call to checkQuery." +
+						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+						"Do not invoke the function directly."
+				);
+			}
+			// Destructuring assignment to reduce property accesses
+			const { input, expected, errorExpected } = await loadTestQuery(this.test.title);
+			let result: InsightResult[];
+			try {
+				result = await facade.performQuery(input);
+				//console.log(result);
+				//expect(result).to.be.deep.equal(expected);
+				expect(result).to.have.deep.members(expected);
+				//expect(result).to.have.ordered.members(expected);
+			} catch (err) {
+				if (!errorExpected) {
+					expect.fail(`performQuery threw unexpected error: ${err}`);
+				}
 
-	// 	// 	// 2
-	// 	// 	it("one valid dataset added", async function () {
-	// 	// 		await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+				if (err instanceof ResultTooLargeError) {
+					expect(expected).to.be.equal("ResultTooLargeError");
+				} else if (err instanceof InsightError) {
+					expect(expected).to.be.equal("InsightError");
+				} else {
+					expect.fail("bruh how did this even happen :sob:" + err);
+				}
+				return;
+			}
 
-	// 	// 		const result = await facade.listDatasets();
+			if (errorExpected) {
+				expect.fail(`performQuery resolved when it should have rejected with ${expected}`);
+			}
+		}
 
-	// 	// 		expect(result).to.be.an("array").that.has.lengthOf(1);
+		it("[validC2/rooms.json] simple rooms query", checkQuery);
+		it("[validC2/emptyApply.json] empty APPLY", checkQuery);
+		it("[validC2/countM.json] empty APPLY", checkQuery);
+		it("[validC2/isolatedApply.json] empty APPLY", checkQuery);
+		it("[validC2/columnApply.json] empty APPLY", checkQuery);
+	});
 
-	// 	// 		const dataset: InsightDataset = result[0];
+	// describe("ListDatasets", function () {
+	// 	beforeEach(function () {
+	// 		// This section resets the insightFacade instance
+	// 		// This runs before each test
+	// 		facade = new InsightFacade();
+	// 	});
 
-	// 	// 		expect(dataset.id).to.be.equal("elysia");
-	// 	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
-	// 	// 	});
+	// 	afterEach(async function () {
+	// 		// This section resets the data directory (removing any cached data)
+	// 		// This runs after each test, which should make each test independent of the previous one
+	// 		await clearDisk();
+	// 	});
 
-	// 	// 	// 3
-	// 	// 	it("multiple datasets added", async function () {
-	// 	// 		const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-	// 	// 		expect(result).to.be.include("elysia");
+	// 	// 1 [accepted] todo: removed cause error cause when doing lint:check
+	// 	// it("should return empty array with no datasets added", async function () {
+	// 	// 	const result = await facade.listDatasets();
 
-	// 	// 		const result1 = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-	// 	// 		expect(result1).to.be.include("aponia");
-
-	// 	// 		const result2 = await facade.listDatasets();
-	// 	// 		//expect(result2).to.have.lengthOf(2);
-
-	// 	// 		//expect(result2).to.be.an("array").that.has.lengthOf(2);
-
-	// 	// 		const dataset: InsightDataset = result2[0];
-	// 	// 		const dataset2: InsightDataset = result2[1];
-
-	// 	// 		expect(dataset.id).to.be.equal("elysia");
-	// 	// 		expect(dataset2.id).to.be.equal("aponia");
-	// 	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
-	// 	// 		expect(dataset2.numRows).to.be.a("number").that.is.greaterThan(0);
-	// 	// 	});
-
-	// 	// 	// 4
-	// 	// 	it("add, remove and list", async function () {
-	// 	// 		const result1 = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
-	// 	// 		expect(result1).to.be.include("elysia");
-
-	// 	// 		const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
-	// 	// 		expect(result).to.be.include("aponia");
-
-	// 	// 		const endresult = await facade.removeDataset("aponia");
-	// 	// 		expect(endresult).to.be.equal("aponia");
-
-	// 	// 		const result2 = await facade.listDatasets();
-	// 	// 		expect(result2).to.be.an("array").that.has.lengthOf(1);
-	// 	// 		expect(result2[0].id).to.be.equal("elysia");
-	// 	// 	});
+	// 	// 	expect(result).to.be.an("array").that.is.empty;
 	// 	// });
+
+	// 	// 2
+	// 	it("one valid dataset added", async function () {
+	// 		await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+
+	// 		const result = await facade.listDatasets();
+
+	// 		expect(result).to.be.an("array").that.has.lengthOf(1);
+
+	// 		const dataset: InsightDataset = result[0];
+
+	// 		expect(dataset.id).to.be.equal("elysia");
+	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 	});
+
+	// 	// 3
+	// 	it("multiple datasets added", async function () {
+	// 		const result = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+	// 		expect(result).to.be.include("elysia");
+
+	// 		const result1 = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+	// 		expect(result1).to.be.include("aponia");
+
+	// 		const result2 = await facade.listDatasets();
+	// 		//expect(result2).to.have.lengthOf(2);
+
+	// 		//expect(result2).to.be.an("array").that.has.lengthOf(2);
+
+	// 		const dataset: InsightDataset = result2[0];
+	// 		const dataset2: InsightDataset = result2[1];
+
+	// 		expect(dataset.id).to.be.equal("elysia");
+	// 		expect(dataset2.id).to.be.equal("aponia");
+	// 		expect(dataset.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 		expect(dataset2.numRows).to.be.a("number").that.is.greaterThan(0);
+	// 	});
+
+	// 	// 4
+	// 	it("add, remove and list", async function () {
+	// 		const result1 = await facade.addDataset("elysia", sections2, InsightDatasetKind.Sections);
+	// 		expect(result1).to.be.include("elysia");
+
+	// 		const result = await facade.addDataset("aponia", sections2, InsightDatasetKind.Sections);
+	// 		expect(result).to.be.include("aponia");
+
+	// 		const endresult = await facade.removeDataset("aponia");
+	// 		expect(endresult).to.be.equal("aponia");
+
+	// 		const result2 = await facade.listDatasets();
+	// 		expect(result2).to.be.an("array").that.has.lengthOf(1);
+	// 		expect(result2[0].id).to.be.equal("elysia");
+	// 	});
+	// });
 
 	// 	// describe("QueryExecutor Tests", () => {
 	// 	// 	let queryExecutor: QueryExecutor;
