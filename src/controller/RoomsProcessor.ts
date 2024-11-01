@@ -8,7 +8,7 @@ import http from "http";
 export class RoomsProcessor {
 	private async geolocationBuilding(buildings: any): Promise<void> {
 		await Promise.all(
-			buildings.map(async (building: { address: string; lat: number; lon: number; shortname: any; }) => {
+			buildings.map(async (building: { address: string; lat: number; lon: number; shortname: any }) => {
 				try {
 					const { lat, lon } = await this.getGeolocation(building.address);
 					building.lat = lat;
@@ -43,7 +43,7 @@ export class RoomsProcessor {
 		try {
 			await this.geolocationBuilding(buildings);
 		} catch {
-			throw new InsightError('Not geolocation-ing');
+			throw new InsightError("Not geolocation-ing");
 		}
 
 		let roomPromises: Promise<Room[]>[] = [];
@@ -69,7 +69,7 @@ export class RoomsProcessor {
 		try {
 			roomsArrays = await Promise.all(roomPromises);
 		} catch {
-			throw new InsightError("unable to fulfill roomPromises")
+			throw new InsightError("unable to fulfill roomPromises");
 		}
 		return roomsArrays.flat();
 	}
