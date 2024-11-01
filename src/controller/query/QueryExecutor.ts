@@ -34,36 +34,39 @@ export class QueryExecutor {
 		return this.evaluateQuery(this.datasets, query);
 	}
 
+	private normalizeData(data: any[]): void {
+		data.forEach((item) => {
+			if (typeof item.year === "string" && item.year !== null) {
+				item.year = Number(item.year);
+			}
+
+			if (typeof item.uuid === "number" && item.uuid !== null) {
+				item.uuid = String(item.uuid);
+			}
+		});
+	}
+
+	private processDataset(data: any[], query: Query): InsightResult[] {
+		let filteredQuery = this.applyFilter(data, query.WHERE);
+		if (query.TRANSFORMATIONS) {
+			filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
+		}
+		if (filteredQuery.length > this.maxNum) {
+			throw new ResultTooLargeError("Query results exceed 5000 entries.");
+		}
+		return this.applyOptions(filteredQuery, query.OPTIONS);
+	}
+
 	private async evaluateQuery(dataset: any[], query: Query): Promise<InsightResult[]> {
 		// apply the WHERE clause
 		let foundValidDataset = false;
 
-		for (let i = 0; i < dataset.length; i++) {
+		for (const data of dataset) {
 			try {
-				const realData: any[] = dataset[i].data;
-				realData.forEach((item) => {
-					if (typeof item.year === "string" && item.year !== null) {
-						item.year = Number(item.year);
-					}
-				});
-				realData.forEach((item) => {
-					if (typeof item.uuid === "number" && item.year !== null) {
-						item.uuid = String(item.uuid);
-					}
-				});
-
-				let filteredQuery = this.applyFilter(realData, query.WHERE);
-
-				if (query.TRANSFORMATIONS) {
-					filteredQuery = this.applyTransformations(filteredQuery, query.TRANSFORMATIONS);
-				}
-
-				if (filteredQuery.length > this.maxNum) {
-					throw new ResultTooLargeError("Query results exceed 5000 entries.");
-				}
-
-				return this.applyOptions(filteredQuery, query.OPTIONS);
-
+				this.normalizeData(data.data);
+				const results = this.processDataset(data.data, query);
+				foundValidDataset = true;
+				return results;
 			} catch (err) {
 				if (err instanceof InsightError && err.message.includes("does not exist in the dataset")) {
 					continue;
@@ -79,7 +82,7 @@ export class QueryExecutor {
 			throw new InsightError("Required key(s) do not exist in any provided dataset.");
 		}
 
-		return await [];
+		return [];
 	}
 
 	// private async getSectionDataForDataset(datasetId: string): Promise<any[]> {

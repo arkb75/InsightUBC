@@ -474,8 +474,8 @@ describe("InsightFacade", function () {
 			if (!this.test) {
 				throw new Error(
 					"Invalid call to checkQuery." +
-					"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
-					"Do not invoke the function directly."
+						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+						"Do not invoke the function directly."
 				);
 			}
 			// Destructuring assignment to reduce property accesses
@@ -577,13 +577,13 @@ describe("InsightFacade", function () {
 		it("[invalidC2/invalidArray.json] Invalid APPLY: is not a list", checkQuery);
 		it(
 			"[invalidC2/invalidColumnMix.json] " +
-			"Invalid COLUMN key - has one in & not in GROUP or APPLY when TRANSFORMATIONS exists",
+				"Invalid COLUMN key - has one in & not in GROUP or APPLY when TRANSFORMATIONS exists",
 			checkQuery
 		);
 		it("[invalidC2/invalidColumnOrder.json] Invalid ORDER key - not in COLUMNS", checkQuery);
 		it(
 			"[invalidC2/invalidColumnsTransformations.json] " +
-			"Invalid COLUMN key - not in GROUP or APPLY when TRANSFORMATIONS exists",
+				"Invalid COLUMN key - not in GROUP or APPLY when TRANSFORMATIONS exists",
 			checkQuery
 		);
 		it("[invalidC2/invalidDirection.json] Invalid ORDER: not valid direction", checkQuery);
@@ -635,8 +635,8 @@ describe("InsightFacade", function () {
 			if (!this.test) {
 				throw new Error(
 					"Invalid call to checkQuery." +
-					"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
-					"Do not invoke the function directly."
+						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+						"Do not invoke the function directly."
 				);
 			}
 			// Destructuring assignment to reduce property accesses
@@ -673,8 +673,6 @@ describe("InsightFacade", function () {
 		it("[validC2/countM.json] empty APPLY", checkQuery);
 		it("[validC2/isolatedApply.json] empty APPLY", checkQuery);
 		it("[validC2/columnApply.json] empty APPLY", checkQuery);
-
-
 	});
 
 	describe("PerformQuerySections", function () {
@@ -699,8 +697,8 @@ describe("InsightFacade", function () {
 			if (!this.test) {
 				throw new Error(
 					"Invalid call to checkQuery." +
-					"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
-					"Do not invoke the function directly."
+						"Usage: 'checkQuery' must be passed as the second parameter of Mocha's it(..) function." +
+						"Do not invoke the function directly."
 				);
 			}
 			// Destructuring assignment to reduce property accesses
@@ -737,10 +735,7 @@ describe("InsightFacade", function () {
 		it("[validC2/countM.json] empty APPLY", checkQuery);
 		it("[validC2/isolatedApply.json] empty APPLY", checkQuery);
 		it("[validC2/columnApply.json] empty APPLY", checkQuery);
-
-
 	});
-
 
 	// describe("ListDatasets", function () {
 	// 	beforeEach(function () {
