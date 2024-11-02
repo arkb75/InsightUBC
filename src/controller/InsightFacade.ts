@@ -21,7 +21,7 @@ import JSZip from "jszip";
  *
  */
 export default class InsightFacade implements IInsightFacade {
-	private datasets: any[];
+	public datasets: any[];
 
 	constructor() {
 		this.datasets = [];
@@ -255,7 +255,8 @@ export default class InsightFacade implements IInsightFacade {
 	}
 
 	public async listDatasets(): Promise<InsightDataset[]> {
-		return this.datasets.map((ds: any) => ({
+		const datasets = await this.updateDatasets();
+		return datasets.map((ds: any) => ({
 			id: ds.id,
 			kind: ds.kind,
 			numRows: ds.numRows,
