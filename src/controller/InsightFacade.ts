@@ -196,6 +196,7 @@ export default class InsightFacade implements IInsightFacade {
 			// Process rooms dataset using RoomsProcessor
 			const roomsProcessor = new RoomsProcessor();
 			const rooms = await this.processSecRoom(content, false, roomsProcessor);
+			// console.log(rooms.length);
 			if (rooms.length === 0) {
 				throw new InsightError("No valid rooms found in dataset");
 			}
