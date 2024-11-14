@@ -256,11 +256,21 @@ export class RoomsProcessor {
 	}
 
 	private extractRoomFurniture(td: any, room: Partial<Room>): void {
-		room.furniture = getTextFromNode(td).trim();
+		const furniture = getTextFromNode(td).trim();
+		if (furniture) {
+			room.furniture = furniture;
+		} else {
+			room.furniture = "";
+		}
 	}
 
 	private extractRoomType(td: any, room: Partial<Room>): void {
-		room.type = getTextFromNode(td).trim();
+		const type = getTextFromNode(td).trim();
+		if (type) {
+			room.type = type;
+		} else {
+			room.type = "";
+		}
 	}
 
 	private async getGeolocation(address: string): Promise<{ lat: number; lon: number }> {
