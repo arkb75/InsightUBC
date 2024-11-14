@@ -232,7 +232,13 @@ export class RoomsProcessor {
 				}
 			}
 		}
-		if (room.name && room.seats !== undefined && room.type && room.furniture && room.href) {
+		if (
+			(room.name || room.name === "") &&
+			room.seats !== undefined &&
+			(room.type || room.type === "") &&
+			(room.furniture || room.furniture === "") &&
+			(room.href || room.href === "")
+		) {
 			return room as Room;
 		}
 		return null;
