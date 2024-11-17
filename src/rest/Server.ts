@@ -103,7 +103,7 @@ export default class Server {
 			const arr = Server.insightFacade.addDataset(
 				req.params.id,
 				// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
-				Buffer.from(req.params.body).toString("base64"),
+				Buffer.from(req.body).toString("base64"),
 				req.params.kind as InsightDatasetKind
 			);
 			res.status(StatusCodes.OK).json({ result: arr });
