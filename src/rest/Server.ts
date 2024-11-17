@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
-import {InsightDatasetKind, InsightError} from "../controller/IInsightFacade";
+import { InsightDatasetKind, InsightError } from "../controller/IInsightFacade";
 import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
@@ -100,10 +100,12 @@ export default class Server {
 	private static addDataset(req: Request, res: Response): void {
 		try {
 			Log.info(`Server::addDataset(..) - params: ${JSON.stringify(req.params)}`);
-			const arr = Server.insightFacade.addDataset(req.params.id,
+			const arr = Server.insightFacade.addDataset(
+				req.params.id,
 				// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
-				Buffer.from(req.params.body).toString('base64'),
-				req.params.kind as InsightDatasetKind);
+				Buffer.from(req.params.body).toString("base64"),
+				req.params.kind as InsightDatasetKind
+			);
 			res.status(StatusCodes.OK).json({ result: arr });
 		} catch (err) {
 			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
