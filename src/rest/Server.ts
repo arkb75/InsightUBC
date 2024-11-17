@@ -3,11 +3,14 @@ import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
+import { InsightDatasetKind, InsightError } from "../controller/IInsightFacade";
+import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
 	private readonly port: number;
 	private express: Application;
 	private server: http.Server | undefined;
+	private static insightFacade: InsightFacade;
 
 	constructor(port: number) {
 		Log.info(`Server::<init>( ${port} )`);
@@ -88,7 +91,60 @@ export default class Server {
 		// http://localhost:4321/echo/hello
 		this.express.get("/echo/:msg", Server.echo);
 
-		// TODO: your other endpoints should go here
+		this.express.put("/dataset/:id/:kind", Server.addDataset);
+		this.express.delete("/dataset/:id", Server.removeDataset);
+		this.express.post("/query", Server.performQuery);
+		this.express.get("/datasets", Server.listDatasets);
+	}
+
+	private static addDataset(req: Request, res: Response): void {
+		try {
+			Log.info(`Server::addDataset(..) - params: ${JSON.stringify(req.params)}`);
+			const arr = Server.insightFacade.addDataset(
+				req.params.id,
+				// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
+				Buffer.from(req.params.body).toString("base64"),
+				req.params.kind as InsightDatasetKind
+			);
+			res.status(StatusCodes.OK).json({ result: arr });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
+	}
+
+	private static removeDataset(req: Request, res: Response): void {
+		try {
+			Log.info(`Server::removeDataset(..) - params: ${JSON.stringify(req.params)}`);
+			const str = Server.insightFacade.removeDataset(req.params.id);
+			res.status(StatusCodes.OK).json({ result: str });
+		} catch (err) {
+			if (err instanceof InsightError) {
+				res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+			} else {
+				res.status(StatusCodes.NOT_FOUND).json({ error: err });
+			}
+		}
+	}
+
+	private static performQuery(req: Request, res: Response): void {
+		try {
+			Log.info(`Server::performQuery(..) - params: ${JSON.stringify(req.params)}`);
+			const arr = Server.insightFacade.performQuery(req.body);
+			// const arr = Server.performEcho(req.params.msg);
+			res.status(StatusCodes.OK).json({ result: arr });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
+	}
+
+	private static listDatasets(req: Request, res: Response): void {
+		try {
+			Log.info(`Server::listDatasets(..) - params: ${JSON.stringify(req.params)}`);
+			const arr = Server.insightFacade.listDatasets();
+			res.status(StatusCodes.OK).json({ result: arr });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
 	}
 
 	// The next two methods handle the echo service.
