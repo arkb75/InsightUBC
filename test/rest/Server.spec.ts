@@ -184,6 +184,7 @@ describe("Facade C3", function () {
 				.catch(function () {
 					expect.fail();
 				});
+
 			request(SERVER_URL)
 				.post("/query")
 				.send(query)
@@ -216,6 +217,7 @@ describe("Facade C3", function () {
 				.catch(function () {
 					expect.fail();
 				});
+
 			request(SERVER_URL)
 				.post("/query")
 				.send(query)
