@@ -14,18 +14,21 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import AddDataset from './components/AddDataset';
 import ListDataset from './components/ListDataset';
+import Insights from './components/Insights';
 
 function App() {
 	const [mode, setMode] = useState(() => {
 		return localStorage.getItem('themeMode') || 'light';
 	});
+	const [datasets, setDatasets] = useState([]);
 	const [updateList, setUpdateList] = useState(false);
 
 	useEffect(() => {
 		localStorage.setItem('themeMode', mode);
 	}, [mode]);
 
-	const handleDatasetAdded = () => {
+	const handleDatasetAdded = (newDataset) => {
+		setDatasets((prev) => [...prev, newDataset]);
 		setUpdateList((prev) => !prev);
 	};
 
@@ -78,12 +81,13 @@ function App() {
 				</Toolbar>
 			</AppBar>
 			<Container maxWidth="md" style={{ marginTop: '2rem' }}>
-				<Grid container spacing={4}>
-					<Grid item xs={12}>
+				<Grid container spacing={4} alignItems="flex-start">
+					<Grid item xs={12} md={6}>
 						<AddDataset onDatasetAdded={handleDatasetAdded} />
-					</Grid>
-					<Grid item xs={12}>
 						<ListDataset key={updateList} />
+					</Grid>
+					<Grid item xs={12} md={6}>
+						<Insights datasets={datasets} />
 					</Grid>
 				</Grid>
 			</Container>

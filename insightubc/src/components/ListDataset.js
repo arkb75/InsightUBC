@@ -53,7 +53,7 @@ const ListDataset = () => {
 	};
 
 	return (
-		<Paper elevation={3} style={{ padding: '2rem', marginTop: '2rem' }}>
+		<Paper elevation={3} style={{ padding: '1rem', marginTop: '2rem' }}>
 			<Typography variant="h5" gutterBottom>
 				Added Datasets
 			</Typography>

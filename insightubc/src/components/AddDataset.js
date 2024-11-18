@@ -64,7 +64,7 @@ const AddDataset = ({ onDatasetAdded }) => {
 	};
 
 	return (
-		<Paper elevation={3} style={{ padding: '2rem' }}>
+		<Paper elevation={3} style={{ padding: '1rem' }}>
 			<Typography variant="h5" gutterBottom>
 				Add Dataset
 			</Typography>
