@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+// import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
@@ -89,7 +89,7 @@ export default class Server {
 	private registerRoutes(): void {
 		// This is an example endpoint this you can invoke by accessing this URL in your browser:
 		// http://localhost:4321/echo/hello
-		this.express.get("/echo/:msg", Server.echo);
+		// this.express.get("/echo/:msg", Server.echo);
 
 		this.express.put("/dataset/:id/:kind", Server.addDataset);
 		this.express.delete("/dataset/:id", Server.removeDataset);
@@ -158,21 +158,21 @@ export default class Server {
 	// The next two methods handle the echo service.
 	// These are almost certainly not the best place to put these, but are here for your reference.
 	// By updating the Server.echo function pointer above, these methods can be easily moved.
-	private static echo(req: Request, res: Response): void {
-		try {
-			Log.info(`Server::echo(..) - params: ${JSON.stringify(req.params)}`);
-			const response = Server.performEcho(req.params.msg);
-			res.status(StatusCodes.OK).json({ result: response });
-		} catch (err) {
-			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
-		}
-	}
-
-	private static performEcho(msg: string): string {
-		if (typeof msg !== "undefined" && msg !== null) {
-			return `${msg}...${msg}`;
-		} else {
-			return "Message not provided";
-		}
-	}
+	// private static echo(req: Request, res: Response): void {
+	// 	try {
+	// 		Log.info(`Server::echo(..) - params: ${JSON.stringify(req.params)}`);
+	// 		const response = Server.performEcho(req.params.msg);
+	// 		res.status(StatusCodes.OK).json({ result: response });
+	// 	} catch (err) {
+	// 		res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+	// 	}
+	// }
+	//
+	// private static performEcho(msg: string): string {
+	// 	if (typeof msg !== "undefined" && msg !== null) {
+	// 		return `${msg}...${msg}`;
+	// 	} else {
+	// 		return "Message not provided";
+	// 	}
+	// }
 }
