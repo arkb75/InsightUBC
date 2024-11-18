@@ -100,12 +100,11 @@ export default class Server {
 	private static addDataset(req: Request, res: Response): void {
 		try {
 			Log.info(`Server::addDataset(..) - params: ${JSON.stringify(req.params)}`);
-			const arr = Server.insightFacade.addDataset(
-				req.params.id,
-				// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
-				Buffer.from(req.body).toString("base64"),
-				req.params.kind as InsightDatasetKind
-			);
+			const id = req.params.id;
+			// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
+			const content = Buffer.from(req.body).toString("base64");
+			const kind = req.params.kind as InsightDatasetKind;
+			const arr = Server.insightFacade.addDataset(id, content, kind);
 			res.status(StatusCodes.OK).json({ result: arr });
 		} catch (err) {
 			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
