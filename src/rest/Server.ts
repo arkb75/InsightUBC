@@ -97,7 +97,7 @@ export default class Server {
 		this.express.get("/datasets", Server.listDatasets);
 	}
 
-	private static addDataset(req: Request, res: Response): void {
+	private static async addDataset(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		const rejectCode = 400;
 		try {
@@ -106,20 +106,20 @@ export default class Server {
 			// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
 			const content = Buffer.from(req.body).toString("base64");
 			const kind = req.params.kind as InsightDatasetKind;
-			const arr = Server.insightFacade.addDataset(id, content, kind);
+			const arr = await Server.insightFacade.addDataset(id, content, kind);
 			res.status(resolveCode).json({ result: arr });
 		} catch (err) {
 			res.status(rejectCode).json({ error: err });
 		}
 	}
 
-	private static removeDataset(req: Request, res: Response): void {
+	private static async removeDataset(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		const rejectCode = 400;
 		const notFoundCode = 404;
 		try {
 			Log.info(`Server::removeDataset(..) - params: ${JSON.stringify(req.params)}`);
-			const str = Server.insightFacade.removeDataset(req.params.id);
+			const str = await Server.insightFacade.removeDataset(req.params.id);
 			res.status(resolveCode).json({ result: str });
 		} catch (err) {
 			if (err instanceof InsightError) {
@@ -130,12 +130,12 @@ export default class Server {
 		}
 	}
 
-	private static performQuery(req: Request, res: Response): void {
+	private static async performQuery(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		const rejectCode = 400;
 		try {
 			Log.info(`Server::performQuery(..) - params: ${JSON.stringify(req.params)}`);
-			const arr = Server.insightFacade.performQuery(req.body);
+			const arr = await Server.insightFacade.performQuery(req.body);
 			// const arr = Server.performEcho(req.params.msg);
 			res.status(resolveCode).json({ result: arr });
 		} catch (err) {
@@ -143,15 +143,14 @@ export default class Server {
 		}
 	}
 
-	private static listDatasets(req: Request, res: Response): void {
+	private static async listDatasets(req: Request, res: Response): Promise<Promise<void> | string> {
 		const resolveCode = 200;
-		const rejectCode = 400;
 		try {
 			Log.info(`Server::listDatasets(..) - params: ${JSON.stringify(req.params)}`);
-			const arr = Server.insightFacade.listDatasets();
+			const arr = await Server.insightFacade.listDatasets();
 			res.status(resolveCode).json({ result: arr });
 		} catch (err) {
-			res.status(rejectCode).json({ error: err });
+			return "error: " + err;
 		}
 	}
 

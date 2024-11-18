@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import request, { Response } from "supertest";
-import { StatusCodes } from "http-status-codes";
+// import { StatusCodes } from "http-status-codes";
 // import Log from "@ubccpsc310/folder-test/build/Log";
 import Server from "../../src/rest/Server";
 // import { clearDisk, getContentFromArchives } from "../TestUtil";
@@ -105,17 +105,18 @@ describe("Facade C3", function () {
 	// });
 
 	it("DELETE test fail with not found error", function () {
+		const code = 404;
 		request(SERVER_URL)
 			.get("/datasets/name")
 			.then(function (res: Response) {
-				expect(res.status).to.be.equal(StatusCodes.NOT_FOUND);
+				expect(res.status).to.be.equal(code);
 			})
 			.catch(function () {
 				expect.fail();
 			});
 	});
 	//
-	// it("DELETE test fail with ingisht error", function () {
+	// it("DELETE test fail with insight error", function () {
 	// 	request(SERVER_URL)
 	// 		.put(ENDPOINT_URL)
 	// 		.send(ZIP_FILE_DATA)
