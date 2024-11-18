@@ -1,6 +1,6 @@
-// import { expect } from "chai";
-// import request, { Response } from "supertest";
-// import { StatusCodes } from "http-status-codes";
+import { expect } from "chai";
+import request, { Response } from "supertest";
+import { StatusCodes } from "http-status-codes";
 // import Log from "@ubccpsc310/folder-test/build/Log";
 import Server from "../../src/rest/Server";
 // import { clearDisk, getContentFromArchives } from "../TestUtil";
@@ -8,7 +8,7 @@ import { clearDisk } from "../TestUtil";
 
 describe("Facade C3", function () {
 	let server: Server;
-	// const SERVER_URL = "http://localhost:4321";
+	const SERVER_URL = "http://localhost:4321";
 	// const ENDPOINT_URL = "/dataset/sections/sections";
 	// const ZIP_FILE_DATA = getContentFromArchives("small.zip");
 
@@ -103,28 +103,17 @@ describe("Facade C3", function () {
 	// 			expect.fail();
 	// 		});
 	// });
-	//
-	// it("DELETE test fail with not found error", function () {
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.get("/datasets/dne")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.NOT_FOUND);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
+
+	it("DELETE test fail with not found error", function () {
+		request(SERVER_URL)
+			.get("/datasets/name")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(StatusCodes.NOT_FOUND);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
 	//
 	// it("DELETE test fail with ingisht error", function () {
 	// 	request(SERVER_URL)
