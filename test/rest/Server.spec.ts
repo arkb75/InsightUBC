@@ -65,8 +65,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	}
 
@@ -84,8 +84,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 
@@ -99,8 +99,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 
@@ -112,8 +112,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(notFoundCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 
@@ -127,8 +127,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 
@@ -155,8 +155,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 
@@ -175,8 +175,8 @@ describe("Facade C3", function () {
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 

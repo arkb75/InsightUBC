@@ -3,14 +3,14 @@ import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
-import { InsightDatasetKind, NotFoundError } from "../controller/IInsightFacade";
+import { IInsightFacade, InsightDatasetKind, NotFoundError } from "../controller/IInsightFacade";
 import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
 	private readonly port: number;
 	private express: Application;
 	private server: http.Server | undefined;
-	private static insightFacade: InsightFacade;
+	private static insightFacade: IInsightFacade;
 
 	constructor(port: number) {
 		Log.info(`Server::<init>( ${port} )`);
