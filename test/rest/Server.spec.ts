@@ -13,8 +13,8 @@ describe("Facade C3", function () {
 
 	before(async function () {
 		const port = 4321;
-		sections = await getContentFromArchives("small.zip");
 		server = new Server(port);
+		sections = await getContentFromArchives("small.zip");
 		await server.start();
 	});
 
@@ -73,9 +73,9 @@ describe("Facade C3", function () {
 		successfulAdd();
 	});
 
-	it("PUT test fail", function () {
+	it("PUT test fail", async function () {
 		const rejectCode = 400;
-		request(SERVER_URL)
+		return request(SERVER_URL)
 			.put("/dataset/invalid_sections/invalid_sections")
 			.send(Buffer.from(sections, "base64"))
 			.set("Content-Type", "application/x-zip-compressed")
