@@ -1,19 +1,19 @@
 import { expect } from "chai";
 import request, { Response } from "supertest";
-import { StatusCodes } from "http-status-codes";
+// import { StatusCodes } from "http-status-codes";
 // import Log from "@ubccpsc310/folder-test/build/Log";
 import Server from "../../src/rest/Server";
-// import { clearDisk, getContentFromArchives } from "../TestUtil";
-import { clearDisk } from "../TestUtil";
+import { clearDisk, getContentFromArchives } from "../TestUtil";
 
 describe("Facade C3", function () {
 	let server: Server;
+	let sections: string;
 	const SERVER_URL = "http://localhost:4321";
-	// const ENDPOINT_URL = "/dataset/sections/sections";
-	// const ZIP_FILE_DATA = getContentFromArchives("small.zip");
+	const ENDPOINT_URL = "/dataset/sections/sections";
 
 	before(async function () {
 		const port = 4321;
+		sections = await getContentFromArchives("small.zip");
 		server = new Server(port);
 		await server.start();
 	});
@@ -56,170 +56,186 @@ describe("Facade C3", function () {
 	// 	}
 	// });
 
-	// it("PUT test success", function () {
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
-	//
-	// it("PUT test fail", function () {
-	// 	request(SERVER_URL)
-	// 		.put("/dataset/invalid_sections/invalid_sections")
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.BAD_REQUEST);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
-	//
-	// it("DELETE test success", function () {
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.get("/datasets/sections")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
+	it("PUT test success", function () {
+		const resolveCode = 200;
 
-	it("DELETE test fail with not found error", function () {
 		request(SERVER_URL)
-			.get("/datasets/name")
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
-				expect(res.status).to.be.equal(StatusCodes.NOT_FOUND);
+				expect(res.status).to.be.equal(resolveCode);
 			})
 			.catch(function () {
 				expect.fail();
 			});
 	});
-	//
-	// it("DELETE test fail with ingisht error", function () {
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.get("/datasets/bad_req")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.BAD_REQUEST);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
-	//
-	// it("POST test success", function () {
-	// 	const query = JSON.stringify({
-	// 		WHERE: {
-	// 			GT: {
-	// 				sections_avg: 97,
-	// 			},
-	// 		},
-	// 		OPTIONS: {
-	// 			COLUMNS: ["sections_dept", "sections_avg"],
-	// 			ORDER: "sections_avg",
-	// 		},
-	// 	});
-	//
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.post("/query")
-	// 		.send(query)
-	// 		.set("Content-Type", "application/json")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
-	//
-	// it("POST test fail", function () {
-	// 	const query = JSON.stringify({
-	// 		OPTIONS: {},
-	// 	});
-	//
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.post("/query")
-	// 		.send(query)
-	// 		.set("Content-Type", "application/json")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.BAD_REQUEST);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
-	//
-	// it("GET test success", function () {
-	// 	request(SERVER_URL)
-	// 		.put(ENDPOINT_URL)
-	// 		.send(ZIP_FILE_DATA)
-	// 		.set("Content-Type", "application/x-zip-compressed")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	//
-	// 	request(SERVER_URL)
-	// 		.get("/datasets")
-	// 		.then(function (res: Response) {
-	// 			expect(res.status).to.be.equal(StatusCodes.OK);
-	// 		})
-	// 		.catch(function () {
-	// 			expect.fail();
-	// 		});
-	// });
+
+	it("PUT test fail", function () {
+		const rejectCode = 400;
+
+		request(SERVER_URL)
+			.put("/dataset/invalid_sections/invalid_sections")
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(rejectCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("DELETE test success", function () {
+		const resolveCode = 200;
+
+		request(SERVER_URL)
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+
+		request(SERVER_URL)
+			.get("/datasets/sections")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("DELETE test fail with not found error", function () {
+		const notFoundCode = 404;
+
+		request(SERVER_URL)
+			.get("/datasets/name")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(notFoundCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("DELETE test fail with insight error", function () {
+		const resolveCode = 200;
+		const rejectCode = 400;
+
+		request(SERVER_URL)
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+
+		request(SERVER_URL)
+			.get("/datasets/bad_req")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(rejectCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("POST test success", function () {
+		const resolveCode = 200;
+		const query = JSON.stringify({
+			WHERE: {
+				GT: {
+					sections_avg: 97,
+				},
+			},
+			OPTIONS: {
+				COLUMNS: ["sections_dept", "sections_avg"],
+				ORDER: "sections_avg",
+			},
+		});
+
+		request(SERVER_URL)
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+
+		request(SERVER_URL)
+			.post("/query")
+			.send(query)
+			.set("Content-Type", "application/json")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("POST test fail", function () {
+		const resolveCode = 200;
+		const rejectCode = 400;
+		const query = JSON.stringify({
+			OPTIONS: {},
+		});
+
+		request(SERVER_URL)
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+
+		request(SERVER_URL)
+			.post("/query")
+			.send(query)
+			.set("Content-Type", "application/json")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(rejectCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
+
+	it("GET test success", function () {
+		const resolveCode = 200;
+
+		request(SERVER_URL)
+			.put(ENDPOINT_URL)
+			.send(sections)
+			.set("Content-Type", "application/x-zip-compressed")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+
+		request(SERVER_URL)
+			.get("/datasets")
+			.then(function (res: Response) {
+				expect(res.status).to.be.equal(resolveCode);
+			})
+			.catch(function () {
+				expect.fail();
+			});
+	});
 });
