@@ -3,7 +3,7 @@ import express, { Application, Request, Response } from "express";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
-import {InsightDatasetKind, InsightError, NotFoundError} from "../controller/IInsightFacade";
+import { InsightDatasetKind, InsightError, NotFoundError } from "../controller/IInsightFacade";
 import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
