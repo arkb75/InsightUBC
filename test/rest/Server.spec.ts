@@ -7,7 +7,7 @@ import { clearDisk, getContentFromArchives } from "../TestUtil";
 
 describe("Facade C3", function () {
 	let server: Server;
-	let sections: string;
+	let sections: any;
 	const SERVER_URL = "http://localhost:4321";
 	const ENDPOINT_URL = "/dataset/sections/sections";
 
@@ -55,13 +55,11 @@ describe("Facade C3", function () {
 	// 		// and some more logging here!
 	// 	}
 	// });
-
-	it("PUT test success", function () {
+	function successfulAdd(): void {
 		const resolveCode = 200;
-
 		request(SERVER_URL)
 			.put(ENDPOINT_URL)
-			.send(sections)
+			.send(Buffer.from(sections, "base64"))
 			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
@@ -69,14 +67,17 @@ describe("Facade C3", function () {
 			.catch(function () {
 				expect.fail();
 			});
+	}
+
+	it("PUT test success", function () {
+		successfulAdd();
 	});
 
 	it("PUT test fail", function () {
 		const rejectCode = 400;
-
 		request(SERVER_URL)
 			.put("/dataset/invalid_sections/invalid_sections")
-			.send(sections)
+			.send(Buffer.from(sections, "base64"))
 			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
@@ -89,16 +90,7 @@ describe("Facade C3", function () {
 	it("DELETE test success", function () {
 		const resolveCode = 200;
 
-		request(SERVER_URL)
-			.put(ENDPOINT_URL)
-			.send(sections)
-			.set("Content-Type", "application/x-zip-compressed")
-			.then(function (res: Response) {
-				expect(res.status).to.be.equal(resolveCode);
-			})
-			.catch(function () {
-				expect.fail();
-			});
+		successfulAdd();
 
 		request(SERVER_URL)
 			.get("/datasets/sections")
@@ -124,19 +116,9 @@ describe("Facade C3", function () {
 	});
 
 	it("DELETE test fail with insight error", function () {
-		const resolveCode = 200;
 		const rejectCode = 400;
 
-		request(SERVER_URL)
-			.put(ENDPOINT_URL)
-			.send(sections)
-			.set("Content-Type", "application/x-zip-compressed")
-			.then(function (res: Response) {
-				expect(res.status).to.be.equal(resolveCode);
-			})
-			.catch(function () {
-				expect.fail();
-			});
+		successfulAdd();
 
 		request(SERVER_URL)
 			.get("/datasets/bad_req")
@@ -162,16 +144,7 @@ describe("Facade C3", function () {
 			},
 		});
 
-		request(SERVER_URL)
-			.put(ENDPOINT_URL)
-			.send(sections)
-			.set("Content-Type", "application/x-zip-compressed")
-			.then(function (res: Response) {
-				expect(res.status).to.be.equal(resolveCode);
-			})
-			.catch(function () {
-				expect.fail();
-			});
+		successfulAdd();
 
 		request(SERVER_URL)
 			.post("/query")
@@ -186,22 +159,12 @@ describe("Facade C3", function () {
 	});
 
 	it("POST test fail", function () {
-		const resolveCode = 200;
 		const rejectCode = 400;
 		const query = JSON.stringify({
 			OPTIONS: {},
 		});
 
-		request(SERVER_URL)
-			.put(ENDPOINT_URL)
-			.send(sections)
-			.set("Content-Type", "application/x-zip-compressed")
-			.then(function (res: Response) {
-				expect(res.status).to.be.equal(resolveCode);
-			})
-			.catch(function () {
-				expect.fail();
-			});
+		successfulAdd();
 
 		request(SERVER_URL)
 			.post("/query")
@@ -219,18 +182,8 @@ describe("Facade C3", function () {
 		const resolveCode = 200;
 
 		request(SERVER_URL)
-			.put(ENDPOINT_URL)
-			.send(sections)
-			.set("Content-Type", "application/x-zip-compressed")
-			.then(function (res: Response) {
-				expect(res.status).to.be.equal(resolveCode);
-			})
-			.catch(function () {
-				expect.fail();
-			});
-
-		request(SERVER_URL)
 			.get("/datasets")
+			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
