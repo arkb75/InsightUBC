@@ -3,7 +3,7 @@ import express, { Application, Request, Response } from "express";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
-import { InsightDatasetKind, InsightError } from "../controller/IInsightFacade";
+import {InsightDatasetKind, InsightError, NotFoundError} from "../controller/IInsightFacade";
 import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
@@ -20,6 +20,7 @@ export default class Server {
 		this.registerMiddleware();
 		this.registerRoutes();
 
+		Server.insightFacade = new InsightFacade();
 		// NOTE: you can serve static frontend files in from your express server
 		// by uncommenting the line below. This makes files in ./frontend/public
 		// accessible at http://localhost:<port>/
@@ -113,7 +114,7 @@ export default class Server {
 		}
 	}
 
-	private static async removeDataset(req: Request, res: Response): Promise<void> {
+	private static async removeDataset(req: Request, res: Response): Promise<Promise<void> | string> {
 		const resolveCode = 200;
 		const rejectCode = 400;
 		const notFoundCode = 404;
@@ -124,8 +125,10 @@ export default class Server {
 		} catch (err) {
 			if (err instanceof InsightError) {
 				res.status(rejectCode).json({ error: err });
-			} else {
+			} else if (err instanceof NotFoundError) {
 				res.status(notFoundCode).json({ error: err });
+			} else {
+				return "error: " + err;
 			}
 		}
 	}
