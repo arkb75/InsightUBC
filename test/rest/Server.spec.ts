@@ -55,9 +55,10 @@ describe("Facade C3", function () {
 	// 		// and some more logging here!
 	// 	}
 	// });
-	function successfulAdd(): void {
+	async function successfulAdd(): Promise<void> {
 		const resolveCode = 200;
-		request(SERVER_URL)
+
+		return request(SERVER_URL)
 			.put(ENDPOINT_URL)
 			.send(Buffer.from(sections, "base64"))
 			.set("Content-Type", "application/x-zip-compressed")
@@ -69,12 +70,13 @@ describe("Facade C3", function () {
 			});
 	}
 
-	it("PUT test success", function () {
-		successfulAdd();
+	it("PUT test success", async function () {
+		return successfulAdd();
 	});
 
 	it("PUT test fail", async function () {
 		const rejectCode = 400;
+
 		return request(SERVER_URL)
 			.put("/dataset/invalid_sections/invalid_sections")
 			.send(Buffer.from(sections, "base64"))
@@ -87,13 +89,13 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("DELETE test success", function () {
+	it("DELETE test success", async function () {
 		const resolveCode = 200;
 
-		successfulAdd();
+		await successfulAdd();
 
-		request(SERVER_URL)
-			.get("/datasets/sections")
+		return request(SERVER_URL)
+			.delete("/dataset/sections")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
@@ -102,11 +104,11 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("DELETE test fail with not found error", function () {
+	it("DELETE test fail with not found error", async function () {
 		const notFoundCode = 404;
 
-		request(SERVER_URL)
-			.get("/datasets/name")
+		return request(SERVER_URL)
+			.delete("/dataset/name")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(notFoundCode);
 			})
@@ -115,13 +117,13 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("DELETE test fail with insight error", function () {
+	it("DELETE test fail with insight error", async function () {
 		const rejectCode = 400;
 
-		successfulAdd();
+		await successfulAdd();
 
-		request(SERVER_URL)
-			.get("/datasets/bad_req")
+		return request(SERVER_URL)
+			.delete("/dataset/bad_req")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
 			})
@@ -130,12 +132,12 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("POST test success", function () {
+	it("POST test success", async function () {
 		const resolveCode = 200;
 		const query = JSON.stringify({
 			WHERE: {
 				GT: {
-					sections_avg: 97,
+					sections_avg: 50,
 				},
 			},
 			OPTIONS: {
@@ -144,9 +146,9 @@ describe("Facade C3", function () {
 			},
 		});
 
-		successfulAdd();
+		await successfulAdd();
 
-		request(SERVER_URL)
+		return request(SERVER_URL)
 			.post("/query")
 			.send(query)
 			.set("Content-Type", "application/json")
@@ -158,15 +160,15 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("POST test fail", function () {
+	it("POST test fail", async function () {
 		const rejectCode = 400;
 		const query = JSON.stringify({
 			OPTIONS: {},
 		});
 
-		successfulAdd();
+		await successfulAdd();
 
-		request(SERVER_URL)
+		return request(SERVER_URL)
 			.post("/query")
 			.send(query)
 			.set("Content-Type", "application/json")
@@ -178,17 +180,18 @@ describe("Facade C3", function () {
 			});
 	});
 
-	it("GET test success", function () {
+	it("GET test success", async function () {
 		const resolveCode = 200;
 
-		request(SERVER_URL)
+		await successfulAdd();
+
+		return request(SERVER_URL)
 			.get("/datasets")
-			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
 			})
-			.catch(function () {
-				expect.fail();
+			.catch(function (err) {
+				expect.fail(err);
 			});
 	});
 });

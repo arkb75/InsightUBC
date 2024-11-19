@@ -1,9 +1,9 @@
 import express, { Application, Request, Response } from "express";
-// import { StatusCodes } from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
-import { InsightDatasetKind, InsightError, NotFoundError } from "../controller/IInsightFacade";
+import { InsightDatasetKind, NotFoundError } from "../controller/IInsightFacade";
 import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
@@ -90,7 +90,7 @@ export default class Server {
 	private registerRoutes(): void {
 		// This is an example endpoint this you can invoke by accessing this URL in your browser:
 		// http://localhost:4321/echo/hello
-		// this.express.get("/echo/:msg", Server.echo);
+		this.express.get("/echo/:msg", Server.echo);
 
 		this.express.put("/dataset/:id/:kind", Server.addDataset);
 		this.express.delete("/dataset/:id", Server.removeDataset);
@@ -114,7 +114,7 @@ export default class Server {
 		}
 	}
 
-	private static async removeDataset(req: Request, res: Response): Promise<Promise<void> | string> {
+	private static async removeDataset(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		const rejectCode = 400;
 		const notFoundCode = 404;
@@ -123,12 +123,10 @@ export default class Server {
 			const str = await Server.insightFacade.removeDataset(req.params.id);
 			res.status(resolveCode).json({ result: str });
 		} catch (err) {
-			if (err instanceof InsightError) {
-				res.status(rejectCode).json({ error: err });
-			} else if (err instanceof NotFoundError) {
+			if (err instanceof NotFoundError) {
 				res.status(notFoundCode).json({ error: err });
 			} else {
-				return "error: " + err;
+				res.status(rejectCode).json({ error: err });
 			}
 		}
 	}
@@ -146,35 +144,35 @@ export default class Server {
 		}
 	}
 
-	private static async listDatasets(req: Request, res: Response): Promise<Promise<void> | string> {
+	private static async listDatasets(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		try {
 			Log.info(`Server::listDatasets(..) - params: ${JSON.stringify(req.params)}`);
 			const arr = await Server.insightFacade.listDatasets();
 			res.status(resolveCode).json({ result: arr });
 		} catch (err) {
-			return "error: " + err;
+			res.status(StatusCodes.IM_A_TEAPOT).json({ error: err });
 		}
 	}
 
 	// The next two methods handle the echo service.
 	// These are almost certainly not the best place to put these, but are here for your reference.
 	// By updating the Server.echo function pointer above, these methods can be easily moved.
-	// private static echo(req: Request, res: Response): void {
-	// 	try {
-	// 		Log.info(`Server::echo(..) - params: ${JSON.stringify(req.params)}`);
-	// 		const response = Server.performEcho(req.params.msg);
-	// 		res.status(StatusCodes.OK).json({ result: response });
-	// 	} catch (err) {
-	// 		res.status(StatusCodes.BAD_REQUEST).json({ error: err });
-	// 	}
-	// }
-	//
-	// private static performEcho(msg: string): string {
-	// 	if (typeof msg !== "undefined" && msg !== null) {
-	// 		return `${msg}...${msg}`;
-	// 	} else {
-	// 		return "Message not provided";
-	// 	}
-	// }
+	private static echo(req: Request, res: Response): void {
+		try {
+			Log.info(`Server::echo(..) - params: ${JSON.stringify(req.params)}`);
+			const response = Server.performEcho(req.params.msg);
+			res.status(StatusCodes.OK).json({ result: response });
+		} catch (err) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		}
+	}
+
+	private static performEcho(msg: string): string {
+		if (typeof msg !== "undefined" && msg !== null) {
+			return `${msg}...${msg}`;
+		} else {
+			return "Message not provided";
+		}
+	}
 }
