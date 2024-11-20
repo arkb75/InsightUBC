@@ -3,7 +3,8 @@ import request, { Response } from "supertest";
 // import { StatusCodes } from "http-status-codes";
 // import Log from "@ubccpsc310/folder-test/build/Log";
 import Server from "../../src/rest/Server";
-import { clearDisk, getContentFromArchives } from "../TestUtil";
+import { clearDisk } from "../TestUtil";
+import { readFile } from "node:fs/promises";
 
 describe("Facade C3", function () {
 	let server: Server;
@@ -14,7 +15,7 @@ describe("Facade C3", function () {
 	before(async function () {
 		const port = 4321;
 		server = new Server(port);
-		sections = await getContentFromArchives("small.zip");
+		sections = await readFile("./test/resources/archives/pair.zip");
 		await server.start();
 	});
 
@@ -60,7 +61,7 @@ describe("Facade C3", function () {
 
 		return request(SERVER_URL)
 			.put(ENDPOINT_URL)
-			.send(Buffer.from(sections, "base64"))
+			.send(Buffer.from(sections))
 			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(resolveCode);
@@ -79,7 +80,7 @@ describe("Facade C3", function () {
 
 		return request(SERVER_URL)
 			.put("/dataset/invalid_sections/invalid_sections")
-			.send(Buffer.from(sections, "base64"))
+			.send(Buffer.from(sections))
 			.set("Content-Type", "application/x-zip-compressed")
 			.then(function (res: Response) {
 				expect(res.status).to.be.equal(rejectCode);
@@ -134,17 +135,20 @@ describe("Facade C3", function () {
 
 	it("POST test success", async function () {
 		const resolveCode = 200;
-		const query = JSON.stringify({
-			WHERE: {
-				GT: {
-					sections_avg: 50,
-				},
+		const query = JSON.parse(JSON.stringify({
+			"WHERE":{
+				"GT":{
+					"sections_avg":97
+				}
 			},
-			OPTIONS: {
-				COLUMNS: ["sections_dept", "sections_avg"],
-				ORDER: "sections_avg",
-			},
-		});
+			"OPTIONS":{
+				"COLUMNS":[
+					"sections_dept",
+					"sections_avg"
+				],
+				"ORDER":"sections_avg"
+			}
+		}));
 
 		await successfulAdd();
 
@@ -162,9 +166,9 @@ describe("Facade C3", function () {
 
 	it("POST test fail", async function () {
 		const rejectCode = 400;
-		const query = JSON.stringify({
-			OPTIONS: {},
-		});
+		const query = JSON.parse(JSON.stringify({
+			"OPTIONS": {},
+		}));
 
 		await successfulAdd();
 
