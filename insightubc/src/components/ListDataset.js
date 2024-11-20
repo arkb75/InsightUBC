@@ -16,7 +16,7 @@ const ListDataset = () => {
 
 	const fetchDatasets = async () => {
 		try {
-			const response = await fetch('/datasets');
+			const response = await fetch('http://localhost:4321/datasets');
 			const result = await response.json();
 
 			if (response.ok) {
@@ -25,6 +25,7 @@ const ListDataset = () => {
 				setFeedback(`Error: ${result.error}`);
 			}
 		} catch (error) {
+			console.error('Fetch error:', error);
 			setFeedback('An error occurred while fetching datasets.');
 		}
 	};

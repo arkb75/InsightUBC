@@ -3,11 +3,14 @@ import { StatusCodes } from "http-status-codes";
 import Log from "@ubccpsc310/folder-test/build/Log";
 import * as http from "http";
 import cors from "cors";
+import { IInsightFacade, InsightDatasetKind, NotFoundError } from "../controller/IInsightFacade";
+import InsightFacade from "../controller/InsightFacade";
 
 export default class Server {
 	private readonly port: number;
 	private express: Application;
 	private server: http.Server | undefined;
+	private static insightFacade: IInsightFacade;
 
 	constructor(port: number) {
 		Log.info(`Server::<init>( ${port} )`);
@@ -17,6 +20,7 @@ export default class Server {
 		this.registerMiddleware();
 		this.registerRoutes();
 
+		Server.insightFacade = new InsightFacade();
 		// NOTE: you can serve static frontend files in from your express server
 		// by uncommenting the line below. This makes files in ./frontend/public
 		// accessible at http://localhost:<port>/
@@ -88,7 +92,67 @@ export default class Server {
 		// http://localhost:4321/echo/hello
 		this.express.get("/echo/:msg", Server.echo);
 
-		// TODO: your other endpoints should go here
+		this.express.put("/dataset/:id/:kind", Server.addDataset);
+		this.express.delete("/dataset/:id", Server.removeDataset);
+		this.express.post("/query", Server.performQuery);
+		this.express.get("/datasets", Server.listDatasets);
+	}
+
+	private static async addDataset(req: Request, res: Response): Promise<void> {
+		const resolveCode = 200;
+		const rejectCode = 400;
+		try {
+			Log.info(`Server::addDataset(..) - params: ${JSON.stringify(req.params)}`);
+			const id = req.params.id;
+			// https://stackoverflow.com/questions/56952405/how-to-decode-encode-string-to-base64-in-typescript-express-server
+			const content = Buffer.from(req.body).toString("base64");
+			const kind = req.params.kind as InsightDatasetKind;
+			const arr = await Server.insightFacade.addDataset(id, content, kind);
+			res.status(resolveCode).json({ result: arr });
+		} catch (err) {
+			res.status(rejectCode).json({ error: err });
+		}
+	}
+
+	private static async removeDataset(req: Request, res: Response): Promise<void> {
+		const resolveCode = 200;
+		const rejectCode = 400;
+		const notFoundCode = 404;
+		try {
+			Log.info(`Server::removeDataset(..) - params: ${JSON.stringify(req.params)}`);
+			const str = await Server.insightFacade.removeDataset(req.params.id);
+			res.status(resolveCode).json({ result: str });
+		} catch (err) {
+			if (err instanceof NotFoundError) {
+				res.status(notFoundCode).json({ error: err });
+			} else {
+				res.status(rejectCode).json({ error: err });
+			}
+		}
+	}
+
+	private static async performQuery(req: Request, res: Response): Promise<void> {
+		const resolveCode = 200;
+		const rejectCode = 400;
+		try {
+			Log.info(`Server::performQuery(..) - params: ${JSON.stringify(req.params)}`);
+			const arr = await Server.insightFacade.performQuery(req.body);
+			// const arr = Server.performEcho(req.params.msg);
+			res.status(resolveCode).json({ result: arr });
+		} catch (err) {
+			res.status(rejectCode).json({ error: err });
+		}
+	}
+
+	private static async listDatasets(req: Request, res: Response): Promise<void> {
+		const resolveCode = 200;
+		try {
+			Log.info(`Server::listDatasets(..) - params: ${JSON.stringify(req.params)}`);
+			const arr = await Server.insightFacade.listDatasets();
+			res.status(resolveCode).json({ result: arr });
+		} catch (err) {
+			res.status(StatusCodes.IM_A_TEAPOT).json({ error: err });
+		}
 	}
 
 	// The next two methods handle the echo service.

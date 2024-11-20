@@ -40,7 +40,7 @@ const AddDataset = ({ onDatasetAdded }) => {
 		}
 
 		try {
-			const response = await fetch(`/dataset/${datasetId}/sections`, {
+			const response = await fetch(`http://localhost:4321/dataset/${datasetId}/sections`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/x-zip-compressed',
