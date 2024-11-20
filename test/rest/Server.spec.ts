@@ -135,20 +135,19 @@ describe("Facade C3", function () {
 
 	it("POST test success", async function () {
 		const resolveCode = 200;
-		const query = JSON.parse(JSON.stringify({
-			"WHERE":{
-				"GT":{
-					"sections_avg":97
-				}
-			},
-			"OPTIONS":{
-				"COLUMNS":[
-					"sections_dept",
-					"sections_avg"
-				],
-				"ORDER":"sections_avg"
-			}
-		}));
+		const query = JSON.parse(
+			JSON.stringify({
+				WHERE: {
+					GT: {
+						sections_avg: 97,
+					},
+				},
+				OPTIONS: {
+					COLUMNS: ["sections_dept", "sections_avg"],
+					ORDER: "sections_avg",
+				},
+			})
+		);
 
 		await successfulAdd();
 
@@ -166,9 +165,11 @@ describe("Facade C3", function () {
 
 	it("POST test fail", async function () {
 		const rejectCode = 400;
-		const query = JSON.parse(JSON.stringify({
-			"OPTIONS": {},
-		}));
+		const query = JSON.parse(
+			JSON.stringify({
+				OPTIONS: {},
+			})
+		);
 
 		await successfulAdd();
 
