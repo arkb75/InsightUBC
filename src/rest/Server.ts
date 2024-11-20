@@ -101,6 +101,7 @@ export default class Server {
 	private static async addDataset(req: Request, res: Response): Promise<void> {
 		const resolveCode = 200;
 		const rejectCode = 400;
+
 		try {
 			Log.info(`Server::addDataset(..) - params: ${JSON.stringify(req.params)}`);
 			const id = req.params.id;

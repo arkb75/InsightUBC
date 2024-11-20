@@ -73,9 +73,15 @@ export class QueryExecutor {
 		for (const data of dataset) {
 			try {
 				this.normalizeData(data.data);
-				const results = this.processDataset(data.data, query);
-				foundValidDataset = true;
-				return results;
+
+				const datasetIds = this.extractDatasetIds(query);
+				const datasetId = Array.from(datasetIds)[0];
+
+				if (data.id === datasetId) {
+					const results = this.processDataset(data.data, query);
+					foundValidDataset = true;
+					return results;
+				}
 			} catch (err) {
 				if (err instanceof InsightError && err.message.includes("does not exist in the dataset")) {
 					continue;
@@ -115,10 +121,18 @@ export class QueryExecutor {
 	private extractDatasetIds(query: Query): Set<string> {
 		const datasetIds = new Set<string>();
 
-		// extract dataset IDs from COLUMNS
-		for (const column of query.OPTIONS.COLUMNS) {
-			const [id] = column.split("_");
-			datasetIds.add(id);
+		if (!query.TRANSFORMATIONS) {
+			// extract dataset IDs from COLUMNS
+			for (const column of query.OPTIONS.COLUMNS) {
+				const [id] = column.split("_");
+				datasetIds.add(id);
+			}
+		} else {
+			// extract dataset IDs from GROUP
+			for (const column of query.TRANSFORMATIONS.GROUP) {
+				const [id] = column.split("_");
+				datasetIds.add(id);
+			}
 		}
 
 		// extract dataset IDs from WHERE clause
