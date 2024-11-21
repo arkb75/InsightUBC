@@ -23,9 +23,9 @@ const Insights = ({ datasetId }) => {
             setLoading(true);
             setError(null);
             setInsights(null);
-            setChartData(null);
-            setBarChartData(null);
-            setHorizontalBarChartData(null);
+            setChartData(null); // Clear chart data when fetching new insights
+            setBarChartData(null); // Clear bar chart data when fetching new insights
+            setHorizontalBarChartData(null); // Clear horizontal bar chart data when fetching new insights
 
             try {
                 let query = {};
@@ -74,8 +74,12 @@ const Insights = ({ datasetId }) => {
                                 { GT: { [`${datasetId}_year`]: 1900 } }
                             ],
                         },
+                        TRANSFORMATIONS: {
+                            GROUP: [`${datasetId}_year`],
+                            APPLY: [{ averageavg: { AVG: `${datasetId}_avg` } }],
+                        },
                         OPTIONS: {
-                            COLUMNS: [`${datasetId}_year`, `${datasetId}_avg`],
+                            COLUMNS: [`${datasetId}_year`, `averageavg`],
                             ORDER: {
                                 dir: 'UP',
                                 keys: [`${datasetId}_year`],
@@ -123,7 +127,7 @@ const Insights = ({ datasetId }) => {
                         });
                     } else if (insightType === 'averageByYears') {
                         const years = result.result.map(item => item[`${datasetId}_year`]);
-                        const averages = result.result.map(item => item[`${datasetId}_avg`]);
+                        const averages = result.result.map(item => item[`averageavg`]);
                         setChartData({
                             labels: years,
                             datasets: [{
@@ -151,8 +155,8 @@ const Insights = ({ datasetId }) => {
     const handleInsightTypeChange = (event) => {
         setInsightType(event.target.value);
         setChartData(null);
-        setBarChartData(null);
-        setHorizontalBarChartData(null);
+        setBarChartData(null); // Clear bar chart data when switching filters
+        setHorizontalBarChartData(null); // Clear horizontal bar chart data when switching filters
     };
 
     const handleGradeThresholdChange = (event) => {
@@ -185,7 +189,7 @@ const Insights = ({ datasetId }) => {
                             <MenuItem value="topCourses">Sorted Averages for Courses in a Department Exceeding Grade Threshold</MenuItem>
                             <MenuItem value="topProfessors">Top Professors for a Course</MenuItem>
                             <MenuItem value="averageByYears">Average Across Different Years for a Selected Course</MenuItem>
-
+                            {/* Add other types as needed */}
                         </TextField>
                     </Grid>
                     {insightType && insightType !== 'averageByYears' && (
@@ -267,9 +271,9 @@ const Insights = ({ datasetId }) => {
                         </>
                     )}
                     <Grid item xs={12}>
-                        {/* <Button variant="contained" color="primary" onClick={() => { }} fullWidth>
+                        <Button variant="contained" color="primary" onClick={() => { }} fullWidth>
                             Apply
-                        </Button> */}
+                        </Button>
                     </Grid>
                 </Grid>
             </Box>
