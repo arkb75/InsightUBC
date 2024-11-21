@@ -110,8 +110,8 @@ export default class Server {
 			const kind = req.params.kind as InsightDatasetKind;
 			const arr = await Server.insightFacade.addDataset(id, content, kind);
 			res.status(resolveCode).json({ result: arr });
-		} catch (err) {
-			res.status(rejectCode).json({ error: err });
+		} catch (err: any) {
+			res.status(rejectCode).json({ error: err.message });
 		}
 	}
 
@@ -123,11 +123,11 @@ export default class Server {
 			Log.info(`Server::removeDataset(..) - params: ${JSON.stringify(req.params)}`);
 			const str = await Server.insightFacade.removeDataset(req.params.id);
 			res.status(resolveCode).json({ result: str });
-		} catch (err) {
+		} catch (err: any) {
 			if (err instanceof NotFoundError) {
-				res.status(notFoundCode).json({ error: err });
+				res.status(notFoundCode).json({ error: err.message });
 			} else {
-				res.status(rejectCode).json({ error: err });
+				res.status(rejectCode).json({ error: err.message });
 			}
 		}
 	}
@@ -140,8 +140,8 @@ export default class Server {
 			const arr = await Server.insightFacade.performQuery(req.body);
 			// const arr = Server.performEcho(req.params.msg);
 			res.status(resolveCode).json({ result: arr });
-		} catch (err) {
-			res.status(rejectCode).json({ error: err });
+		} catch (err: any) {
+			res.status(rejectCode).json({ error: err.message });
 		}
 	}
 
@@ -151,8 +151,8 @@ export default class Server {
 			Log.info(`Server::listDatasets(..) - params: ${JSON.stringify(req.params)}`);
 			const arr = await Server.insightFacade.listDatasets();
 			res.status(resolveCode).json({ result: arr });
-		} catch (err) {
-			res.status(StatusCodes.IM_A_TEAPOT).json({ error: err });
+		} catch (err: any) {
+			res.status(StatusCodes.IM_A_TEAPOT).json({ error: err.message });
 		}
 	}
 
@@ -164,8 +164,8 @@ export default class Server {
 			Log.info(`Server::echo(..) - params: ${JSON.stringify(req.params)}`);
 			const response = Server.performEcho(req.params.msg);
 			res.status(StatusCodes.OK).json({ result: response });
-		} catch (err) {
-			res.status(StatusCodes.BAD_REQUEST).json({ error: err });
+		} catch (err: any) {
+			res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
 		}
 	}
 
