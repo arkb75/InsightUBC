@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Box, CircularProgress, TextField, MenuItem, Button, Grid } from '@mui/material';
+import { Line, Bar } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 
 const Insights = ({ datasetId }) => {
     const [loading, setLoading] = useState(false);
@@ -9,14 +11,21 @@ const Insights = ({ datasetId }) => {
     const [department, setDepartment] = useState('');
     const [gradeThreshold, setGradeThreshold] = useState('');
     const [order, setOrder] = useState('UP');
+    const [courseId, setCourseId] = useState('');
+    const [chartData, setChartData] = useState(null);
+    const [barChartData, setBarChartData] = useState(null);
+    const [horizontalBarChartData, setHorizontalBarChartData] = useState(null);
 
     useEffect(() => {
         const fetchInsights = async () => {
-            if (!datasetId || !insightType || !department) return;
+            if (!datasetId || !insightType || (!department && insightType !== 'averageByYears') || (insightType === 'averageByYears' && (!courseId || !department)) || (insightType === 'topProfessors' && (!department || !courseId))) return;
 
             setLoading(true);
             setError(null);
             setInsights(null);
+            setChartData(null);
+            setBarChartData(null);
+            setHorizontalBarChartData(null);
 
             try {
                 let query = {};
@@ -29,7 +38,7 @@ const Insights = ({ datasetId }) => {
                             ],
                         },
                         OPTIONS: {
-                            COLUMNS: [`${datasetId}_dept`, `${datasetId}_avg`, `${datasetId}_title`],
+                            COLUMNS: [`${datasetId}_dept`, `${datasetId}_avg`, `${datasetId}_id`],
                             ORDER: {
                                 dir: order,
                                 keys: [`${datasetId}_avg`],
@@ -39,20 +48,41 @@ const Insights = ({ datasetId }) => {
                 } else if (insightType === 'topProfessors') {
                     query = {
                         WHERE: {
-                            IS: {
-                                [`${datasetId}_course`]: department,
-                            },
+                            AND: [
+                                { IS: { [`${datasetId}_dept`]: department } },
+                                { IS: { [`${datasetId}_id`]: courseId } }
+                            ],
+                        },
+                        TRANSFORMATIONS: {
+                            GROUP: [`${datasetId}_instructor`],
+                            APPLY: [{ averageavg: { AVG: `${datasetId}_avg` } }],
                         },
                         OPTIONS: {
-                            COLUMNS: [`${datasetId}_instructor`, `${datasetId}_avg`],
+                            COLUMNS: [`${datasetId}_instructor`, `averageavg`],
                             ORDER: {
                                 dir: order,
-                                keys: [`${datasetId}_avg`],
+                                keys: [`averageavg`],
+                            },
+                        },
+                    };
+                } else if (insightType === 'averageByYears') {
+                    query = {
+                        WHERE: {
+                            AND: [
+                                { IS: { [`${datasetId}_id`]: courseId } },
+                                { IS: { [`${datasetId}_dept`]: department } },
+                                { GT: { [`${datasetId}_year`]: 1900 } }
+                            ],
+                        },
+                        OPTIONS: {
+                            COLUMNS: [`${datasetId}_year`, `${datasetId}_avg`],
+                            ORDER: {
+                                dir: 'UP',
+                                keys: [`${datasetId}_year`],
                             },
                         },
                     };
                 }
-                // Add other types of queries as needed
 
                 const response = await fetch('http://localhost:4321/query', {
                     method: 'POST',
@@ -64,6 +94,47 @@ const Insights = ({ datasetId }) => {
 
                 if (response.ok) {
                     setInsights(result.result);
+
+                    if (insightType === 'topCourses') {
+                        const ids = result.result.map(item => item[`${datasetId}_id`]);
+                        const averages = result.result.map(item => item[`${datasetId}_avg`]);
+                        setBarChartData({
+                            labels: ids,
+                            datasets: [{
+                                label: `Top Courses in ${department}`,
+                                data: averages,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                            }],
+                        });
+                    } else if (insightType === 'topProfessors') {
+                        const instructors = result.result.map(item => item[`${datasetId}_instructor`]);
+                        const averages = result.result.map(item => item[`averageavg`]);
+                        setHorizontalBarChartData({
+                            labels: instructors,
+                            datasets: [{
+                                label: `Top Professors for ${department} in ${courseId}`,
+                                data: averages,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                            }],
+                        });
+                    } else if (insightType === 'averageByYears') {
+                        const years = result.result.map(item => item[`${datasetId}_year`]);
+                        const averages = result.result.map(item => item[`${datasetId}_avg`]);
+                        setChartData({
+                            labels: years,
+                            datasets: [{
+                                label: `Average Grades for ${courseId}`,
+                                data: averages,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                fill: true,
+                            }],
+                        });
+                    }
                 } else {
                     setError(result.error || 'An error occurred while fetching insights.');
                 }
@@ -75,7 +146,14 @@ const Insights = ({ datasetId }) => {
         };
 
         fetchInsights();
-    }, [datasetId, insightType, department, gradeThreshold, order]);
+    }, [datasetId, insightType, department, gradeThreshold, order, courseId]);
+
+    const handleInsightTypeChange = (event) => {
+        setInsightType(event.target.value);
+        setChartData(null);
+        setBarChartData(null);
+        setHorizontalBarChartData(null);
+    };
 
     const handleGradeThresholdChange = (event) => {
         const value = event.target.value;
@@ -99,17 +177,18 @@ const Insights = ({ datasetId }) => {
                             select
                             label="Insight Type"
                             value={insightType}
-                            onChange={(e) => setInsightType(e.target.value)}
+                            onChange={handleInsightTypeChange}
                             variant="outlined"
                             fullWidth
                             size="small"
                         >
-                            <MenuItem value="topCourses">Top Courses for a Department</MenuItem>
+                            <MenuItem value="topCourses">Sorted Averages for Courses in a Department Exceeding Grade Threshold</MenuItem>
                             <MenuItem value="topProfessors">Top Professors for a Course</MenuItem>
-                            {/* Add other types as needed */}
+                            <MenuItem value="averageByYears">Average Across Different Years for a Selected Course</MenuItem>
+
                         </TextField>
                     </Grid>
-                    {insightType && (
+                    {insightType && insightType !== 'averageByYears' && (
                         <>
                             <Grid item xs={12} md={6}>
                                 <TextField
@@ -121,6 +200,18 @@ const Insights = ({ datasetId }) => {
                                     size="small"
                                 />
                             </Grid>
+                            {insightType === 'topProfessors' && (
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        label="Course ID"
+                                        value={courseId}
+                                        onChange={(e) => setCourseId(e.target.value)}
+                                        variant="outlined"
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </Grid>
+                            )}
                             {insightType === 'topCourses' && (
                                 <Grid item xs={12} md={6}>
                                     <TextField
@@ -151,31 +242,58 @@ const Insights = ({ datasetId }) => {
                             </Grid>
                         </>
                     )}
+                    {insightType === 'averageByYears' && (
+                        <>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Department"
+                                    value={department}
+                                    onChange={(e) => setDepartment(e.target.value)}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    label="Course ID"
+                                    value={courseId}
+                                    onChange={(e) => setCourseId(e.target.value)}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                />
+                            </Grid>
+                        </>
+                    )}
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={() => { }} fullWidth>
+                        {/* <Button variant="contained" color="primary" onClick={() => { }} fullWidth>
                             Apply
-                        </Button>
+                        </Button> */}
                     </Grid>
                 </Grid>
             </Box>
             {loading && <CircularProgress size={20} />}
             {error && <Typography color="error">{error}</Typography>}
             {
-                insights && (
-                    <Box mt={2}>
-                        {insights.map((item, index) => (
-                            <Typography key={index} style={{ fontSize: '0.9rem' }}>
-                                {JSON.stringify(item)}
-                            </Typography>
-                        ))}
+                barChartData && (
+                    <Box mt={2} style={{ height: '500px', width: '100%' }}>
+                        <Bar data={barChartData} />
                     </Box>
                 )
             }
             {
-                !datasetId && !loading && (
-                    <Typography style={{ fontSize: '0.9rem' }}>
-                        Select a dataset to view insights.
-                    </Typography>
+                horizontalBarChartData && (
+                    <Box mt={2} style={{ height: '500px', width: '100%' }}>
+                        <Bar data={horizontalBarChartData} options={{ indexAxis: 'y' }} />
+                    </Box>
+                )
+            }
+            {
+                chartData && (
+                    <Box mt={2} style={{ height: '500px', width: '100%' }}>
+                        <Line data={chartData} />
+                    </Box>
                 )
             }
         </Paper>
