@@ -21,7 +21,7 @@ function App() {
 		return localStorage.getItem('themeMode') || 'light';
 	});
 	const [datasets, setDatasets] = useState([]);
-	const [updateList, setUpdateList] = useState(false);
+	const [selectedDataset, setSelectedDataset] = useState(null); // Track selected dataset
 
 	useEffect(() => {
 		localStorage.setItem('themeMode', mode);
@@ -29,7 +29,10 @@ function App() {
 
 	const handleDatasetAdded = (newDataset) => {
 		setDatasets((prev) => [...prev, newDataset]);
-		setUpdateList((prev) => !prev);
+	};
+
+	const handleSelectDataset = (dataset) => {
+		setSelectedDataset(dataset); // Update the selected dataset
 	};
 
 	const colorMode = {
@@ -84,10 +87,14 @@ function App() {
 				<Grid container spacing={4} alignItems="flex-start">
 					<Grid item xs={12} md={6}>
 						<AddDataset onDatasetAdded={handleDatasetAdded} />
-						<ListDataset key={updateList} />
+						<ListDataset
+							datasets={datasets}
+							onSelectDataset={handleSelectDataset} // Callback for dataset selection
+						/>
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<Insights datasets={datasets} />
+						<Insights datasetId={selectedDataset?.id} /> {/* Pass selected dataset */}
+
 					</Grid>
 				</Grid>
 			</Container>

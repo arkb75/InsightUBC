@@ -13,51 +13,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Insights from './Insights';
 
 const ListDataset = ({ datasets, onSelectDataset }) => {
-	// Rename the state variable to avoid naming conflicts
-	const [localDatasets, setLocalDatasets] = useState([]);
 	const [feedback, setFeedback] = useState('');
-	const [selectedDatasetId, setSelectedDatasetId] = useState(null); // State for the selected dataset ID
 
-	// Fetch datasets from the server
-	const fetchDatasets = async () => {
-		try {
-			const response = await fetch('http://localhost:4321/datasets');
-			const result = await response.json();
-
-			if (response.ok) {
-				setLocalDatasets(result.result);
-			} else {
-				setFeedback(`Error: ${result.error}`);
-			}
-		} catch (error) {
-			setFeedback('An error occurred while fetching datasets.');
-		}
-	};
-
-	useEffect(() => {
-		fetchDatasets();
-	}, []);
-
-	// Remove a dataset
-	const handleRemove = async (id) => {
-		try {
-			const response = await fetch(`/dataset/${id}`, { method: 'DELETE' });
-			const result = await response.json();
-
-			if (response.ok) {
-				setFeedback(`Dataset ${id} removed successfully.`);
-				setLocalDatasets(localDatasets.filter((ds) => ds.id !== id));
-			} else {
-				setFeedback(`Error: ${result.error}`);
-			}
-		} catch (error) {
-			setFeedback('An error occurred while removing the dataset.');
-		}
-	};
-
-	// Handle viewing insights
 	const handleViewInsights = (id) => {
-		onSelectDataset(localDatasets.find((ds) => ds.id === id)); // Pass selected dataset to parent
+		onSelectDataset(datasets.find((ds) => ds.id === id)); // Pass selected dataset to parent
 	};
 
 	return (
@@ -66,11 +25,11 @@ const ListDataset = ({ datasets, onSelectDataset }) => {
 				<Typography variant="h5" gutterBottom>
 					Added Datasets
 				</Typography>
-				{localDatasets.length === 0 ? (
+				{datasets.length === 0 ? (
 					<Typography variant="body1">No datasets added.</Typography>
 				) : (
 					<List>
-						{localDatasets.map((dataset) => (
+						{datasets.map((dataset) => (
 							<ListItem key={dataset.id}>
 								<Box
 									display="flex"

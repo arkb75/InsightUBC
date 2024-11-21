@@ -1,105 +1,83 @@
-import React from 'react';
-import { Typography, Box, Paper, Divider } from '@mui/material';
-import { Line, Bar, Pie } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    PointElement,
-    LineElement,
-    ArcElement,
-} from 'chart.js';
+import React, { useEffect, useState } from 'react';
+import { Paper, Typography, Box, CircularProgress } from '@mui/material';
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    PointElement,
-    LineElement,
-    ArcElement
-);
+const Insights = ({ datasetId }) => {
+    const [loading, setLoading] = useState(false);
+    const [insights, setInsights] = useState(null);
+    const [error, setError] = useState(null);
 
-const Insights = ({ datasets }) => {
+    useEffect(() => {
+        if (!datasetId) return;
+
+        // Fetch insights when datasetId changes
+        const fetchInsights = async () => {
+            setLoading(true);
+            setError(null);
+            setInsights(null);
+
+            try {
+                const query = {
+                    WHERE: {
+                        GT: {
+                            [`${datasetId}_avg`]: 95, // Adjust key dynamically based on the dataset ID
+                        },
+                    },
+                    OPTIONS: {
+                        COLUMNS: [`${datasetId}_dept`, `${datasetId}_avg`],
+                        ORDER: `${datasetId}_avg`,
+                    },
+                };
+
+                const response = await fetch('http://localhost:4321/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(query),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    setInsights(result.result);
+                } else {
+                    setError(result.error || 'An error occurred while fetching insights.');
+                }
+            } catch (err) {
+                setError('An unexpected error occurred.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchInsights();
+    }, [datasetId]);
+
     return (
         <Paper elevation={3} style={{ padding: '1rem' }}>
             <Typography variant="h5" gutterBottom>
-                Insights
+                Insights for: {datasetId || 'None'}
             </Typography>
-            {datasets.length === 0 ? (
-                <Typography variant="body1" color="textSecondary">
-                    No datasets added yet. Add a dataset to see insights.
-                </Typography>
-            ) : (
-                datasets.map((dataset, index) => (
-                    <Box key={index} mb={4}>
-                        <Typography variant="h6" gutterBottom>
-                            Dataset {index + 1} Insights
-                        </Typography>
-                        <Box mt={2} mb={2}>
-                            <Line
-                                data={{
-                                    labels: dataset.labels,
-                                    datasets: [
-                                        {
-                                            label: 'Trend Analysis',
-                                            data: dataset.data,
-                                            borderColor: 'rgba(75,192,192,1)',
-                                            fill: false,
-                                        },
-                                    ],
-                                }}
-                                options={{ responsive: true }}
-                            />
-                        </Box>
-                        <Box mt={2} mb={2}>
-                            <Bar
-                                data={{
-                                    labels: dataset.labels,
-                                    datasets: [
-                                        {
-                                            label: 'Category Comparison',
-                                            data: dataset.data,
-                                            backgroundColor: 'rgba(255,99,132,0.2)',
-                                            borderColor: 'rgba(255,99,132,1)',
-                                            borderWidth: 1,
-                                        },
-                                    ],
-                                }}
-                                options={{ responsive: true }}
-                            />
-                        </Box>
-                        <Box mt={2} mb={2}>
-                            <Pie
-                                data={{
-                                    labels: dataset.labels,
-                                    datasets: [
-                                        {
-                                            label: 'Proportions',
-                                            data: dataset.data,
-                                            backgroundColor: [
-                                                'rgba(255,99,132,0.2)',
-                                                'rgba(54,162,235,0.2)',
-                                                'rgba(255,206,86,0.2)',
-                                                'rgba(75,192,192,0.2)',
-                                            ],
-                                        },
-                                    ],
-                                }}
-                                options={{ responsive: true }}
-                            />
-                        </Box>
-                        <Divider style={{ margin: '1rem 0' }} />
+            {loading && <CircularProgress size={20} />}
+            {error && <Typography color="error">{error}</Typography>}
+            {
+                insights && (
+                    <Box>
+                        {insights.map((item, index) => (
+                            <Typography key={index} style={{ fontSize: '0.9rem' }}>
+                                {JSON.stringify(item)}
+                            </Typography>
+                        ))}
                     </Box>
-                ))
-            )}
-        </Paper>
+                )
+            }
+            {
+                !datasetId && !loading && (
+                    <Typography style={{ fontSize: '0.9rem' }}>
+                        Select a dataset to view insights.
+                    </Typography>
+                )
+            }
+        </Paper >
+
     );
 };
 
