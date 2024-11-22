@@ -158,7 +158,7 @@ const Insights = ({ datasetId }) => {
 							AND: [
 								{ IS: { [`${datasetId}_dept`]: departmentValue } },
 								{ IS: { [`${datasetId}_id`]: courseIdValue } },
-								...(gradeThreshold
+								...(failCountMin
 									? [{ GT: { [`${datasetId}_fail`]: Number(failCountMin) } }]
 									: []),
 							],
