@@ -20,15 +20,15 @@ function App() {
 	const [mode, setMode] = useState(() => {
 		return localStorage.getItem('themeMode') || 'light';
 	});
-	const [datasets, setDatasets] = useState([]);
+	const [datasetsUpdated, setDatasetsUpdated] = useState(0);
 	const [selectedDataset, setSelectedDataset] = useState(null); // Track selected dataset
 
 	useEffect(() => {
 		localStorage.setItem('themeMode', mode);
 	}, [mode]);
 
-	const handleDatasetAdded = (newDataset) => {
-		setDatasets((prev) => [...prev, newDataset]);
+	const handleDatasetAdded = () => {
+		setDatasetsUpdated((prev) => prev + 1);
 	};
 
 	const handleSelectDataset = (dataset) => {
@@ -88,13 +88,12 @@ function App() {
 					<Grid item xs={12} md={6}>
 						<AddDataset onDatasetAdded={handleDatasetAdded} />
 						<ListDataset
-							datasets={datasets}
+							datasetsUpdated={datasetsUpdated}
 							onSelectDataset={handleSelectDataset} // Callback for dataset selection
 						/>
 					</Grid>
 					<Grid item xs={12} md={6}>
 						<Insights datasetId={selectedDataset?.id} /> {/* Pass selected dataset */}
-
 					</Grid>
 				</Grid>
 			</Container>

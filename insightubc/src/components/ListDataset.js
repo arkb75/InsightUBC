@@ -10,13 +10,10 @@ import {
 	Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Insights from './Insights';
 
-const ListDataset = ({ datasets, onSelectDataset }) => {
-	// Rename the state variable to avoid naming conflicts
+const ListDataset = ({ datasetsUpdated, onSelectDataset }) => {
 	const [localDatasets, setLocalDatasets] = useState([]);
 	const [feedback, setFeedback] = useState('');
-	const [selectedDatasetId, setSelectedDatasetId] = useState(null); // State for the selected dataset ID
 
 	// Fetch datasets from the server
 	const fetchDatasets = async () => {
@@ -36,17 +33,19 @@ const ListDataset = ({ datasets, onSelectDataset }) => {
 
 	useEffect(() => {
 		fetchDatasets();
-	}, []);
+	}, [datasetsUpdated]); // Re-fetch datasets when datasetsUpdated changes
 
 	// Remove a dataset
 	const handleRemove = async (id) => {
 		try {
-			const response = await fetch(`/dataset/${id}`, { method: 'DELETE' });
+			const response = await fetch(`http://localhost:4321/dataset/${id}`, {
+				method: 'DELETE',
+			});
 			const result = await response.json();
 
 			if (response.ok) {
 				setFeedback(`Dataset ${id} removed successfully.`);
-				setLocalDatasets(localDatasets.filter((ds) => ds.id !== id));
+				fetchDatasets(); // Re-fetch datasets after deletion
 			} else {
 				setFeedback(`Error: ${result.error}`);
 			}
@@ -106,6 +105,12 @@ const ListDataset = ({ datasets, onSelectDataset }) => {
 					</List>
 				)}
 			</Paper>
+			<Snackbar
+				open={!!feedback}
+				autoHideDuration={6000}
+				message={feedback}
+				onClose={() => setFeedback('')}
+			/>
 		</Box>
 	);
 };

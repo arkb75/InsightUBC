@@ -40,19 +40,22 @@ const AddDataset = ({ onDatasetAdded }) => {
 		}
 
 		try {
-			const response = await fetch(`http://localhost:4321/dataset/${datasetId}/sections`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/x-zip-compressed',
-				},
-				body: file,
-			});
+			const response = await fetch(
+				`http://localhost:4321/dataset/${datasetId}/sections`,
+				{
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/x-zip-compressed',
+					},
+					body: file,
+				}
+			);
 
 			const result = await response.json();
 
 			if (response.ok) {
 				setFeedback('Dataset added successfully!');
-				onDatasetAdded();
+				onDatasetAdded(); // Notify App.js that a dataset was added
 				setDatasetId('');
 				setFile(null);
 			} else {
@@ -80,11 +83,7 @@ const AddDataset = ({ onDatasetAdded }) => {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Button
-							variant="contained"
-							component="label"
-							color="primary"
-						>
+						<Button variant="contained" component="label" color="primary">
 							Upload File
 							<input
 								type="file"
