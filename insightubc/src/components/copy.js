@@ -6,6 +6,7 @@ import {
 	CircularProgress,
 	TextField,
 	MenuItem,
+	Button,
 	Grid,
 } from '@mui/material';
 import { Line, Bar } from 'react-chartjs-2';
@@ -18,7 +19,7 @@ const Insights = ({ datasetId }) => {
 	const [insightType, setInsightType] = useState('');
 	const [department, setDepartment] = useState('');
 	const [gradeThreshold, setGradeThreshold] = useState('');
-	const [order, setOrder] = useState('DOWN'); // Default to 'DOWN' for pass count
+	const [order, setOrder] = useState('UP');
 	const [courseId, setCourseId] = useState('');
 	const [chartData, setChartData] = useState(null);
 	const [barChartData, setBarChartData] = useState(null);
@@ -31,8 +32,7 @@ const Insights = ({ datasetId }) => {
 				!insightType ||
 				(!department && insightType !== 'averageByYears') ||
 				(insightType === 'averageByYears' && (!courseId || !department)) ||
-				(insightType === 'topProfessors' && (!department || !courseId)) ||
-				(insightType === 'coursesByPassCount' && !department)
+				(insightType === 'topProfessors' && (!department || !courseId))
 			)
 				return;
 
@@ -44,23 +44,23 @@ const Insights = ({ datasetId }) => {
 			setHorizontalBarChartData(null);
 
 			try {
-				// Use department and courseId as is, since case sensitivity may cause issues
-				const departmentValue = department.trim();
-				const courseIdValue = courseId.trim();
+				// Convert user input to lowercase
+				const departmentLower = department.toLowerCase();
+				const courseIdLower = courseId.toLowerCase();
 
 				let query = {};
 				if (insightType === 'topCourses') {
 					query = {
 						WHERE: {
 							AND: [
-								{ IS: { [`${datasetId}_dept`]: departmentValue } },
+								{ IS: { [`${datasetId}_dept`]: departmentLower } },
 								...(gradeThreshold
 									? [{ GT: { [`${datasetId}_avg`]: Number(gradeThreshold) } }]
 									: []),
 							],
 						},
 						OPTIONS: {
-							COLUMNS: [`${datasetId}_dept`, `${datasetId}_id`, `${datasetId}_avg`],
+							COLUMNS: [`${datasetId}_dept`, `${datasetId}_avg`, `${datasetId}_id`],
 							ORDER: {
 								dir: order,
 								keys: [`${datasetId}_avg`],
@@ -71,8 +71,8 @@ const Insights = ({ datasetId }) => {
 					query = {
 						WHERE: {
 							AND: [
-								{ IS: { [`${datasetId}_dept`]: departmentValue } },
-								{ IS: { [`${datasetId}_id`]: courseIdValue } },
+								{ IS: { [`${datasetId}_dept`]: departmentLower } },
+								{ IS: { [`${datasetId}_id`]: courseIdLower } },
 							],
 						},
 						TRANSFORMATIONS: {
@@ -91,8 +91,8 @@ const Insights = ({ datasetId }) => {
 					query = {
 						WHERE: {
 							AND: [
-								{ IS: { [`${datasetId}_dept`]: departmentValue } },
-								{ IS: { [`${datasetId}_id`]: courseIdValue } },
+								{ IS: { [`${datasetId}_id`]: courseIdLower } },
+								{ IS: { [`${datasetId}_dept`]: departmentLower } },
 								{ GT: { [`${datasetId}_year`]: 1900 } },
 							],
 						},
@@ -108,36 +108,7 @@ const Insights = ({ datasetId }) => {
 							},
 						},
 					};
-				} else if (insightType === 'coursesByPassCount') {
-					query = {
-						WHERE: {
-							AND: [
-								{ IS: { [`${datasetId}_dept`]: departmentValue } },
-								{ GT: { [`${datasetId}_avg`]: 49 } },
-							],
-						},
-						TRANSFORMATIONS: {
-							GROUP: [`${datasetId}_dept`, `${datasetId}_id`],
-							APPLY: [
-								{
-									passCount: {
-										COUNT: `${datasetId}_uuid`,
-									},
-								},
-							],
-						},
-						OPTIONS: {
-							COLUMNS: [`${datasetId}_dept`, `${datasetId}_id`, 'passCount'],
-							ORDER: {
-								dir: order, // Use the user's selected order
-								keys: ['passCount'],
-							},
-						},
-					};
 				}
-
-				// Uncomment the next line to see the generated query in the console
-				// console.log(JSON.stringify(query, null, 2));
 
 				const response = await fetch('http://localhost:4321/query', {
 					method: 'POST',
@@ -180,7 +151,7 @@ const Insights = ({ datasetId }) => {
 							labels: instructors,
 							datasets: [
 								{
-									label: `Top Professors for ${department} ${courseId}`,
+									label: `Top Professors for ${department} in ${courseId}`,
 									data: averages,
 									backgroundColor: 'rgba(75, 192, 192, 0.2)',
 									borderColor: 'rgba(75, 192, 192, 1)',
@@ -195,28 +166,11 @@ const Insights = ({ datasetId }) => {
 							labels: years,
 							datasets: [
 								{
-									label: `Average Grades for ${department} ${courseId}`,
+									label: `Average Grades for ${courseId}`,
 									data: averages,
 									borderColor: 'rgba(75, 192, 192, 1)',
 									backgroundColor: 'rgba(75, 192, 192, 0.2)',
 									fill: true,
-								},
-							],
-						});
-					} else if (insightType === 'coursesByPassCount') {
-						const courseLabels = result.result.map(
-							(item) => `${item[`${datasetId}_dept`]} ${item[`${datasetId}_id`]}`
-						);
-						const passCounts = result.result.map((item) => item['passCount']);
-						setBarChartData({
-							labels: courseLabels,
-							datasets: [
-								{
-									label: `Courses Sorted by Number of Students Passed`,
-									data: passCounts,
-									backgroundColor: 'rgba(54, 162, 235, 0.6)',
-									borderColor: 'rgba(54, 162, 235, 1)',
-									borderWidth: 1,
 								},
 							],
 						});
@@ -247,9 +201,6 @@ const Insights = ({ datasetId }) => {
 		setBarChartData(null);
 		setHorizontalBarChartData(null);
 		setError(null); // Clear error when changing insight type
-		setDepartment('');
-		setCourseId('');
-		setGradeThreshold('');
 	};
 
 	const handleGradeThresholdChange = (event) => {
@@ -286,14 +237,11 @@ const Insights = ({ datasetId }) => {
 							<MenuItem value="averageByYears">
 								Average Across Different Years for a Selected Course
 							</MenuItem>
-							<MenuItem value="coursesByPassCount">
-								Courses Sorted by Number of Students Passed
-							</MenuItem>
 						</TextField>
 					</Grid>
 					{insightType && insightType !== '' && (
 						<>
-							{insightType === 'topCourses' && (
+							{insightType !== 'averageByYears' && (
 								<>
 									<Grid item xs={12} md={6}>
 										<TextField
@@ -305,56 +253,32 @@ const Insights = ({ datasetId }) => {
 											size="small"
 										/>
 									</Grid>
-									<Grid item xs={12} md={6}>
-										<TextField
-											label="Grade Threshold"
-											value={gradeThreshold}
-											onChange={handleGradeThresholdChange}
-											variant="outlined"
-											fullWidth
-											size="small"
-											error={!!error}
-											helperText={error}
-										/>
-									</Grid>
-									<Grid item xs={12} md={6}>
-										<TextField
-											select
-											label="Order"
-											value={order}
-											onChange={(e) => setOrder(e.target.value)}
-											variant="outlined"
-											fullWidth
-											size="small"
-										>
-											<MenuItem value="UP">Ascending</MenuItem>
-											<MenuItem value="DOWN">Descending</MenuItem>
-										</TextField>
-									</Grid>
-								</>
-							)}
-							{insightType === 'topProfessors' && (
-								<>
-									<Grid item xs={12} md={6}>
-										<TextField
-											label="Department"
-											value={department}
-											onChange={(e) => setDepartment(e.target.value)}
-											variant="outlined"
-											fullWidth
-											size="small"
-										/>
-									</Grid>
-									<Grid item xs={12} md={6}>
-										<TextField
-											label="Course ID"
-											value={courseId}
-											onChange={(e) => setCourseId(e.target.value)}
-											variant="outlined"
-											fullWidth
-											size="small"
-										/>
-									</Grid>
+									{insightType === 'topProfessors' && (
+										<Grid item xs={12} md={6}>
+											<TextField
+												label="Course ID"
+												value={courseId}
+												onChange={(e) => setCourseId(e.target.value)}
+												variant="outlined"
+												fullWidth
+												size="small"
+											/>
+										</Grid>
+									)}
+									{insightType === 'topCourses' && (
+										<Grid item xs={12} md={6}>
+											<TextField
+												label="Grade Threshold"
+												value={gradeThreshold}
+												onChange={handleGradeThresholdChange}
+												variant="outlined"
+												fullWidth
+												size="small"
+												error={!!error}
+												helperText={error}
+											/>
+										</Grid>
+									)}
 									<Grid item xs={12} md={6}>
 										<TextField
 											select
@@ -395,36 +319,9 @@ const Insights = ({ datasetId }) => {
 									</Grid>
 								</>
 							)}
-							{insightType === 'coursesByPassCount' && (
-								<>
-									<Grid item xs={12} md={6}>
-										<TextField
-											label="Department"
-											value={department}
-											onChange={(e) => setDepartment(e.target.value)}
-											variant="outlined"
-											fullWidth
-											size="small"
-										/>
-									</Grid>
-									<Grid item xs={12} md={6}>
-										<TextField
-											select
-											label="Order"
-											value={order}
-											onChange={(e) => setOrder(e.target.value)}
-											variant="outlined"
-											fullWidth
-											size="small"
-										>
-											<MenuItem value="DOWN">Descending</MenuItem>
-											<MenuItem value="UP">Ascending</MenuItem>
-										</TextField>
-									</Grid>
-								</>
-							)}
 						</>
 					)}
+					{/* Removed the "Apply" button as the insights are fetched automatically */}
 				</Grid>
 			</Box>
 			{loading && <CircularProgress size={20} />}
