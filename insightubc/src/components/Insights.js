@@ -97,6 +97,12 @@ const Insights = ({ datasetId }) => {
                 const result = await response.json();
 
                 if (response.ok) {
+                    if (result.result.length === 0) {
+                        setError('No data found for the selected criteria.');
+                        setLoading(false);
+                        return;
+                    }
+
                     setInsights(result.result);
 
                     if (insightType === 'topCourses') {
@@ -155,8 +161,8 @@ const Insights = ({ datasetId }) => {
     const handleInsightTypeChange = (event) => {
         setInsightType(event.target.value);
         setChartData(null);
-        setBarChartData(null); // Clear bar chart data when switching filters
-        setHorizontalBarChartData(null); // Clear horizontal bar chart data when switching filters
+        setBarChartData(null);
+        setHorizontalBarChartData(null);
     };
 
     const handleGradeThresholdChange = (event) => {
@@ -189,7 +195,6 @@ const Insights = ({ datasetId }) => {
                             <MenuItem value="topCourses">Sorted Averages for Courses in a Department Exceeding Grade Threshold</MenuItem>
                             <MenuItem value="topProfessors">Top Professors for a Course</MenuItem>
                             <MenuItem value="averageByYears">Average Across Different Years for a Selected Course</MenuItem>
-                            {/* Add other types as needed */}
                         </TextField>
                     </Grid>
                     {insightType && insightType !== 'averageByYears' && (
