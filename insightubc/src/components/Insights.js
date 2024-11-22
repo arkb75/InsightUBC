@@ -19,10 +19,11 @@ const Insights = ({ datasetId }) => {
 	const [department, setDepartment] = useState('');
 	const [gradeThreshold, setGradeThreshold] = useState('');
 	const [failCountMin, setFailCountMin] = useState('');
-	const [order, setOrder] = useState('DOWN'); // Default to 'DOWN' for pass count
+	const [order, setOrder] = useState('DOWN');
 	const [courseId, setCourseId] = useState('');
 	const [yearFilter, setYearFilter] = useState('');
-	const [yearNegation, setYearNegation] = useState('is'); // 'is' or 'is not'
+	const [yearNegation, setYearNegation] = useState('is');
+	const [instructorName, setInstructorName] = useState('');
 	const [chartData, setChartData] = useState(null);
 	const [barChartData, setBarChartData] = useState(null);
 	const [horizontalBarChartData, setHorizontalBarChartData] = useState(null);
@@ -34,7 +35,6 @@ const Insights = ({ datasetId }) => {
 				!insightType ||
 				(!department && insightType !== 'averageByYears') ||
 				(insightType === 'averageByYears' && (!courseId || !department)) ||
-				(insightType === 'topProfessors' && (!department || !courseId)) ||
 				(insightType === 'coursesByPassCount' && !department) ||
 				(insightType === 'instructorsByFail' && !department)
 			)
@@ -48,9 +48,9 @@ const Insights = ({ datasetId }) => {
 			setHorizontalBarChartData(null);
 
 			try {
-				// Use department and courseId as is, since case sensitivity may cause issues
 				const departmentValue = department.trim();
 				const courseIdValue = courseId.trim();
+				const instructorNameValue = instructorName.trim();
 
 				let query = {};
 				if (insightType === 'topCourses') {
@@ -82,6 +82,9 @@ const Insights = ({ datasetId }) => {
 							AND: [
 								{ IS: { [`${datasetId}_dept`]: departmentValue } },
 								{ IS: { [`${datasetId}_id`]: courseIdValue } },
+								...(instructorNameValue !== ''
+									? [{ IS: { [`${datasetId}_instructor`]: `*${instructorNameValue}*` } }]
+									: []),
 								...(yearFilter
 									? yearNegation === 'is'
 										? [{ EQ: { [`${datasetId}_year`]: Number(yearFilter) } }]
@@ -89,15 +92,16 @@ const Insights = ({ datasetId }) => {
 									: []),
 							],
 						},
-						TRANSFORMATIONS: {
-							GROUP: [`${datasetId}_instructor`],
-							APPLY: [{ averageavg: { AVG: `${datasetId}_avg` } }],
-						},
 						OPTIONS: {
-							COLUMNS: [`${datasetId}_instructor`, `averageavg`],
+							COLUMNS: [
+								`${datasetId}_dept`,
+								`${datasetId}_id`,
+								`${datasetId}_instructor`,
+								`${datasetId}_avg`,
+							],
 							ORDER: {
 								dir: order,
-								keys: [`averageavg`],
+								keys: [`${datasetId}_avg`],
 							},
 						},
 					};
@@ -164,10 +168,9 @@ const Insights = ({ datasetId }) => {
 							],
 						},
 						TRANSFORMATIONS: {
-							GROUP: [`${datasetId}_dept`, `${datasetId}_id`,`${datasetId}_instructor`],
+							GROUP: [`${datasetId}_dept`, `${datasetId}_id`, `${datasetId}_instructor`],
 							APPLY: [
 								{
-									// get total of fails across sections of course for instructor
 									totalFail: {
 										SUM: `${datasetId}_fail`,
 									},
@@ -175,7 +178,7 @@ const Insights = ({ datasetId }) => {
 							],
 						},
 						OPTIONS: {
-							COLUMNS: [`${datasetId}_instructor`,`totalFail`],
+							COLUMNS: [`${datasetId}_instructor`, `totalFail`],
 							ORDER: {
 								dir: order,
 								keys: [`${datasetId}_instructor`],
@@ -183,9 +186,6 @@ const Insights = ({ datasetId }) => {
 						},
 					};
 				}
-
-				// Uncomment the next line to see the generated query in the console
-				// console.log(JSON.stringify(query, null, 2));
 
 				const response = await fetch('http://localhost:4321/query', {
 					method: 'POST',
@@ -201,8 +201,6 @@ const Insights = ({ datasetId }) => {
 						setLoading(false);
 						return;
 					}
-
-					setInsights(result.result);
 
 					if (insightType === 'topCourses') {
 						const ids = result.result.map((item) => item[`${datasetId}_id`]);
@@ -220,15 +218,15 @@ const Insights = ({ datasetId }) => {
 							],
 						});
 					} else if (insightType === 'topProfessors') {
-						const instructors = result.result.map(
-							(item) => item[`${datasetId}_instructor`]
+						const courseLabels = result.result.map(
+							(item) => `${item[`${datasetId}_dept`]} ${item[`${datasetId}_id`]}`
 						);
-						const averages = result.result.map((item) => item[`averageavg`]);
-						setHorizontalBarChartData({
-							labels: instructors,
+						const averages = result.result.map((item) => item[`${datasetId}_avg`]);
+						setBarChartData({
+							labels: courseLabels,
 							datasets: [
 								{
-									label: `Top Professors for ${department} ${courseId}`,
+									label: `Courses taught by ${instructorName || 'selected instructor'}`,
 									data: averages,
 									backgroundColor: 'rgba(75, 192, 192, 0.2)',
 									borderColor: 'rgba(75, 192, 192, 1)',
@@ -271,8 +269,8 @@ const Insights = ({ datasetId }) => {
 					} else if (insightType === 'instructorsByFail') {
 						const profs = result.result.map((item) => item[`${datasetId}_instructor`]);
 						const totalFails = result.result.map((item) => item['totalFail']);
-						const courseStr = `${department} ${courseId}`
-						const labelStr = "Number of Students Failed for Sorted Instructors of " + courseStr;
+						const courseStr = `${department} ${courseId}`;
+						const labelStr = `Number of Students Failed for Sorted Instructors of ${courseStr}`;
 						setBarChartData({
 							labels: profs,
 							datasets: [
@@ -307,6 +305,7 @@ const Insights = ({ datasetId }) => {
 		courseId,
 		yearFilter,
 		yearNegation,
+		instructorName,
 	]);
 
 	const handleInsightTypeChange = (event) => {
@@ -314,13 +313,14 @@ const Insights = ({ datasetId }) => {
 		setChartData(null);
 		setBarChartData(null);
 		setHorizontalBarChartData(null);
-		setError(null); // Clear error when changing insight type
+		setError(null);
 		setDepartment('');
 		setCourseId('');
 		setGradeThreshold('');
 		setFailCountMin('');
 		setYearFilter('');
 		setYearNegation('is');
+		setInstructorName('');
 	};
 
 	const handleGradeThresholdChange = (event) => {
@@ -373,7 +373,9 @@ const Insights = ({ datasetId }) => {
 							<MenuItem value="topCourses">
 								Sorted Averages for Courses in a Department Exceeding Grade Threshold
 							</MenuItem>
-							<MenuItem value="topProfessors">Top Professors for a Course</MenuItem>
+							<MenuItem value="topProfessors">
+								Filter Course Sections by Instructor's Name
+							</MenuItem>
 							<MenuItem value="averageByYears">
 								Average Across Different Years for a Selected Course
 							</MenuItem>
@@ -425,7 +427,6 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="DOWN">Descending</MenuItem>
 										</TextField>
 									</Grid>
-									{/* Year Filter */}
 									<Grid item xs={12} md={6}>
 										<TextField
 											select
@@ -478,6 +479,16 @@ const Insights = ({ datasetId }) => {
 									</Grid>
 									<Grid item xs={12} md={6}>
 										<TextField
+											label="Instructor Name"
+											value={instructorName}
+											onChange={(e) => setInstructorName(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										/>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
 											select
 											label="Order"
 											value={order}
@@ -490,7 +501,6 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="DOWN">Descending</MenuItem>
 										</TextField>
 									</Grid>
-									{/* Year Filter */}
 									<Grid item xs={12} md={6}>
 										<TextField
 											select
@@ -541,7 +551,6 @@ const Insights = ({ datasetId }) => {
 											size="small"
 										/>
 									</Grid>
-									{/* Year filter not applicable for 'averageByYears' */}
 								</>
 							)}
 							{insightType === 'coursesByPassCount' && (
@@ -570,7 +579,6 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="UP">Ascending</MenuItem>
 										</TextField>
 									</Grid>
-									{/* Year Filter */}
 									<Grid item xs={12} md={6}>
 										<TextField
 											select
