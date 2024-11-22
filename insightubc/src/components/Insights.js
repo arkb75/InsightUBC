@@ -271,12 +271,13 @@ const Insights = ({ datasetId }) => {
 					} else if (insightType === 'instructorsByFail') {
 						const profs = result.result.map((item) => item[`${datasetId}_instructor`]);
 						const totalFails = result.result.map((item) => item['totalFail']);
+						const courseStr = `${department} ${courseId}`
+						const labelStr = "Number of Students Failed for Sorted Instructors of " + courseStr;
 						setBarChartData({
 							labels: profs,
 							datasets: [
 								{
-									label: `Number of Students Failed for Sorted Instructors' +
-									 'of ${department} ${courseId}`,
+									label: labelStr,
 									data: totalFails,
 									backgroundColor: 'rgba(54, 162, 235, 0.6)',
 									borderColor: 'rgba(54, 162, 235, 1)',
@@ -322,13 +323,23 @@ const Insights = ({ datasetId }) => {
 		setYearNegation('is');
 	};
 
-	const handleThresholdChange = (event) => {
+	const handleGradeThresholdChange = (event) => {
 		const value = event.target.value;
 		if (!value || /^[0-9]*\.?[0-9]+$/.test(value)) {
 			setGradeThreshold(value);
 			setError(null);
 		} else {
 			setError('Invalid grade threshold. Please enter a valid number.');
+		}
+	};
+
+	const handleFailMinChange = (event) => {
+		const value = event.target.value;
+		if (!value || /^[0-9]*\.?[0-9]+$/.test(value)) {
+			setFailCountMin(value);
+			setError(null);
+		} else {
+			setError('Invalid minimum fail value. Please enter a valid number.');
 		}
 	};
 
@@ -392,7 +403,7 @@ const Insights = ({ datasetId }) => {
 										<TextField
 											label="Grade Threshold"
 											value={gradeThreshold}
-											onChange={handleThresholdChange}
+											onChange={handleGradeThresholdChange}
 											variant="outlined"
 											fullWidth
 											size="small"
@@ -628,7 +639,7 @@ const Insights = ({ datasetId }) => {
 										<TextField
 											label="Minimum Total of Fails"
 											value={failCountMin}
-											onChange={handleThresholdChange}
+											onChange={handleFailMinChange}
 											variant="outlined"
 											fullWidth
 											size="small"
