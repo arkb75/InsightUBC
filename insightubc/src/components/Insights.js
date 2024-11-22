@@ -127,7 +127,6 @@ const Insights = ({ datasetId }) => {
 						WHERE: {
 							AND: [
 								{ IS: { [`${datasetId}_dept`]: departmentValue } },
-								{ GT: { [`${datasetId}_avg`]: 49 } },
 								...(yearFilter
 									? yearNegation === 'is'
 										? [{ EQ: { [`${datasetId}_year`]: Number(yearFilter) } }]
@@ -139,17 +138,17 @@ const Insights = ({ datasetId }) => {
 							GROUP: [`${datasetId}_dept`, `${datasetId}_id`],
 							APPLY: [
 								{
-									passCount: {
-										COUNT: `${datasetId}_uuid`,
+									totalPass: {
+										SUM: `${datasetId}_pass`,
 									},
 								},
 							],
 						},
 						OPTIONS: {
-							COLUMNS: [`${datasetId}_dept`, `${datasetId}_id`, 'passCount'],
+							COLUMNS: [`${datasetId}_dept`, `${datasetId}_id`, 'totalPass'],
 							ORDER: {
 								dir: order,
-								keys: ['passCount'],
+								keys: ['totalPass'],
 							},
 						},
 					};
@@ -256,12 +255,12 @@ const Insights = ({ datasetId }) => {
 						const courseLabels = result.result.map(
 							(item) => `${item[`${datasetId}_dept`]} ${item[`${datasetId}_id`]}`
 						);
-						const passCounts = result.result.map((item) => item['passCount']);
+						const passCounts = result.result.map((item) => item['totalPass']);
 						setBarChartData({
 							labels: courseLabels,
 							datasets: [
 								{
-									label: `Courses Sorted by Number of Students Passed`,
+									label: `Courses Sorted by Total Number of Students Passed`,
 									data: passCounts,
 									backgroundColor: 'rgba(54, 162, 235, 0.6)',
 									borderColor: 'rgba(54, 162, 235, 1)',
