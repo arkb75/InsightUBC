@@ -10,53 +10,13 @@ import {
 	Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Insights from './Insights';
 
-const ListDataset = ({ datasetsUpdated, onSelectDataset }) => {
-	const [localDatasets, setLocalDatasets] = useState([]);
+const ListDataset = ({ datasets, onSelectDataset }) => {
 	const [feedback, setFeedback] = useState('');
 
-	// Fetch datasets from the server
-	const fetchDatasets = async () => {
-		try {
-			const response = await fetch('http://localhost:4321/datasets');
-			const result = await response.json();
-
-			if (response.ok) {
-				setLocalDatasets(result.result);
-			} else {
-				setFeedback(`Error: ${result.error}`);
-			}
-		} catch (error) {
-			setFeedback('An error occurred while fetching datasets.');
-		}
-	};
-
-	useEffect(() => {
-		fetchDatasets();
-	}, [datasetsUpdated]); // Re-fetch datasets when datasetsUpdated changes
-
-	// Remove a dataset
-	const handleRemove = async (id) => {
-		try {
-			const response = await fetch(`http://localhost:4321/dataset/${id}`, {
-				method: 'DELETE',
-			});
-			const result = await response.json();
-
-			if (response.ok) {
-				setFeedback(`Dataset ${id} removed successfully.`);
-				fetchDatasets(); // Re-fetch datasets after deletion
-			} else {
-				setFeedback(`Error: ${result.error}`);
-			}
-		} catch (error) {
-			setFeedback('An error occurred while removing the dataset.');
-		}
-	};
-
-	// Handle viewing insights
 	const handleViewInsights = (id) => {
-		onSelectDataset(localDatasets.find((ds) => ds.id === id)); // Pass selected dataset to parent
+		onSelectDataset(datasets.find((ds) => ds.id === id)); // Pass selected dataset to parent
 	};
 
 	return (
@@ -65,11 +25,11 @@ const ListDataset = ({ datasetsUpdated, onSelectDataset }) => {
 				<Typography variant="h5" gutterBottom>
 					Added Datasets
 				</Typography>
-				{localDatasets.length === 0 ? (
+				{datasets.length === 0 ? (
 					<Typography variant="body1">No datasets added.</Typography>
 				) : (
 					<List>
-						{localDatasets.map((dataset) => (
+						{datasets.map((dataset) => (
 							<ListItem key={dataset.id}>
 								<Box
 									display="flex"
@@ -105,12 +65,6 @@ const ListDataset = ({ datasetsUpdated, onSelectDataset }) => {
 					</List>
 				)}
 			</Paper>
-			<Snackbar
-				open={!!feedback}
-				autoHideDuration={6000}
-				message={feedback}
-				onClose={() => setFeedback('')}
-			/>
 		</Box>
 	);
 };
