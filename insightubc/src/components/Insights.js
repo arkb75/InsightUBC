@@ -167,7 +167,7 @@ const Insights = ({ datasetId }) => {
 							GROUP: [`${datasetId}_dept`, `${datasetId}_id`,`${datasetId}_instructor`],
 							APPLY: [
 								{
-									// get total of fails across sections of course for the instructor
+									// get total of fails across sections of course for instructor
 									totalFail: {
 										SUM: `${datasetId}_fail`,
 									},
