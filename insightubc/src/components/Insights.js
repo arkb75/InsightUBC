@@ -18,6 +18,7 @@ const Insights = ({ datasetId }) => {
 	const [insightType, setInsightType] = useState('');
 	const [department, setDepartment] = useState('');
 	const [gradeThreshold, setGradeThreshold] = useState('');
+	const [failCountMin, setFailCountMin] = useState('');
 	const [order, setOrder] = useState('DOWN'); // Default to 'DOWN' for pass count
 	const [courseId, setCourseId] = useState('');
 	const [yearFilter, setYearFilter] = useState('');
@@ -34,7 +35,8 @@ const Insights = ({ datasetId }) => {
 				(!department && insightType !== 'averageByYears') ||
 				(insightType === 'averageByYears' && (!courseId || !department)) ||
 				(insightType === 'topProfessors' && (!department || !courseId)) ||
-				(insightType === 'coursesByPassCount' && !department)
+				(insightType === 'coursesByPassCount' && !department) ||
+				(insightType === 'instructorsByFail' && !department)
 			)
 				return;
 
@@ -151,6 +153,36 @@ const Insights = ({ datasetId }) => {
 							},
 						},
 					};
+				} else if (insightType === 'instructorsByFail') {
+					query = {
+						WHERE: {
+							AND: [
+								{ IS: { [`${datasetId}_dept`]: departmentValue } },
+								{ IS: { [`${datasetId}_id`]: courseIdValue } },
+								...(gradeThreshold
+									? [{ GT: { [`${datasetId}_fail`]: Number(failCountMin) } }]
+									: []),
+							],
+						},
+						TRANSFORMATIONS: {
+							GROUP: [`${datasetId}_dept`, `${datasetId}_id`,`${datasetId}_instructor`],
+							APPLY: [
+								{
+									// get total of fails across sections of course for the instructor
+									totalFail: {
+										SUM: `${datasetId}_fail`,
+									},
+								},
+							],
+						},
+						OPTIONS: {
+							COLUMNS: [`${datasetId}_instructor`,`totalFail`],
+							ORDER: {
+								dir: order,
+								keys: [`${datasetId}_instructor`],
+							},
+						},
+					};
 				}
 
 				// Uncomment the next line to see the generated query in the console
@@ -237,6 +269,22 @@ const Insights = ({ datasetId }) => {
 								},
 							],
 						});
+					} else if (insightType === 'instructorsByFail') {
+						const profs = result.result.map((item) => item[`${datasetId}_instructor`]);
+						const totalFails = result.result.map((item) => item['totalFail']);
+						setBarChartData({
+							labels: profs,
+							datasets: [
+								{
+									label: `Number of Students Failed for Sorted Instructors' +
+									 'of ${department} ${courseId}`,
+									data: totalFails,
+									backgroundColor: 'rgba(54, 162, 235, 0.6)',
+									borderColor: 'rgba(54, 162, 235, 1)',
+									borderWidth: 1,
+								},
+							],
+						});
 					}
 				} else {
 					setError(result.error || 'An error occurred while fetching insights.');
@@ -254,6 +302,7 @@ const Insights = ({ datasetId }) => {
 		insightType,
 		department,
 		gradeThreshold,
+		failCountMin,
 		order,
 		courseId,
 		yearFilter,
@@ -269,11 +318,12 @@ const Insights = ({ datasetId }) => {
 		setDepartment('');
 		setCourseId('');
 		setGradeThreshold('');
+		setFailCountMin('');
 		setYearFilter('');
 		setYearNegation('is');
 	};
 
-	const handleGradeThresholdChange = (event) => {
+	const handleThresholdChange = (event) => {
 		const value = event.target.value;
 		if (!value || /^[0-9]*\.?[0-9]+$/.test(value)) {
 			setGradeThreshold(value);
@@ -320,6 +370,9 @@ const Insights = ({ datasetId }) => {
 							<MenuItem value="coursesByPassCount">
 								Courses Sorted by Number of Students Passed
 							</MenuItem>
+							<MenuItem value="instructorsByFail">
+								Numbers of Students Failed for Sorted Instructors of a Course
+							</MenuItem>
 						</TextField>
 					</Grid>
 					{insightType && insightType !== '' && (
@@ -340,7 +393,7 @@ const Insights = ({ datasetId }) => {
 										<TextField
 											label="Grade Threshold"
 											value={gradeThreshold}
-											onChange={handleGradeThresholdChange}
+											onChange={handleThresholdChange}
 											variant="outlined"
 											fullWidth
 											size="small"
@@ -532,6 +585,56 @@ const Insights = ({ datasetId }) => {
 											size="small"
 											error={!!error && error.includes('year')}
 											helperText={error && error.includes('year') ? error : ''}
+										/>
+									</Grid>
+								</>
+							)}
+							{insightType === 'instructorsByFail' && (
+								<>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Department"
+											value={department}
+											onChange={(e) => setDepartment(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										/>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Course ID"
+											value={courseId}
+											onChange={(e) => setCourseId(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										/>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											select
+											label="Order for Instructors"
+											value={order}
+											onChange={(e) => setOrder(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										>
+											<MenuItem value="DOWN">Descending</MenuItem>
+											<MenuItem value="UP">Ascending</MenuItem>
+										</TextField>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Minimum Total of Fails"
+											value={failCountMin}
+											onChange={handleThresholdChange}
+											variant="outlined"
+											fullWidth
+											size="small"
+											error={!!error && error.includes('fail')}
+											helperText={error && error.includes('fail') ? error : ''}
 										/>
 									</Grid>
 								</>
