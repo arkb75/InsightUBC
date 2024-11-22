@@ -20,6 +20,8 @@ const Insights = ({ datasetId }) => {
 	const [gradeThreshold, setGradeThreshold] = useState('');
 	const [order, setOrder] = useState('DOWN'); // Default to 'DOWN' for pass count
 	const [courseId, setCourseId] = useState('');
+	const [yearFilter, setYearFilter] = useState('');
+	const [yearNegation, setYearNegation] = useState('is'); // 'is' or 'is not'
 	const [chartData, setChartData] = useState(null);
 	const [barChartData, setBarChartData] = useState(null);
 	const [horizontalBarChartData, setHorizontalBarChartData] = useState(null);
@@ -57,6 +59,11 @@ const Insights = ({ datasetId }) => {
 								...(gradeThreshold
 									? [{ GT: { [`${datasetId}_avg`]: Number(gradeThreshold) } }]
 									: []),
+								...(yearFilter
+									? yearNegation === 'is'
+										? [{ EQ: { [`${datasetId}_year`]: Number(yearFilter) } }]
+										: [{ NOT: { EQ: { [`${datasetId}_year`]: Number(yearFilter) } } }]
+									: []),
 							],
 						},
 						OPTIONS: {
@@ -73,6 +80,11 @@ const Insights = ({ datasetId }) => {
 							AND: [
 								{ IS: { [`${datasetId}_dept`]: departmentValue } },
 								{ IS: { [`${datasetId}_id`]: courseIdValue } },
+								...(yearFilter
+									? yearNegation === 'is'
+										? [{ EQ: { [`${datasetId}_year`]: Number(yearFilter) } }]
+										: [{ NOT: { EQ: { [`${datasetId}_year`]: Number(yearFilter) } } }]
+									: []),
 							],
 						},
 						TRANSFORMATIONS: {
@@ -114,6 +126,11 @@ const Insights = ({ datasetId }) => {
 							AND: [
 								{ IS: { [`${datasetId}_dept`]: departmentValue } },
 								{ GT: { [`${datasetId}_avg`]: 49 } },
+								...(yearFilter
+									? yearNegation === 'is'
+										? [{ EQ: { [`${datasetId}_year`]: Number(yearFilter) } }]
+										: [{ NOT: { EQ: { [`${datasetId}_year`]: Number(yearFilter) } } }]
+									: []),
 							],
 						},
 						TRANSFORMATIONS: {
@@ -129,7 +146,7 @@ const Insights = ({ datasetId }) => {
 						OPTIONS: {
 							COLUMNS: [`${datasetId}_dept`, `${datasetId}_id`, 'passCount'],
 							ORDER: {
-								dir: order, // Use the user's selected order
+								dir: order,
 								keys: ['passCount'],
 							},
 						},
@@ -239,6 +256,8 @@ const Insights = ({ datasetId }) => {
 		gradeThreshold,
 		order,
 		courseId,
+		yearFilter,
+		yearNegation,
 	]);
 
 	const handleInsightTypeChange = (event) => {
@@ -250,6 +269,8 @@ const Insights = ({ datasetId }) => {
 		setDepartment('');
 		setCourseId('');
 		setGradeThreshold('');
+		setYearFilter('');
+		setYearNegation('is');
 	};
 
 	const handleGradeThresholdChange = (event) => {
@@ -259,6 +280,16 @@ const Insights = ({ datasetId }) => {
 			setError(null);
 		} else {
 			setError('Invalid grade threshold. Please enter a valid number.');
+		}
+	};
+
+	const handleYearFilterChange = (event) => {
+		const value = event.target.value;
+		if (!value || /^[0-9]+$/.test(value)) {
+			setYearFilter(value);
+			setError(null);
+		} else {
+			setError('Invalid year. Please enter a valid number.');
 		}
 	};
 
@@ -313,8 +344,8 @@ const Insights = ({ datasetId }) => {
 											variant="outlined"
 											fullWidth
 											size="small"
-											error={!!error}
-											helperText={error}
+											error={!!error && error.includes('grade')}
+											helperText={error && error.includes('grade') ? error : ''}
 										/>
 									</Grid>
 									<Grid item xs={12} md={6}>
@@ -330,6 +361,33 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="UP">Ascending</MenuItem>
 											<MenuItem value="DOWN">Descending</MenuItem>
 										</TextField>
+									</Grid>
+									{/* Year Filter */}
+									<Grid item xs={12} md={6}>
+										<TextField
+											select
+											label="Year Filter"
+											value={yearNegation}
+											onChange={(e) => setYearNegation(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										>
+											<MenuItem value="is">Is</MenuItem>
+											<MenuItem value="is not">Is Not</MenuItem>
+										</TextField>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Year"
+											value={yearFilter}
+											onChange={handleYearFilterChange}
+											variant="outlined"
+											fullWidth
+											size="small"
+											error={!!error && error.includes('year')}
+											helperText={error && error.includes('year') ? error : ''}
+										/>
 									</Grid>
 								</>
 							)}
@@ -369,6 +427,33 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="DOWN">Descending</MenuItem>
 										</TextField>
 									</Grid>
+									{/* Year Filter */}
+									<Grid item xs={12} md={6}>
+										<TextField
+											select
+											label="Year Filter"
+											value={yearNegation}
+											onChange={(e) => setYearNegation(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										>
+											<MenuItem value="is">Is</MenuItem>
+											<MenuItem value="is not">Is Not</MenuItem>
+										</TextField>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Year"
+											value={yearFilter}
+											onChange={handleYearFilterChange}
+											variant="outlined"
+											fullWidth
+											size="small"
+											error={!!error && error.includes('year')}
+											helperText={error && error.includes('year') ? error : ''}
+										/>
+									</Grid>
 								</>
 							)}
 							{insightType === 'averageByYears' && (
@@ -393,6 +478,7 @@ const Insights = ({ datasetId }) => {
 											size="small"
 										/>
 									</Grid>
+									{/* Year filter not applicable for 'averageByYears' */}
 								</>
 							)}
 							{insightType === 'coursesByPassCount' && (
@@ -420,6 +506,33 @@ const Insights = ({ datasetId }) => {
 											<MenuItem value="DOWN">Descending</MenuItem>
 											<MenuItem value="UP">Ascending</MenuItem>
 										</TextField>
+									</Grid>
+									{/* Year Filter */}
+									<Grid item xs={12} md={6}>
+										<TextField
+											select
+											label="Year Filter"
+											value={yearNegation}
+											onChange={(e) => setYearNegation(e.target.value)}
+											variant="outlined"
+											fullWidth
+											size="small"
+										>
+											<MenuItem value="is">Is</MenuItem>
+											<MenuItem value="is not">Is Not</MenuItem>
+										</TextField>
+									</Grid>
+									<Grid item xs={12} md={6}>
+										<TextField
+											label="Year"
+											value={yearFilter}
+											onChange={handleYearFilterChange}
+											variant="outlined"
+											fullWidth
+											size="small"
+											error={!!error && error.includes('year')}
+											helperText={error && error.includes('year') ? error : ''}
+										/>
 									</Grid>
 								</>
 							)}
