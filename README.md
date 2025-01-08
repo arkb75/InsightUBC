@@ -1,46 +1,99 @@
-# CPSC 310 Project Repository
+# InsightUBC - Dataset Manager
 
-This repository contains starter code for the class project.
-Please keep your repository private.
+## Overview
+InsightUBC is a full-stack web application designed to enable users to upload, manage, and analyze academic datasets. This application provides valuable data insights through dynamic visualizations, empowering users to extract meaningful information from complex datasets. The application leverages a modular architecture built upon a React.js front-end and a REST API back-end.
 
-For information about the project, autotest, and the checkpoints, see the course webpage.
+## Key Features
 
-## Configuring your environment
+1. **Dataset Management**:
+	- **Uploading Datasets**: Users can upload datasets in ZIP format using a straightforward file selection interface. The application handles both valid and corrupted ZIP files and provides feedback.
+	- **Naming Datasets**: Users assign custom names to datasets for organized management and retrieval, facilitating identification of different datasets.
+	- **Successful Addition Feedback**: On successful upload of a dataset, the system provides a confirmation message to affirm the action.
+	- **Dataset Listing**: Users can see all added datasets listed in a clear table, including the name, kind, and number of rows of each dataset, in addition to a view action.
+	- **Removing Datasets**: Users can remove datasets via a trash can icon, and the removal action is confirmed by a feedback message.
 
-To start using this project, you need to get your development environment configured so that you can build and execute the code.
-To do this, follow these steps; the specifics of each step will vary based on your operating system:
+2. **Data Insights and Visualization**:
+	- **Insight Selection**: Users choose various types of data insights through a dropdown menu, which include:
+		- Sorted Averages for Courses in a Department Exceeding a Grade Threshold.
+		- Filter Course Sections by Instructor's Name.
+		- Average Across Different Years for a Selected Course.
+		- Courses Sorted by Number of Students Passed.
+		- Number of Students Failed for Sorted Instructors of a Course.
+	- **Parametric Insight Generation**: Each insight type can be modified with parameters, such as the department, grade thresholds, course IDs, instructor names, output order, and year filters.
+	- **Dynamic Data Visualization**: Data is displayed with either dynamic graphs or charts in direct response to the insights chosen and parameters provided.
 
-1. [Install git](https://git-scm.com/downloads) (v2.X). You should be able to execute `git --version` on the command line after installation is complete.
+3. **User Interface and Experience**:
+	- **Intuitive Design**: The interface is intuitive and user-friendly, which allows users to manage their datasets easily and gain insights without needing specialized knowledge of the program.
+	- **Feedback System**: Throughout the application, feedback messages inform users of the app's current state, such as successful dataset uploads, removals, or errors.
+	- **Dark Mode**: A dark mode toggle option is provided for the user's preference.
 
-1. [Install Node LTS](https://nodejs.org/en/download/) (LTS: v18.X), which will also install NPM (you should be able to execute `node --version` and `npm --version` on the command line).
+## Tech Stack
 
-1. [Install Yarn](https://yarnpkg.com/en/docs/install) (1.22.X). You should be able to execute `yarn --version`.
+### Front-End:
+- **React.js**: A component-based library used for building interactive UI elements.
+- **Chart.js**: A library utilized to provide dynamic visualizations in the front-end.
 
-1. Clone your repository by running `git clone REPO_URL` from the command line. You can get the REPO_URL by clicking on the green button on your project repository page on GitHub. Note that due to new department changes you can no longer access private git resources using https and a username and password. You will need to use either [an access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) or [SSH](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account).
+### Back-End:
+- **REST API**: A stateless backend using the HTTP protocol for communication with the React front-end.
+- **Node.js/Express.js**: (Implied, not explicit but likely based on testing practices.) A server-side runtime for the backend.
+- **JSZip**: Used to manage and process zipped files.
+- **Mocha and Chai**: Used for unit testing the backend.
 
-## Project commands
+## Testing
+- **Automated Testing**: Implemented using Mocha and Chai for backend functionality with focus on unit and integration tests.
+- **Manual Testing**: Applied to the front-end testing to address user interaction and visual bugs, and to ensure ease of use.
+- **Fuzz Testing**: Fuzz testing was used to help uncover additional edge cases that might not have been apparent during standard testing processes.
 
-Once your environment is configured you need to further prepare the project's tooling and dependencies.
-In the project folder:
+## User Stories Implemented
+- Users can add a dataset to the system and the system verifies validity.
+- Users can remove a dataset from the system.
+- Users can see a list of datasets in the system.
+- Users can get results for datasets sorted by course department exceeding a certain grade threshold.
+- Users can filter courses by an instructor’s name.
+- Users can get the average across different years for a selected course.
+- Users can see a list of courses sorted by the number of students passed.
+- Users can get the number of students failed for instructors of a course.
+- Users can filter courses by semester.
+- Users can get results with the number of students failed and sorted by instructors.
+- Users can visualize previous insights.
+- Users can filter for invalid department names.
 
-1. `yarn install` to download the packages specified in your project's *package.json* to the *node_modules* directory.
+## API Endpoints
+- **GET /datasets**: Retrieves a list of all datasets.
+- **PUT /dataset/:id**: Adds or updates a dataset. Note: the dataset kind can also be sent using a custom header or the request body.
+- **DELETE /dataset/:id**: Removes a dataset.
+- **POST /query**: Returns the result of a query on one or more datasets.
 
-1. `yarn build` to compile your project. You must run this command after making changes to your TypeScript files. If it does not build locally, AutoTest will not be able to build it. This will also run formatting and linting, so make sure to fix those errors too!
+## How to Run Locally (Example with React)
+To run this project locally on your machine, follow these steps (assuming you have NodeJS and npm installed):
 
-1. `yarn test` to run the test suite.
-    - To run with coverage, run `yarn cover`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/arkb75/InsightUBC
+   cd InsightUBC
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+	```
+This will start the React development server, usually on `http://localhost:3000`. Open this URL in your browser to use the application.
 
-1. `yarn prettier:fix` to format your project code.
+**Note**: You will need a back-end service running at the specified URL. Please refer to documentation for that service.
 
-1. `yarn lint:check` to see lint errors in your project code. You may be able to fix some of them using the `yarn lint:fix` command.
+## Future Enhancements
+- Expand the range of dataset formats that can be processed (e.g. CSV).
+- Include support for different types of visualizations.
+- Implement a loading state during data processing to enhance the user experience.
+- Add caching and user-specific history.
 
+## About Me
+I am Abdul Rafay Khurram, a Computer Science student and the primary developer of InsightUBC. This project demonstrates my proficiency in building full-stack applications using React, Node.js and REST APIs. I also implemented key features from the initial design to test implementation and was instrumental in the refactoring of the codebase to ensure high cohesion and maintainability. Through the implementation of the InsightUBC app, I have further developed my abilities to take a project from concept to final delivery using diverse testing strategies, and also reinforced my proficiency in TypeScript as well as unit and integration testing.
 
-If you are curious, some of these commands are actually shortcuts defined in [package.json -> scripts](./package.json).
-
-## Running and testing from an IDE
-
-IntelliJ Ultimate should be automatically configured the first time you open the project (IntelliJ Ultimate is a free download through the [JetBrains student program](https://www.jetbrains.com/community/education/#students/)).
-
-### License
-
-While the readings for this course are licensed using [CC-by-SA](https://creativecommons.org/licenses/by-sa/3.0/), **checkpoint descriptions and implementations are considered private materials**. Please do not post or share your project solutions. We go to considerable lengths to make the project an interesting and useful learning experience for this course. This is a great deal of work, and while future students may be tempted by your solutions, posting them does not do them any real favours. Please be considerate with these private materials and not pass them along to others, make your repos public, or post them to other sites online.
+## Contact
+**Abdul Rafay Khurram**  
+rafay@abdulkhurram.com  
+GitHub Profile: [arkb75](https://github.com/arkb75)
